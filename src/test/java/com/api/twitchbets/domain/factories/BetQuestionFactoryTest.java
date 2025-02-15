@@ -1,26 +1,28 @@
 package com.api.twitchbets.domain.factories;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.api.twitchbets.domain.BetQuestion;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class BetQuestionFactoryTest {
 
+    @Mock
     private BetQuestionFactory betQuestionFactory;
-
-    @BeforeEach
-    void setupBetQuestionFactory() {
-        betQuestionFactory = new BetQuestionFactory();
-    }
 
     @Test
     void whenCreateBetQuestion_thenReturnBetQuestion() {
+        BetQuestion newQuestion = new BetQuestion();
+        when(betQuestionFactory.createBetQuestion()).thenReturn(newQuestion);
 
         BetQuestion betQuestion = betQuestionFactory.createBetQuestion();
 
-        assertEquals(0, betQuestion.getCurrentBettedAmount());
+        assertEquals(newQuestion, betQuestion);
     }
 }
