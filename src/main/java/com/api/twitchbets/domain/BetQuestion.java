@@ -1,5 +1,6 @@
 package com.api.twitchbets.domain;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,10 @@ import java.util.UUID;
 public class BetQuestion {
 
     private List<BetOption> options;
+
+    public BetQuestion() {
+        options = new ArrayList<>();
+    }
 
     public BetQuestion(List<BetOption> options) {
         this.options = options;
