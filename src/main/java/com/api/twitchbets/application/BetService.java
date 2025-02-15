@@ -15,7 +15,7 @@ public class BetService {
 
     @Autowired
     public BetService(
-        final BetQuestionRepository betQuestionRepository,
+        BetQuestionRepository betQuestionRepository,
         BetQuestionFactory betQuestionFactory
     ) {
         this.betQuestionRepository = betQuestionRepository;

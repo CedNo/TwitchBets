@@ -16,17 +16,17 @@ class InMemoryBetQuestionRepositoryTest {
     private InMemoryBetQuestionRepository repository;
 
     @BeforeEach
-    public void initializeEmptyRepository() {
+    void initializeEmptyRepository() {
         repository = new InMemoryBetQuestionRepository();
     }
 
     @Test
-    public void givenNewRepository_whenGetBetQuestions_thenReturnEmptyList() {
+    void givenNewRepository_whenGetBetQuestions_thenReturnEmptyList() {
         assertTrue(repository.getBetQuestions().isEmpty());
     }
 
     @Test
-    public void givenEmptyRepository_whenAddBetQuestion_thenRepositoryOnlyContainsNewBetQuestion() {
+    void givenEmptyRepository_whenAddBetQuestion_thenRepositoryOnlyContainsNewBetQuestion() {
         BetQuestion betquestion = mock();
         List<BetQuestion> expectedList = new ArrayList<>();
         expectedList.add(betquestion);
@@ -38,15 +38,15 @@ class InMemoryBetQuestionRepositoryTest {
     }
 
     @Test
-    public void givenBetQuestionsAdded_whenGetBetQuestions_thenContainsAllAddedBetQuestions() {
-        BetQuestion betquestion1 = mock();
-        BetQuestion betquestion2 = mock();
-        repository.addBetQuestion(betquestion1);
-        repository.addBetQuestion(betquestion2);
+    void givenBetQuestionsAdded_whenGetBetQuestions_thenContainsAllAddedBetQuestions() {
+        BetQuestion betQuestion1 = mock();
+        BetQuestion betQuestion2 = mock();
+        repository.addBetQuestion(betQuestion1);
+        repository.addBetQuestion(betQuestion2);
 
         List<BetQuestion> returnedList = repository.getBetQuestions();
 
-        assertTrue(returnedList.contains(betquestion1));
-        assertTrue(returnedList.contains(betquestion2));
+        assertTrue(returnedList.contains(betQuestion1));
+        assertTrue(returnedList.contains(betQuestion2));
     }
 }
