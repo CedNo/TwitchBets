@@ -1,5 +1,7 @@
 package com.api.twitchbets.interfaces.controllers;
 
+import java.util.ArrayList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -27,6 +29,6 @@ public class BetQuestionController {
     public void createBetQuestion() {
         logger.info("Creating new question");
 
-        betService.createBetQuestion();
+        betService.createBetQuestion("", new ArrayList<>());
     }
 }

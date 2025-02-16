@@ -1,5 +1,6 @@
 package com.api.twitchbets.interfaces.controllers;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -35,6 +36,6 @@ public class BetQuestionControllerTest {
     void whenCreateBetQuestion_thenBetServiceCreatesBetQuestion() throws Exception {
         mvc.perform(MockMvcRequestBuilders.post("/bet/question/create").accept(MediaType.APPLICATION_JSON));
 
-        verify(betService).createBetQuestion();
+        verify(betService).createBetQuestion(any(), any());
     }
 }
