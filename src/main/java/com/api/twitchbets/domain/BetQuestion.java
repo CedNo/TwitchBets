@@ -7,10 +7,12 @@ import java.util.UUID;
 
 public class BetQuestion {
 
-    private String question;
+    private final UUID id;
+    private final String question;
     private final List<BetOption> options;
 
-    public BetQuestion(String question, List<BetOption> options) {
+    public BetQuestion(UUID id, String question, List<BetOption> options) {
+        this.id = id;
         this.question = question;
         this.options = options;
     }

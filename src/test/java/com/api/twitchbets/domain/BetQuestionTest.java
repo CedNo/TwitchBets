@@ -9,6 +9,8 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.api.twitchbets.domain.factories.BetQuestionFactory;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class BetQuestionTest {
@@ -17,6 +19,7 @@ class BetQuestionTest {
     private BetOption secondBetOption;
     private BetOption thirdBetOption;
 
+    private final BetQuestionFactory betQuestionFactory = new BetQuestionFactory();
     private BetQuestion betQuestion;
 
     @BeforeEach
@@ -38,7 +41,7 @@ class BetQuestionTest {
         betOptions.add(firstBetOption);
         betOptions.add(secondBetOption);
         betOptions.add(thirdBetOption);
-        betQuestion = new BetQuestion(question, betOptions);
+        betQuestion = betQuestionFactory.createBetQuestion(question, betOptions);
     }
 
     @Test
