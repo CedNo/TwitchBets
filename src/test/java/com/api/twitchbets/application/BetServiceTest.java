@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.api.twitchbets.domain.BetOption;
 import com.api.twitchbets.domain.BetQuestion;
 import com.api.twitchbets.domain.BetQuestionRepository;
+import com.api.twitchbets.domain.factories.BetOptionFactory;
 import com.api.twitchbets.domain.factories.BetQuestionFactory;
 
 import static org.mockito.Mockito.inOrder;
@@ -21,6 +22,8 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class BetServiceTest {
 
+    final String VALID_QUESTION = "Question";
+    final List<String> VALID_OPTIONS = new ArrayList<>();
     @InjectMocks
     private BetService betService;
     @Mock
@@ -28,18 +31,22 @@ class BetServiceTest {
     @Mock
     private BetQuestionFactory betQuestionFactory;
     @Mock
+    private BetOptionFactory betOptionFactory;
+    @Mock
     private BetQuestion betQuestion;
+    @Mock
+    private List<BetOption> betOptions;
 
     @Test
     void whenCreateBetQuestion_thenCreateAndSaveNewBetQuestion() {
-        final String VALID_QUESTION = "Question";
-        final List<BetOption> VALID_OPTIONS = new ArrayList<>();
-        when(betQuestionFactory.createBetQuestion(VALID_QUESTION, VALID_OPTIONS)).thenReturn(betQuestion);
+        when(betOptionFactory.createBetOptions(VALID_OPTIONS)).thenReturn(betOptions);
+        when(betQuestionFactory.createBetQuestion(VALID_QUESTION, betOptions)).thenReturn(betQuestion);
 
         betService.createBetQuestion(VALID_QUESTION, VALID_OPTIONS);
 
-        InOrder inOrder = inOrder(betQuestionFactory, betQuestionRepository);
-        inOrder.verify(betQuestionFactory).createBetQuestion(VALID_QUESTION, VALID_OPTIONS);
+        InOrder inOrder = inOrder(betOptionFactory, betQuestionFactory, betQuestionRepository);
+        inOrder.verify(betOptionFactory).createBetOptions(VALID_OPTIONS);
+        inOrder.verify(betQuestionFactory).createBetQuestion(VALID_QUESTION, betOptions);
         inOrder.verify(betQuestionRepository).addBetQuestion(betQuestion);
     }
 }

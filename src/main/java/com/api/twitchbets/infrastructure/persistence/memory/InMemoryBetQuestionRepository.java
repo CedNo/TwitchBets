@@ -11,7 +11,7 @@ import com.api.twitchbets.domain.BetQuestionRepository;
 @Repository
 public class InMemoryBetQuestionRepository implements BetQuestionRepository {
 
-    private static List<BetQuestion> betQuestions;
+    private final List<BetQuestion> betQuestions;
 
     public InMemoryBetQuestionRepository() {
         betQuestions = new ArrayList<>();

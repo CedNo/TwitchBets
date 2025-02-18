@@ -7,11 +7,12 @@ import java.util.UUID;
 public class BetOption {
 
     private final UUID id;
-    private String option;
+    private final String option;
     private final List<Bet> bets;
 
-    public BetOption() {
+    public BetOption(String option) {
         this.id = UUID.randomUUID();
+        this.option = option;
         this.bets = new ArrayList<>();
     }
 

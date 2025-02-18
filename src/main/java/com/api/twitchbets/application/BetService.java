@@ -29,9 +29,9 @@ public class BetService {
         this.betOptionFactory = betOptionFactory;
     }
 
-    public void createBetQuestion(String question, List<BetOption> options) {
-
-        BetQuestion newQuestion = betQuestionFactory.createBetQuestion(question, options);
+    public void createBetQuestion(String question, List<String> options) {
+        List<BetOption> betOptions = betOptionFactory.createBetOptions(options);
+        BetQuestion newQuestion = betQuestionFactory.createBetQuestion(question, betOptions);
 
         betQuestionRepository.addBetQuestion(newQuestion);
     }
