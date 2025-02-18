@@ -16,7 +16,8 @@ class BetOptionTest {
         bets.add(new Bet(125f));
         bets.add(new Bet(130f));
         bets.add(new Bet(0.43f));
-        BetOption betOption = new BetOption(UUID.randomUUID(), bets);
+        final String VALID_OPTION = "Yes";
+        BetOption betOption = new BetOption(UUID.randomUUID(), VALID_OPTION, bets);
 
         float returnedAmount = betOption.getCurrentAmount();
 
@@ -26,7 +27,8 @@ class BetOptionTest {
     @Test
     void givenNoBetsInOption_whenGetCurrentAmount_thenReturnZero() {
         List<Bet> bets = new ArrayList<>();
-        BetOption betOption = new BetOption(UUID.randomUUID(), bets);
+        final String VALID_OPTION = "Yes";
+        BetOption betOption = new BetOption(UUID.randomUUID(), VALID_OPTION, bets);
 
         float returnedAmount = betOption.getCurrentAmount();
 

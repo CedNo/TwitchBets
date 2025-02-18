@@ -1,5 +1,8 @@
 package com.api.twitchbets.application;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InOrder;
@@ -7,8 +10,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.api.twitchbets.domain.BetOption;
 import com.api.twitchbets.domain.BetQuestion;
 import com.api.twitchbets.domain.BetQuestionRepository;
+import com.api.twitchbets.domain.factories.BetOptionFactory;
 import com.api.twitchbets.domain.factories.BetQuestionFactory;
 
 import static org.mockito.Mockito.inOrder;
@@ -17,6 +22,8 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class BetServiceTest {
 
+    final String VALID_QUESTION = "Question";
+    final List<String> VALID_OPTIONS = new ArrayList<>();
     @InjectMocks
     private BetService betService;
     @Mock
@@ -24,16 +31,22 @@ class BetServiceTest {
     @Mock
     private BetQuestionFactory betQuestionFactory;
     @Mock
+    private BetOptionFactory betOptionFactory;
+    @Mock
     private BetQuestion betQuestion;
+    @Mock
+    private List<BetOption> betOptions;
 
     @Test
     void whenCreateBetQuestion_thenCreateAndSaveNewBetQuestion() {
-        when(betQuestionFactory.createBetQuestion()).thenReturn(betQuestion);
+        when(betOptionFactory.createBetOptions(VALID_OPTIONS)).thenReturn(betOptions);
+        when(betQuestionFactory.createBetQuestion(VALID_QUESTION, betOptions)).thenReturn(betQuestion);
 
-        betService.createBetQuestion();
+        betService.createBetQuestion(VALID_QUESTION, VALID_OPTIONS);
 
-        InOrder inOrder = inOrder(betQuestionFactory, betQuestionRepository);
-        inOrder.verify(betQuestionFactory).createBetQuestion();
+        InOrder inOrder = inOrder(betOptionFactory, betQuestionFactory, betQuestionRepository);
+        inOrder.verify(betOptionFactory).createBetOptions(VALID_OPTIONS);
+        inOrder.verify(betQuestionFactory).createBetQuestion(VALID_QUESTION, betOptions);
         inOrder.verify(betQuestionRepository).addBetQuestion(betQuestion);
     }
 }

@@ -9,6 +9,8 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.api.twitchbets.domain.factories.BetQuestionFactory;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class BetQuestionTest {
@@ -17,24 +19,29 @@ class BetQuestionTest {
     private BetOption secondBetOption;
     private BetOption thirdBetOption;
 
+    private final BetQuestionFactory betQuestionFactory = new BetQuestionFactory();
     private BetQuestion betQuestion;
 
     @BeforeEach
     void setupBetQuestion() {
+        String question = "Question?";
+        final String VALID_OPTION1 = "Yes";
         List<Bet> bets1 = new ArrayList<>();
         bets1.add(new Bet(115f));
-        firstBetOption = new BetOption(UUID.randomUUID(), bets1);
+        firstBetOption = new BetOption(UUID.randomUUID(), VALID_OPTION1, bets1);
+        final String VALID_OPTION2 = "No";
         List<Bet> bets2 = new ArrayList<>();
         bets2.add(new Bet(120f));
-        secondBetOption = new BetOption(UUID.randomUUID(), bets2);
+        secondBetOption = new BetOption(UUID.randomUUID(), VALID_OPTION2, bets2);
+        final String VALID_OPTION3 = "Toaster";
         List<Bet> bets3 = new ArrayList<>();
         bets3.add(new Bet(0.5f));
-        thirdBetOption = new BetOption(UUID.randomUUID(), bets3);
+        thirdBetOption = new BetOption(UUID.randomUUID(), VALID_OPTION3, bets3);
         List<BetOption> betOptions = new ArrayList<>();
         betOptions.add(firstBetOption);
         betOptions.add(secondBetOption);
         betOptions.add(thirdBetOption);
-        betQuestion = new BetQuestion(betOptions);
+        betQuestion = betQuestionFactory.createBetQuestion(question, betOptions);
     }
 
     @Test
