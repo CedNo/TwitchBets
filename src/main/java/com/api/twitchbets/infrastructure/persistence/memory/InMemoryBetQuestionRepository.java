@@ -29,7 +29,7 @@ public class InMemoryBetQuestionRepository implements BetQuestionRepository {
 
         //TODO: TEST
 
-        throw new BetQuestionNotFoundException();
+        throw new BetQuestionNotFoundException(id);
     }
 
     @Override
