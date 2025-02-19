@@ -17,6 +17,18 @@ public class BetQuestion {
         this.options = options;
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public List<BetOption> getOptions() {
+        return options;
+    }
+
     public Map<UUID, Float> getCurrentOddsOfOptions() {
         Map<UUID, Float> oddsOfOptions = new HashMap<>();
         float totalBettedAmount = getCurrentBettedAmount();
