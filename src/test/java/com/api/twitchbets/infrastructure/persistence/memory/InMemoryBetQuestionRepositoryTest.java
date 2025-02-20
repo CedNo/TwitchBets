@@ -2,11 +2,13 @@ package com.api.twitchbets.infrastructure.persistence.memory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.api.twitchbets.domain.BetQuestion;
+import com.api.twitchbets.domain.exceptions.BetQuestionNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -48,5 +50,26 @@ class InMemoryBetQuestionRepositoryTest {
 
         assertTrue(returnedList.contains(betQuestion1));
         assertTrue(returnedList.contains(betQuestion2));
+    }
+
+    @Test
+    void givenInvalidId_whenGetBetQuestion_thenThrowsBetQuestionNotFoundException() {
+        UUID INVALID_ID = UUID.randomUUID();
+
+        assertThrows(
+            BetQuestionNotFoundException.class,
+            () -> repository.getBetQuestion(INVALID_ID)
+        );
+    }
+
+    @Test
+    void givenBetQuestionAdded_whenGetBetQuestion_thenReturnsCorrespondingBetQuestion() {
+        UUID id = UUID.randomUUID();
+        BetQuestion expectedBetQuestion = new BetQuestion(id, "question", new ArrayList<>());
+        repository.addBetQuestion(expectedBetQuestion);
+
+        BetQuestion returnedBetQuestion = repository.getBetQuestion(id);
+
+        assertEquals(expectedBetQuestion, returnedBetQuestion);
     }
 }

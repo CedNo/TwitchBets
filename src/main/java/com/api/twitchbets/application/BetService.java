@@ -40,7 +40,6 @@ public class BetService {
     }
 
     public BetQuestion getBetQuestion(UUID id) {
-        //TODO: TEST
         return betQuestionRepository.getBetQuestion(id);
     }
 }

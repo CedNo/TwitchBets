@@ -20,14 +20,12 @@ public class InMemoryBetQuestionRepository implements BetQuestionRepository {
     }
 
     @Override
-    public BetQuestion getBetQuestion(UUID id) {
+    public BetQuestion getBetQuestion(UUID id) throws BetQuestionNotFoundException {
         for (BetQuestion betQuestion : betQuestions) {
             if (betQuestion.getId().equals(id)) {
                 return betQuestion;
             }
         }
-
-        //TODO: TEST
 
         throw new BetQuestionNotFoundException(id);
     }

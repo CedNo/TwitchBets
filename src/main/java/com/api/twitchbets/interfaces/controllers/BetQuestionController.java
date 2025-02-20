@@ -57,9 +57,6 @@ public class BetQuestionController {
         BetQuestion betQuestion = betService.getBetQuestion(id);
         BetQuestionResponse response = betQuestionResponseMapper.toResponse(betQuestion);
 
-        //TODO: TEST
-        //TODO: Catch BetQuestionNotFoundException
-
         return response;
     }
 }

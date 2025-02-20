@@ -2,6 +2,7 @@ package com.api.twitchbets.application;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,6 +18,7 @@ import com.api.twitchbets.domain.factories.BetOptionFactory;
 import com.api.twitchbets.domain.factories.BetQuestionFactory;
 
 import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -48,5 +50,14 @@ class BetServiceTest {
         inOrder.verify(betOptionFactory).createBetOptions(VALID_OPTIONS);
         inOrder.verify(betQuestionFactory).createBetQuestion(VALID_QUESTION, betOptions);
         inOrder.verify(betQuestionRepository).addBetQuestion(betQuestion);
+    }
+
+    @Test
+    void whenGetBetQuestion_thenGetBetQuestionFromRepository() {
+        UUID VALID_ID = UUID.randomUUID();
+
+        betService.getBetQuestion(VALID_ID);
+
+        verify(betQuestionRepository).getBetQuestion(VALID_ID);
     }
 }
