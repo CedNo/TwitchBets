@@ -1,6 +1,7 @@
 package com.api.twitchbets.application;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,10 +30,16 @@ public class BetService {
         this.betOptionFactory = betOptionFactory;
     }
 
-    public void createBetQuestion(String question, List<String> options) {
+    public UUID createBetQuestion(String question, List<String> options) {
         List<BetOption> betOptions = betOptionFactory.createBetOptions(options);
         BetQuestion newQuestion = betQuestionFactory.createBetQuestion(question, betOptions);
 
         betQuestionRepository.addBetQuestion(newQuestion);
+
+        return newQuestion.getId();
+    }
+
+    public BetQuestion getBetQuestion(UUID id) {
+        return betQuestionRepository.getBetQuestion(id);
     }
 }

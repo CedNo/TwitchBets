@@ -2,11 +2,13 @@ package com.api.twitchbets.infrastructure.persistence.memory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Repository;
 
 import com.api.twitchbets.domain.BetQuestion;
 import com.api.twitchbets.domain.BetQuestionRepository;
+import com.api.twitchbets.domain.exceptions.BetQuestionNotFoundException;
 
 @Repository
 public class InMemoryBetQuestionRepository implements BetQuestionRepository {
@@ -15,6 +17,17 @@ public class InMemoryBetQuestionRepository implements BetQuestionRepository {
 
     public InMemoryBetQuestionRepository() {
         betQuestions = new ArrayList<>();
+    }
+
+    @Override
+    public BetQuestion getBetQuestion(UUID id) throws BetQuestionNotFoundException {
+        for (BetQuestion betQuestion : betQuestions) {
+            if (betQuestion.getId().equals(id)) {
+                return betQuestion;
+            }
+        }
+
+        throw new BetQuestionNotFoundException(id);
     }
 
     @Override
