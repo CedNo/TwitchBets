@@ -6,9 +6,9 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.api.twitchbets.domain.BetOption;
-import com.api.twitchbets.domain.BetQuestion;
-import com.api.twitchbets.domain.BetQuestionRepository;
+import com.api.twitchbets.domain.bet.BetOption;
+import com.api.twitchbets.domain.bet.BetQuestion;
+import com.api.twitchbets.domain.bet.BetQuestionRepository;
 import com.api.twitchbets.domain.factories.BetOptionFactory;
 import com.api.twitchbets.domain.factories.BetQuestionFactory;
 

@@ -11,9 +11,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.api.twitchbets.domain.BetOption;
-import com.api.twitchbets.domain.BetQuestion;
-import com.api.twitchbets.domain.BetQuestionRepository;
+import com.api.twitchbets.domain.bet.BetOption;
+import com.api.twitchbets.domain.bet.BetQuestion;
+import com.api.twitchbets.domain.bet.BetQuestionRepository;
 import com.api.twitchbets.domain.factories.BetOptionFactory;
 import com.api.twitchbets.domain.factories.BetQuestionFactory;
 

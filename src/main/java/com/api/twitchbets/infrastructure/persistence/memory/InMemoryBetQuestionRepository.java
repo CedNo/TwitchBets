@@ -6,8 +6,8 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Repository;
 
-import com.api.twitchbets.domain.BetQuestion;
-import com.api.twitchbets.domain.BetQuestionRepository;
+import com.api.twitchbets.domain.bet.BetQuestion;
+import com.api.twitchbets.domain.bet.BetQuestionRepository;
 import com.api.twitchbets.domain.exceptions.BetQuestionNotFoundException;
 
 @Repository

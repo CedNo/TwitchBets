@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.twitchbets.application.BetService;
-import com.api.twitchbets.domain.BetQuestion;
+import com.api.twitchbets.domain.bet.BetQuestion;
 import com.api.twitchbets.interfaces.dto.requests.AddBetQuestionRequest;
 import com.api.twitchbets.interfaces.dto.responses.BetQuestionResponse;
 import com.api.twitchbets.interfaces.mappers.responses.BetQuestionResponseMapper;
