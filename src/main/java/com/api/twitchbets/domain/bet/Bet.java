@@ -1,4 +1,4 @@
-package com.api.twitchbets.domain;
+package com.api.twitchbets.domain.bet;
 
 public class Bet {
 

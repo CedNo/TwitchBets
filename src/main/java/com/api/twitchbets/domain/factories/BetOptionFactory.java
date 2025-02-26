@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.api.twitchbets.domain.BetOption;
+import com.api.twitchbets.domain.bet.BetOption;
 
 @Component
 public class BetOptionFactory {

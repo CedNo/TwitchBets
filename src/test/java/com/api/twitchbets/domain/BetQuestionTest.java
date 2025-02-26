@@ -9,6 +9,9 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.api.twitchbets.domain.bet.Bet;
+import com.api.twitchbets.domain.bet.BetOption;
+import com.api.twitchbets.domain.bet.BetQuestion;
 import com.api.twitchbets.domain.factories.BetQuestionFactory;
 
 import static org.junit.jupiter.api.Assertions.*;

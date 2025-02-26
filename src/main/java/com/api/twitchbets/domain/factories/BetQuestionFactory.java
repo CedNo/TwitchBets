@@ -5,8 +5,8 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
-import com.api.twitchbets.domain.BetOption;
-import com.api.twitchbets.domain.BetQuestion;
+import com.api.twitchbets.domain.bet.BetOption;
+import com.api.twitchbets.domain.bet.BetQuestion;
 
 @Component
 public class BetQuestionFactory {

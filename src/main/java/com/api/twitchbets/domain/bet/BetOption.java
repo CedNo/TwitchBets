@@ -1,4 +1,4 @@
-package com.api.twitchbets.domain;
+package com.api.twitchbets.domain.bet;
 
 import java.util.ArrayList;
 import java.util.List;

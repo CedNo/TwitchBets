@@ -6,6 +6,9 @@ import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 
+import com.api.twitchbets.domain.bet.Bet;
+import com.api.twitchbets.domain.bet.BetOption;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class BetOptionTest {
