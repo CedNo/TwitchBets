@@ -21,6 +21,11 @@ class InMemoryUserRepositoryTest {
     }
 
     @Test
+    void givenNewRepository_whenGetUsers_thenReturnEmptyList() {
+        assertTrue(inMemoryUserRepository.getUsers().isEmpty());
+    }
+
+    @Test
     void whenAddUser_thenUserIsAdded() {
         User user = new User(VALID_USER_ID, VALID_USERNAME);
 

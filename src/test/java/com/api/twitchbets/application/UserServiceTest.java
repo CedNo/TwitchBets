@@ -30,7 +30,7 @@ class UserServiceTest {
     private User user;
 
     @Test
-    void whenCreateUser_thenCreateAndSaveNeUser() {
+    void whenCreateUser_thenCreateAndSaveNewUser() {
         when(userFactory.createUser(VALID_ID, VALID_USERNAME)).thenReturn(user);
 
         userService.createUser(VALID_ID, VALID_USERNAME);
