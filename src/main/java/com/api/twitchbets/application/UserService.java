@@ -22,7 +22,6 @@ public class UserService {
         this.userFactory = userFactory;
     }
 
-    //TODO: Test
     public void createUser(int id, String username) {
         User newUser = userFactory.createUser(id, username);
 
