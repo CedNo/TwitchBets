@@ -47,7 +47,7 @@ public class BetQuestionControllerTest {
         List<String> options = new ArrayList<>(Arrays.asList("Yes", "No"));
         AddBetQuestionRequest addBetQuestionRequest = new AddBetQuestionRequest(question, options);
 
-        mvc.perform(MockMvcRequestBuilders.post("/bet/question/create")
+        mvc.perform(MockMvcRequestBuilders.post("/bets/questions")
                 .content(asJsonString(addBetQuestionRequest))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
@@ -60,7 +60,7 @@ public class BetQuestionControllerTest {
         List<String> options = new ArrayList<>(Arrays.asList("Yes", "No"));
         AddBetQuestionRequest addBetQuestionRequest = new AddBetQuestionRequest(question, options);
 
-        mvc.perform(MockMvcRequestBuilders.post("/bet/question/create")
+        mvc.perform(MockMvcRequestBuilders.post("/bets/questions")
             .content(asJsonString(addBetQuestionRequest))
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON));
@@ -72,7 +72,7 @@ public class BetQuestionControllerTest {
     void givenId_whenGetBetQuestion_thenBetServiceFetchBetQuestionAndMapperAssemblesResponse() throws Exception {
         when(betService.getBetQuestion(any())).thenReturn(mock());
 
-        mvc.perform(MockMvcRequestBuilders.get("/bet/question/{id}", UUID.randomUUID())
+        mvc.perform(MockMvcRequestBuilders.get("/bets/questions/{id}", UUID.randomUUID())
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isFound());
 
