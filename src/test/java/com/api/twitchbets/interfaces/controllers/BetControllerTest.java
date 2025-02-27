@@ -20,7 +20,7 @@ public class BetControllerTest {
 
     @Test
     void whenCreateBetOption_thenReturnOkStatus() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.post("/bet/create").accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk());
+        mvc.perform(MockMvcRequestBuilders.post("/bets").accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isCreated());
     }
 }

@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/bet")
+@RequestMapping("/bets")
 public class BetController {
 
     private final Logger logger = LoggerFactory.getLogger(BetController.class);
 
-    @PostMapping("/create")
-    @ResponseStatus(HttpStatus.OK)
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public void createBet() {
         logger.info("Placing bet");
 

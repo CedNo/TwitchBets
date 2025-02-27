@@ -21,7 +21,7 @@ import com.api.twitchbets.interfaces.dto.responses.BetQuestionResponse;
 import com.api.twitchbets.interfaces.mappers.responses.BetQuestionResponseMapper;
 
 @RestController
-@RequestMapping("/bet")
+@RequestMapping("/bets/questions")
 public class BetQuestionController {
 
     private final BetService betService;
@@ -37,7 +37,7 @@ public class BetQuestionController {
 
     private final Logger logger = LoggerFactory.getLogger(BetQuestionController.class);
 
-    @PostMapping("/question/create")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public UUID createBetQuestion(@RequestBody AddBetQuestionRequest request) {
@@ -48,7 +48,7 @@ public class BetQuestionController {
         return id;
     }
 
-    @GetMapping ("/question/{id}")
+    @GetMapping ("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
     @ResponseBody
     public BetQuestionResponse createBetQuestion(@PathVariable UUID id) {
