@@ -3,7 +3,6 @@ package com.api.twitchbets.domain.user;
 import org.springframework.stereotype.Component;
 
 import com.api.twitchbets.domain.exceptions.GenericException;
-import com.api.twitchbets.domain.exceptions.InvalidUsernameException;
 
 @Component
 public class UserAttributesValidator {
@@ -16,7 +15,7 @@ public class UserAttributesValidator {
 
     private void validateUsername(String username) throws GenericException {
         if (username == null || username.isEmpty() || !username.matches(NAME_REGEX)) {
-            throw new InvalidUsernameException();
+            throw new GenericException("INVALID_USERNAME", "Invalid username");
         }
     }
 

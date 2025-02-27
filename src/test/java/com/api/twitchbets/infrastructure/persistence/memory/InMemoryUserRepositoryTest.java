@@ -3,6 +3,7 @@ package com.api.twitchbets.infrastructure.persistence.memory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.api.twitchbets.domain.exceptions.UserAlreadyExistsException;
 import com.api.twitchbets.domain.exceptions.UserNotFoundException;
 import com.api.twitchbets.domain.user.User;
 import com.api.twitchbets.domain.user.UserRepository;
@@ -60,5 +61,13 @@ class InMemoryUserRepositoryTest {
         assertEquals(2, inMemoryUserRepository.getUsers().size());
         assertTrue(inMemoryUserRepository.getUsers().contains(user1));
         assertTrue(inMemoryUserRepository.getUsers().contains(user2));
+    }
+
+    @Test
+    void givenUserAdded_whenAddUserWithAddedUsername_thenThrowUserAlreadyExistsException() {
+        User user = new User(VALID_USERNAME);
+        inMemoryUserRepository.addUser(user);
+
+        assertThrows(UserAlreadyExistsException.class, () -> inMemoryUserRepository.addUser(user));
     }
 }
