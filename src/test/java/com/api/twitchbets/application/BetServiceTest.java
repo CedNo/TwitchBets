@@ -7,9 +7,10 @@ import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InOrder;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import com.api.twitchbets.domain.bet.BetOption;
 import com.api.twitchbets.domain.bet.BetQuestion;
@@ -21,22 +22,24 @@ import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 class BetServiceTest {
 
     final String VALID_QUESTION = "Question";
     final List<String> VALID_OPTIONS = new ArrayList<>();
-    @InjectMocks
+
+    @Autowired
     private BetService betService;
-    @Mock
+    @MockitoBean
     private BetQuestionRepository betQuestionRepository;
-    @Mock
+    @MockitoBean
     private BetQuestionFactory betQuestionFactory;
-    @Mock
+    @MockitoBean
     private BetOptionFactory betOptionFactory;
-    @Mock
+    @MockitoBean
     private BetQuestion betQuestion;
-    @Mock
+    @MockitoBean
     private List<BetOption> betOptions;
 
     @Test

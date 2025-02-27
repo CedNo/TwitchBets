@@ -11,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryUserRepositoryTest {
 
-    private static final int VALID_USER_ID = 1;
     private static final String VALID_USERNAME = "test";
     UserRepository inMemoryUserRepository;
 
@@ -27,7 +26,7 @@ class InMemoryUserRepositoryTest {
 
     @Test
     void whenAddUser_thenUserIsAdded() {
-        User user = new User(VALID_USER_ID, VALID_USERNAME);
+        User user = new User(VALID_USERNAME);
 
         inMemoryUserRepository.addUser(user);
 
@@ -38,23 +37,23 @@ class InMemoryUserRepositoryTest {
     @Test
     void givenUserAdded_whenGetUser_thenUserIsReturned() {
         InMemoryUserRepository inMemoryUserRepository = new InMemoryUserRepository();
-        User user = new User(VALID_USER_ID, VALID_USERNAME);
+        User user = new User(VALID_USERNAME);
         inMemoryUserRepository.addUser(user);
 
-        User returnedUser = inMemoryUserRepository.getUser(VALID_USER_ID);
+        User returnedUser = inMemoryUserRepository.getUser(VALID_USERNAME);
 
         assertEquals(user, returnedUser);
     }
 
     @Test
     void givenNoUserAdded_whenGetUser_thenUserNotFoundExceptionIsThrown() {
-        assertThrows(UserNotFoundException.class, () -> inMemoryUserRepository.getUser(VALID_USER_ID));
+        assertThrows(UserNotFoundException.class, () -> inMemoryUserRepository.getUser(VALID_USERNAME));
     }
 
     @Test
     void whenGetUsers_thenAllUsersAreReturned() {
-        User user1 = new User(VALID_USER_ID, VALID_USERNAME);
-        User user2 = new User(2, "test2");
+        User user1 = new User(VALID_USERNAME);
+        User user2 = new User("test2");
         inMemoryUserRepository.addUser(user1);
         inMemoryUserRepository.addUser(user2);
 

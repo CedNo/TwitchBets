@@ -7,8 +7,8 @@ import com.api.twitchbets.domain.user.User;
 @Component
 public class UserFactory {
 
-    public User createUser(int id, String username) {
-        return new User(id, username);
+    public User createUser(String username) {
+        return new User(username);
     }
 
 }
