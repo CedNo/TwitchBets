@@ -13,6 +13,7 @@ import com.api.twitchbets.domain.user.User;
 import com.api.twitchbets.domain.user.UserAttributesValidator;
 import com.api.twitchbets.domain.user.UserRepository;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.when;
 
@@ -49,10 +50,12 @@ class UserServiceTest {
     void whenGetUser_thenValidateUsernameAndReturnUser() {
         when(userRepository.getUser(VALID_USERNAME)).thenReturn(user);
 
-        userService.getUser(VALID_USERNAME);
+        User returnedUser = userService.getUser(VALID_USERNAME);
 
         InOrder inOrder = inOrder(userAttributesValidator, userFactory, userRepository);
         inOrder.verify(userAttributesValidator).validate(VALID_USERNAME);
         inOrder.verify(userRepository).getUser(VALID_USERNAME);
+
+        assertEquals(user, returnedUser);
     }
 }

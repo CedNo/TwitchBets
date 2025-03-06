@@ -24,7 +24,10 @@ public class UserController {
     private final UserService userService;
     private final UserResponseMapper userResponseMapper;
 
-    public UserController(UserService userService, UserResponseMapper userResponseMapper) {
+    public UserController (
+        UserService userService,
+        UserResponseMapper userResponseMapper
+    ) {
         this.userService = userService;
         this.userResponseMapper = userResponseMapper;
     }

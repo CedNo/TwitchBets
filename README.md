@@ -101,5 +101,5 @@ It is built using Spring Boot.
     Connection: keep-alive
 
     "user": {
-        "username": "Edgouille"
+        "username": "user1"
     }
