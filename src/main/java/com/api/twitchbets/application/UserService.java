@@ -32,4 +32,12 @@ public class UserService {
 
         userRepository.addUser(newUser);
     }
+
+    public User getUser(String username) {
+        userAttributesValidator.validate(username);
+
+        User user = userRepository.getUser(username);
+
+        return user;
+    }
 }

@@ -49,7 +49,7 @@ public class BetQuestionController {
     }
 
     @GetMapping ("/{id}")
-    @ResponseStatus(HttpStatus.FOUND)
+    @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public BetQuestionResponse createBetQuestion(@PathVariable UUID id) {
         logger.info("Getting bet question: {}", id);
