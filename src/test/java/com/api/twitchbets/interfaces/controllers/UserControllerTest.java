@@ -35,4 +35,12 @@ class UserControllerTest {
 
         verify(userService).createUser(VALID_USERNAME);
     }
+
+    @Test
+    void whenGetUser_thenReturnUser() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/users/" + VALID_USERNAME).accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
+
+        verify(userService).getUser(VALID_USERNAME);
+    }
 }
