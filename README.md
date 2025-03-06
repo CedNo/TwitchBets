@@ -69,11 +69,9 @@ It is built using Spring Boot.
 
 ### Request
 
-`POST /users`
+`POST /users/{username}`
 
-    curl --location 'http://localhost:8181/users' \
-        --header 'Content-Type: application/json' \
-        --data-raw '{"username": "user1"}'
+    curl --location --request POST 'http://localhost:8181/users/user1'
 
 ### Response
 
@@ -84,3 +82,24 @@ It is built using Spring Boot.
     Connection: keep-alive
 
     []
+
+## Get a user
+
+### Request
+
+`GET /users/{username}`
+
+    curl --location 'http://localhost:8181/users/user1'
+
+### Response
+
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+    Transfer-Encoding: chunked
+    Date: Wed, 05 Mar 2025 13:06:54 GMT
+    Keep-Alive: timeout=60
+    Connection: keep-alive
+
+    "user": {
+        "username": "Edgouille"
+    }
