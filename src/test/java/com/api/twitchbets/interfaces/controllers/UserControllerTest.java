@@ -12,8 +12,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.api.twitchbets.application.UserService;
+import com.api.twitchbets.interfaces.mappers.responses.UserResponseMapper;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -27,6 +31,8 @@ class UserControllerTest {
     private MockMvc mvc;
     @MockitoBean
     private UserService userService;
+    @MockitoBean
+    private UserResponseMapper userResponseMapper;
 
     @Test
     void whenCreateUser_thenReturnCreatedStatus() throws Exception {
@@ -42,5 +48,18 @@ class UserControllerTest {
             .andExpect(status().isOk());
 
         verify(userService).getUser(VALID_USERNAME);
+        verify(userResponseMapper).toResponse(any());
+    }
+
+    @Test
+    void givenId_whenGetUser_thenUserServiceFetchUserAndMapperAssemblesResponse() throws Exception {
+        when(userService.getUser(any())).thenReturn(mock());
+
+        mvc.perform(MockMvcRequestBuilders.get("/users/{username}", VALID_USERNAME)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
+
+        verify(userService).getUser(any());
+        verify(userResponseMapper).toResponse(any());
     }
 }

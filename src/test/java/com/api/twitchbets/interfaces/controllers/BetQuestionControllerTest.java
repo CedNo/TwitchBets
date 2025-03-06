@@ -6,9 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
@@ -70,11 +68,9 @@ public class BetQuestionControllerTest {
 
     @Test
     void givenId_whenGetBetQuestion_thenBetServiceFetchBetQuestionAndMapperAssemblesResponse() throws Exception {
-        when(betService.getBetQuestion(any())).thenReturn(mock());
-
         mvc.perform(MockMvcRequestBuilders.get("/bets/questions/{id}", UUID.randomUUID())
                 .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isFound());
+            .andExpect(status().isOk());
 
         verify(betService).getBetQuestion(any());
         verify(betQuestionResponseMapper).toResponse(any());
