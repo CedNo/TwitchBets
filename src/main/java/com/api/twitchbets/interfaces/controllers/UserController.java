@@ -3,6 +3,7 @@ package com.api.twitchbets.interfaces.controllers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,5 +29,13 @@ public class UserController {
         logger.info("Creating user : {}", username);
 
         userService.createUser(username);
+    }
+
+    @GetMapping("/{username}")
+    @ResponseStatus(HttpStatus.OK)
+    public void getUser(@PathVariable String username) {
+        logger.info("Getting user : {}", username);
+
+        userService.getUser(username);
     }
 }

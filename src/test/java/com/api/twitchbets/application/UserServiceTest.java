@@ -34,7 +34,7 @@ class UserServiceTest {
     private User user;
 
     @Test
-    void whenCreateUser_thenCreateAndSaveNewUser() {
+    void whenCreateUser_thenValidateCreateAndSaveNewUser() {
         when(userFactory.createUser(VALID_USERNAME)).thenReturn(user);
 
         userService.createUser(VALID_USERNAME);
@@ -43,5 +43,16 @@ class UserServiceTest {
         inOrder.verify(userAttributesValidator).validate(VALID_USERNAME);
         inOrder.verify(userFactory).createUser(VALID_USERNAME);
         inOrder.verify(userRepository).addUser(user);
+    }
+
+    @Test
+    void whenGetUser_thenValidateUsernameAndReturnUser() {
+        when(userRepository.getUser(VALID_USERNAME)).thenReturn(user);
+
+        userService.getUser(VALID_USERNAME);
+
+        InOrder inOrder = inOrder(userAttributesValidator, userFactory, userRepository);
+        inOrder.verify(userAttributesValidator).validate(VALID_USERNAME);
+        inOrder.verify(userRepository).getUser(VALID_USERNAME);
     }
 }
