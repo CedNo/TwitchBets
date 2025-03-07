@@ -72,4 +72,18 @@ class InMemoryBetQuestionRepositoryTest {
 
         assertEquals(expectedBetQuestion, returnedBetQuestion);
     }
+
+    @Test
+    void givenBetQuestionAdded_whenUpdateBetQuestion_thenRepositoryContainsUpdatedBetQuestion() {
+        UUID id = UUID.randomUUID();
+        BetQuestion betQuestion = new BetQuestion(id, "question", new ArrayList<>());
+        repository.addBetQuestion(betQuestion);
+
+        BetQuestion updatedBetQuestion = new BetQuestion(id, "question", new ArrayList<>());
+        repository.updateBetQuestion(updatedBetQuestion);
+
+        List<BetQuestion> returnedList = repository.getBetQuestions();
+
+        assertEquals(updatedBetQuestion, returnedList.get(0));
+    }
 }

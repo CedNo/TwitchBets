@@ -39,4 +39,15 @@ public class InMemoryBetQuestionRepository implements BetQuestionRepository {
     public void addBetQuestion(BetQuestion betQuestion) {
         betQuestions.add(betQuestion);
     }
+
+    @Override
+    public void updateBetQuestion(BetQuestion betQuestion) {
+        for (BetQuestion question : betQuestions) {
+            if (question.getId().equals(betQuestion.getId())) {
+                betQuestions.remove(question);
+                betQuestions.add(betQuestion);
+                return;
+            }
+        }
+    }
 }
