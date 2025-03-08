@@ -18,8 +18,6 @@ public class BetControllerTest {
     @Autowired
     private MockMvc mvc;
 
-
-
     @Test
     void whenCreateBet_thenReturnCreatedStatus() throws Exception {
         mvc.perform(MockMvcRequestBuilders.post("/bets").accept(MediaType.APPLICATION_JSON))

@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import com.api.twitchbets.domain.bet.Bet;
 import com.api.twitchbets.domain.bet.BetOption;
-import com.api.twitchbets.domain.user.User;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,9 +16,9 @@ class BetOptionTest {
     @Test
     void givenBetsInOption_whenGetCurrentAmount_thenReturnTotalAmountOfAllBetsInBets() {
         List<Bet> bets = new ArrayList<>();
-        bets.add(new Bet(UUID.randomUUID(), new User("user1"), 125f));
-        bets.add(new Bet(UUID.randomUUID(), new User("user2"), 130f));
-        bets.add(new Bet(UUID.randomUUID(), new User("user3"), 0.43f));
+        bets.add(new Bet(UUID.randomUUID(), "user1", 125f));
+        bets.add(new Bet(UUID.randomUUID(), "user2", 130f));
+        bets.add(new Bet(UUID.randomUUID(), "user3", 0.43f));
         final String VALID_OPTION = "Yes";
         BetOption betOption = new BetOption(UUID.randomUUID(), VALID_OPTION, bets);
 

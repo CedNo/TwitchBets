@@ -34,10 +34,19 @@ public class UserService {
     }
 
     public User getUser(String username) {
-        userAttributesValidator.validate(username);
-
         User user = userRepository.getUser(username);
 
         return user;
+    }
+
+    public void checkIfCanPlaceBet(String username, float amount) {
+        User user = userRepository.getUser(username);
+        user.checkIfCanPlaceBet(amount);
+    }
+
+    public void chargeUser(String username, float amount) {
+        User user = userRepository.getUser(username);
+        user.charge(amount);
+        userRepository.updateUser(user);
     }
 }

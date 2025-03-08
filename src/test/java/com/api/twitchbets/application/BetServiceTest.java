@@ -12,13 +12,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
+import com.api.twitchbets.domain.bet.Bet;
 import com.api.twitchbets.domain.bet.BetOption;
 import com.api.twitchbets.domain.bet.BetQuestion;
 import com.api.twitchbets.domain.bet.BetQuestionRepository;
+import com.api.twitchbets.domain.factories.BetFactory;
 import com.api.twitchbets.domain.factories.BetOptionFactory;
 import com.api.twitchbets.domain.factories.BetQuestionFactory;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyFloat;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -41,6 +47,8 @@ class BetServiceTest {
     private BetQuestion betQuestion;
     @MockitoBean
     private List<BetOption> betOptions;
+    @MockitoBean
+    private BetFactory betFactory;
 
     @Test
     void whenCreateBetQuestion_thenCreateAndSaveNewBetQuestion() {
@@ -62,5 +70,20 @@ class BetServiceTest {
         betService.getBetQuestion(VALID_ID);
 
         verify(betQuestionRepository).getBetQuestion(VALID_ID);
+    }
+
+    @Test
+    void whenCreateBet_thenCreateAndSaveUpdatedBetQuestion() {
+        Bet VALID_BET = mock();
+        when(betFactory.createBet(anyString(), anyFloat())).thenReturn(VALID_BET);
+        when(betQuestionRepository.getBetQuestion(any())).thenReturn(betQuestion);
+
+        betService.createBet(anyString(), anyFloat(), UUID.randomUUID(), UUID.randomUUID());
+
+        InOrder inOrder = inOrder(betQuestionRepository, betQuestion, betFactory);
+        inOrder.verify(betFactory).createBet(anyString(), anyFloat());
+        inOrder.verify(betQuestionRepository).getBetQuestion(any());
+        inOrder.verify(betQuestion).placeBet(any(), any());
+        inOrder.verify(betQuestionRepository).updateBetQuestion(betQuestion);
     }
 }

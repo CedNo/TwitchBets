@@ -13,7 +13,6 @@ import com.api.twitchbets.domain.bet.Bet;
 import com.api.twitchbets.domain.bet.BetOption;
 import com.api.twitchbets.domain.bet.BetQuestion;
 import com.api.twitchbets.domain.factories.BetQuestionFactory;
-import com.api.twitchbets.domain.user.User;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,15 +30,15 @@ class BetQuestionTest {
         String question = "Question?";
         final String VALID_OPTION1 = "Yes";
         List<Bet> bets1 = new ArrayList<>();
-        bets1.add(new Bet(UUID.randomUUID(), new User("user1"), 115f));
+        bets1.add(new Bet(UUID.randomUUID(), "user1", 115f));
         firstBetOption = new BetOption(UUID.randomUUID(), VALID_OPTION1, bets1);
         final String VALID_OPTION2 = "No";
         List<Bet> bets2 = new ArrayList<>();
-        bets2.add(new Bet(UUID.randomUUID(), new User("user2"), 120f));
+        bets2.add(new Bet(UUID.randomUUID(), "user2", 120f));
         secondBetOption = new BetOption(UUID.randomUUID(), VALID_OPTION2, bets2);
         final String VALID_OPTION3 = "Toaster";
         List<Bet> bets3 = new ArrayList<>();
-        bets3.add(new Bet(UUID.randomUUID(), new User("user3"), 0.5f));
+        bets3.add(new Bet(UUID.randomUUID(), "user3", 0.5f));
         thirdBetOption = new BetOption(UUID.randomUUID(), VALID_OPTION3, bets3);
         List<BetOption> betOptions = new ArrayList<>();
         betOptions.add(firstBetOption);

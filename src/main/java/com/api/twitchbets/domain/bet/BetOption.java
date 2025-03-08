@@ -35,4 +35,8 @@ public class BetOption {
 
         return totalAmount;
     }
+
+    public void placeBet(Bet bet) {
+        bets.add(bet);
+    }
 }

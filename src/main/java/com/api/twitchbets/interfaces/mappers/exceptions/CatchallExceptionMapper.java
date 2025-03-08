@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.api.twitchbets.domain.exceptions.BetOptionNotFoundException;
 import com.api.twitchbets.domain.exceptions.BetQuestionNotFoundException;
 import com.api.twitchbets.domain.exceptions.GenericException;
 import com.api.twitchbets.domain.exceptions.UserAlreadyExistsException;
@@ -35,6 +36,15 @@ public class CatchallExceptionMapper extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(exception, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
+    @ExceptionHandler(BetOptionNotFoundException.class)
+    protected ResponseEntity<Object> handleConflict(BetOptionNotFoundException exception, WebRequest request) {
+        logger.error("BetOptionNotFoundException in " + request.getDescription(false), exception.getCause());
+
+        ErrorResponse bodyOfResponse = new ErrorResponse(exception.error, exception.description);
+
+        return handleExceptionInternal(exception, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
     @ExceptionHandler(UserNotFoundException.class)
     protected ResponseEntity<Object> handleConflict(UserNotFoundException exception, WebRequest request) {
         logger.error("UserNotFoundException in " + request.getDescription(false), exception.getCause());
@@ -42,6 +52,15 @@ public class CatchallExceptionMapper extends ResponseEntityExceptionHandler {
         ErrorResponse bodyOfResponse = new ErrorResponse(exception.error, exception.description);
 
         return handleExceptionInternal(exception, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    protected ResponseEntity<Object> handleConflict(IllegalArgumentException exception, WebRequest request) {
+        logger.error("InvalidArgumentException in " + request.getDescription(false), exception.getCause());
+
+        ErrorResponse bodyOfResponse = new ErrorResponse(exception.getClass().getSimpleName(), exception.getMessage());
+
+        return handleExceptionInternal(exception, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
     @ExceptionHandler(value = { GenericException.class, RuntimeException.class })

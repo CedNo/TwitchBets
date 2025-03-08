@@ -15,6 +15,7 @@ import com.api.twitchbets.domain.user.UserRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -47,15 +48,12 @@ class UserServiceTest {
     }
 
     @Test
-    void whenGetUser_thenValidateUsernameAndReturnUser() {
+    void whenGetUser_thenReturnUser() {
         when(userRepository.getUser(VALID_USERNAME)).thenReturn(user);
 
         User returnedUser = userService.getUser(VALID_USERNAME);
 
-        InOrder inOrder = inOrder(userAttributesValidator, userFactory, userRepository);
-        inOrder.verify(userAttributesValidator).validate(VALID_USERNAME);
-        inOrder.verify(userRepository).getUser(VALID_USERNAME);
-
+        verify(userRepository).getUser(VALID_USERNAME);
         assertEquals(user, returnedUser);
     }
 }
