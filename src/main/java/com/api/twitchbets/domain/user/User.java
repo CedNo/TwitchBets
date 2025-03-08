@@ -19,6 +19,13 @@ public class User {
     }
 
     public void charge(float amount) {
+        if(balance < amount) {
+            throw new IllegalArgumentException("Insufficient funds");
+        } else if (amount <= 0) {
+            throw new IllegalArgumentException("Amount must be greater than 0");
+
+        }
+
         balance -= amount;
     }
 }
