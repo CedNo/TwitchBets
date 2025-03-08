@@ -41,7 +41,5 @@ public class BetController {
             logger.error("Error placing bet");
             throw e;
         }
-
-        //todo:    ** test **
     }
 }

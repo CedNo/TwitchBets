@@ -58,7 +58,7 @@ public class BetService {
         }
     }
 
-    public void createBet(String username, Float amount, UUID betQuestionId, UUID betOptionId) {
+    public void createBet(String username, float amount, UUID betQuestionId, UUID betOptionId) {
         Bet bet = betFactory.createBet(username, amount);
         BetQuestion betQuestion = betQuestionRepository.getBetQuestion(betQuestionId);
 
