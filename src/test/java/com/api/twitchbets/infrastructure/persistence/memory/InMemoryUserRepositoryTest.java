@@ -14,10 +14,12 @@ class InMemoryUserRepositoryTest {
 
     private static final String VALID_USERNAME = "test";
     UserRepository inMemoryUserRepository;
+    User user;
 
     @BeforeEach
-    void setUpRepository() {
+    void setUpRepositoryAndUser() {
         inMemoryUserRepository = new InMemoryUserRepository();
+        user = new User(VALID_USERNAME, 1000);
     }
 
     @Test
@@ -27,7 +29,6 @@ class InMemoryUserRepositoryTest {
 
     @Test
     void whenAddUser_thenUserIsAdded() {
-        User user = new User(VALID_USERNAME);
 
         inMemoryUserRepository.addUser(user);
 
@@ -38,7 +39,6 @@ class InMemoryUserRepositoryTest {
     @Test
     void givenUserAdded_whenGetUser_thenUserIsReturned() {
         InMemoryUserRepository inMemoryUserRepository = new InMemoryUserRepository();
-        User user = new User(VALID_USERNAME);
         inMemoryUserRepository.addUser(user);
 
         User returnedUser = inMemoryUserRepository.getUser(VALID_USERNAME);
@@ -53,21 +53,29 @@ class InMemoryUserRepositoryTest {
 
     @Test
     void whenGetUsers_thenAllUsersAreReturned() {
-        User user1 = new User(VALID_USERNAME);
-        User user2 = new User("test2");
-        inMemoryUserRepository.addUser(user1);
+        User user2 = new User("test2", 1000);
+        inMemoryUserRepository.addUser(user);
         inMemoryUserRepository.addUser(user2);
 
         assertEquals(2, inMemoryUserRepository.getUsers().size());
-        assertTrue(inMemoryUserRepository.getUsers().contains(user1));
+        assertTrue(inMemoryUserRepository.getUsers().contains(user));
         assertTrue(inMemoryUserRepository.getUsers().contains(user2));
     }
 
     @Test
     void givenUserAdded_whenAddUserWithAddedUsername_thenThrowUserAlreadyExistsException() {
-        User user = new User(VALID_USERNAME);
         inMemoryUserRepository.addUser(user);
 
         assertThrows(UserAlreadyExistsException.class, () -> inMemoryUserRepository.addUser(user));
+    }
+
+    @Test
+    void givenUserAdded_whenUpdateUser_thenUserIsUpdated() {
+        inMemoryUserRepository.addUser(user);
+        User updatedUser = new User(VALID_USERNAME, 2000);
+
+        inMemoryUserRepository.updateUser(updatedUser);
+
+        assertEquals(2000, inMemoryUserRepository.getUser(VALID_USERNAME).getBalance());
     }
 }

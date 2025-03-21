@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import com.api.twitchbets.domain.exceptions.BetOptionNotFoundException;
+
 public class BetQuestion {
 
     private final UUID id;
@@ -52,5 +54,26 @@ public class BetQuestion {
         }
 
         return totalAmount;
+    }
+
+    public boolean hasOption(UUID optionId) {
+        for (BetOption option : options) {
+            if (option.getId().equals(optionId)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void placeBet(UUID optionId, Bet bet) throws BetOptionNotFoundException {
+        for (BetOption option : options) {
+            if (option.getId().equals(optionId)) {
+                option.placeBet(bet);
+                return;
+            }
+        }
+
+        throw new BetOptionNotFoundException(optionId);
     }
 }

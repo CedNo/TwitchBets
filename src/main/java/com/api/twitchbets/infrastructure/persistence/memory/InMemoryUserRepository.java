@@ -42,6 +42,17 @@ public class InMemoryUserRepository  implements UserRepository {
         return users;
     }
 
+    @Override
+    public void updateUser(User user) {
+        for (User u : users) {
+            if (u.getUsername().equals(user.getUsername())) {
+                users.remove(u);
+                users.add(user);
+                return;
+            }
+        }
+    }
+
     private void checkIfUserExists(String username) throws UserAlreadyExistsException {
         for (User user : users) {
             if (user.getUsername().equals(username)) {

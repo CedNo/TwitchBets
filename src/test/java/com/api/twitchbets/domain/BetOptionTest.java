@@ -16,9 +16,9 @@ class BetOptionTest {
     @Test
     void givenBetsInOption_whenGetCurrentAmount_thenReturnTotalAmountOfAllBetsInBets() {
         List<Bet> bets = new ArrayList<>();
-        bets.add(new Bet(125f));
-        bets.add(new Bet(130f));
-        bets.add(new Bet(0.43f));
+        bets.add(new Bet(UUID.randomUUID(), "user1", 125f));
+        bets.add(new Bet(UUID.randomUUID(), "user2", 130f));
+        bets.add(new Bet(UUID.randomUUID(), "user3", 0.43f));
         final String VALID_OPTION = "Yes";
         BetOption betOption = new BetOption(UUID.randomUUID(), VALID_OPTION, bets);
 
@@ -36,5 +36,17 @@ class BetOptionTest {
         float returnedAmount = betOption.getCurrentAmount();
 
         assertEquals(0, returnedAmount);
+    }
+
+    @Test
+    void whenPlaceBet_thenAddBetToBets() {
+        List<Bet> bets = new ArrayList<>();
+        final String VALID_OPTION = "Yes";
+        BetOption betOption = new BetOption(UUID.randomUUID(), VALID_OPTION, bets);
+        Bet newBet = new Bet(UUID.randomUUID(), "user1", 125f);
+
+        betOption.placeBet(newBet);
+
+        assertTrue(betOption.getBets().contains(newBet));
     }
 }

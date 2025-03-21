@@ -10,4 +10,6 @@ public interface BetQuestionRepository {
     List<BetQuestion> getBetQuestions();
 
     void addBetQuestion(BetQuestion betQuestion);
+
+    void updateBetQuestion(BetQuestion betQuestion);
 }

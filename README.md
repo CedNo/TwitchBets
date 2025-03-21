@@ -103,3 +103,28 @@ It is built using Spring Boot.
     "user": {
         "username": "user1"
     }
+
+## Place a bet
+
+### Request
+
+    `POST /bets/
+
+    curl --location 'http://localhost:8181/bets' \
+    --header 'Content-Type: application/json' \
+    --data '{
+    "username": "user1",
+    "amount": 10.0,
+    "betQuestionId": "1c2ab561-37b2-44e9-9979-ae685f5d6958",
+    "betOptionId": "153dfe05-6f92-4751-8cad-5f210701b9ae"
+    }'
+
+### Response
+
+    HTTP/1.1 201 Created
+    Content-Length: 0
+    Date: Wed, 05 Mar 2025 13:06:54 GMT
+    Keep-Alive: timeout=60
+    Connection: keep-alive
+
+    []

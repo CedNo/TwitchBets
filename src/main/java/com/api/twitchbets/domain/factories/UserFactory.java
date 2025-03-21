@@ -7,8 +7,10 @@ import com.api.twitchbets.domain.user.User;
 @Component
 public class UserFactory {
 
+    public static final float INITIAL_BALANCE = 1000;
+
     public User createUser(String username) {
-        return new User(username);
+        return new User(username, INITIAL_BALANCE);
     }
 
 }
