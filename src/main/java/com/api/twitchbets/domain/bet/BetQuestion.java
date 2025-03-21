@@ -74,8 +74,6 @@ public class BetQuestion {
             }
         }
 
-        //todo test
-
         throw new BetOptionNotFoundException(optionId);
     }
 }

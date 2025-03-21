@@ -22,7 +22,6 @@ public class User {
         checkIfCanPlaceBet(amount);
 
         balance -= amount;
-        //todo: test
     }
 
     public void checkIfCanPlaceBet(float amount) throws IllegalArgumentException {

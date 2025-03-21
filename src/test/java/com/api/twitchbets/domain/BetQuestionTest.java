@@ -12,9 +12,13 @@ import org.junit.jupiter.api.Test;
 import com.api.twitchbets.domain.bet.Bet;
 import com.api.twitchbets.domain.bet.BetOption;
 import com.api.twitchbets.domain.bet.BetQuestion;
+import com.api.twitchbets.domain.exceptions.BetOptionNotFoundException;
 import com.api.twitchbets.domain.factories.BetQuestionFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class BetQuestionTest {
 
@@ -78,5 +82,43 @@ class BetQuestionTest {
         }
 
         assertEquals(1f, totalOdds);
+    }
+
+    @Test
+    void givenValidOptionId_whenHasOption_thenReturnTrue() {
+        UUID validOptionId = firstBetOption.getId();
+
+        boolean hasOption = betQuestion.hasOption(validOptionId);
+
+        assertTrue(hasOption);
+    }
+
+    @Test
+    void givenInvalidOptionId_whenHasOption_thenReturnFalse() {
+        UUID invalidOptionId = UUID.randomUUID();
+
+        boolean hasOption = betQuestion.hasOption(invalidOptionId);
+
+        assertFalse(hasOption);
+    }
+
+    @Test
+    void givenValidOptionId_whenPlaceBet_thenPlaceBet() {
+        BetOption betOption = mock();
+        UUID optionId = UUID.randomUUID();
+        when(betOption.getId()).thenReturn(optionId);
+        BetQuestion betQuestion1 = new BetQuestion(UUID.randomUUID(), "Question?", List.of(betOption));
+        Bet bet = mock();
+
+        betQuestion1.placeBet(optionId, bet);
+
+        verify(betOption).placeBet(bet);
+    }
+
+    @Test
+    void givenInvalidOptionId_whenPlaceBet_thenThrowBetOptionNotFoundException() {
+        Bet bet = mock();
+
+        assertThrows(BetOptionNotFoundException.class, () -> betQuestion.placeBet(UUID.randomUUID(), bet));
     }
 }

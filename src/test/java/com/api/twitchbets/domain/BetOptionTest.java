@@ -37,4 +37,16 @@ class BetOptionTest {
 
         assertEquals(0, returnedAmount);
     }
+
+    @Test
+    void whenPlaceBet_thenAddBetToBets() {
+        List<Bet> bets = new ArrayList<>();
+        final String VALID_OPTION = "Yes";
+        BetOption betOption = new BetOption(UUID.randomUUID(), VALID_OPTION, bets);
+        Bet newBet = new Bet(UUID.randomUUID(), "user1", 125f);
+
+        betOption.placeBet(newBet);
+
+        assertTrue(betOption.getBets().contains(newBet));
+    }
 }

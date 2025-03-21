@@ -19,6 +19,10 @@ public class BetOption {
         return id;
     }
 
+    public List<Bet> getBets() {
+        return bets;
+    }
+
     public float getCurrentAmount() {
         float totalAmount = 0;
 
