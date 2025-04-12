@@ -18,6 +18,7 @@ It is built using Spring Boot.
 ### Response
 
     HTTP/1.1 201 Created
+    Location: http://localhost:8181/bets/questions/5c41aaee-4772-441e-957a-9805f7dad34e
     Content-Type: application/json
     Transfer-Encoding: chunked
     Date: Wed, 05 Mar 2025 12:53:15 GMT
