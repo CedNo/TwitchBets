@@ -25,7 +25,7 @@ It is built using Spring Boot.
     Keep-Alive: timeout=60
     Connection: keep-alive
 
-    {"id":"5c41aaee-4772-441e-957a-9805f7dad34e"}
+    []
 
 ## Get a bet question
 
