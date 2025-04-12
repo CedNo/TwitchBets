@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
@@ -40,28 +41,19 @@ public class BetQuestionControllerTest {
     private BetQuestionResponseMapper betQuestionResponseMapper;
 
     @Test
-    void whenCreateBetQuestion_thenReturnCreatedStatus() throws Exception {
+    void whenCreateBetQuestion_thenBetServiceCreatesBetQuestionAndHasCreatedStatus() throws Exception {
         String question = "Will @xQc stream today? (02/16/2025)";
         List<String> options = new ArrayList<>(Arrays.asList("Yes", "No"));
         AddBetQuestionRequest addBetQuestionRequest = new AddBetQuestionRequest(question, options);
-
-        mvc.perform(MockMvcRequestBuilders.post("/bets/questions")
-                .content(asJsonString(addBetQuestionRequest))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isCreated());
-    }
-
-    @Test
-    void whenCreateBetQuestion_thenBetServiceCreatesBetQuestion() throws Exception {
-        String question = "Will @xQc stream today? (02/16/2025)";
-        List<String> options = new ArrayList<>(Arrays.asList("Yes", "No"));
-        AddBetQuestionRequest addBetQuestionRequest = new AddBetQuestionRequest(question, options);
+        UUID id = UUID.randomUUID();
+        when(betService.createBetQuestion(question, options)).thenReturn(id);
 
         mvc.perform(MockMvcRequestBuilders.post("/bets/questions")
             .content(asJsonString(addBetQuestionRequest))
             .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON));
+            .header("location", id)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isCreated());
 
         verify(betService).createBetQuestion(any(), any());
     }

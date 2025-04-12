@@ -1,10 +1,12 @@
 package com.api.twitchbets.interfaces.controllers;
 
+import java.net.URI;
 import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.api.twitchbets.application.BetService;
 import com.api.twitchbets.domain.bet.BetQuestion;
@@ -40,12 +43,18 @@ public class BetQuestionController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public UUID createBetQuestion(@RequestBody AddBetQuestionRequest request) {
+    public ResponseEntity<Object> createBetQuestion(@RequestBody AddBetQuestionRequest request) {
         logger.info("Creating new question: {}", request.question());
 
         UUID id = betService.createBetQuestion(request.question(), request.options());
 
-        return id;
+        URI location = ServletUriComponentsBuilder
+            .fromCurrentRequest()
+            .path("/{id}")
+            .buildAndExpand(id)
+            .toUri();
+
+        return ResponseEntity.created(location).build();
     }
 
     @GetMapping ("/{id}")
