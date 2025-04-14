@@ -46,21 +46,25 @@ It is built using Spring Boot.
 
     {
         "betQuestion": {
-            "id": "5c41aaee-4772-441e-957a-9805f7dad34e",
+            "id": "e4585195-6185-4522-a118-1a21a99dd9a7",
             "question": "Will @xQc stream today? (02/16/2025)",
             "options": [
                 {
-                    "id": "197a0932-416a-4259-8eec-c51ef3a5eeba",
+                    "id": "757c3f15-c78e-4179-a3d0-8f928ac8f618",
+                    "option": "Yes",
+                    "bets": [],
                     "currentAmount": 0.0
                 },
                 {
-                    "id": "aa26cd55-b1ae-4fcb-96b4-ecacd8447bf8",
+                    "id": "57f415d7-97de-42e5-bae5-c5fa4cbde505",
+                    "option": "No",
+                    "bets": [],
                     "currentAmount": 0.0
                 }
             ],
             "currentOddsOfOptions": {
-                "aa26cd55-b1ae-4fcb-96b4-ecacd8447bf8": "NaN",
-                "197a0932-416a-4259-8eec-c51ef3a5eeba": "NaN"
+                "757c3f15-c78e-4179-a3d0-8f928ac8f618": "NaN",
+                "57f415d7-97de-42e5-bae5-c5fa4cbde505": "NaN"
             },
             "currentBettedAmount": 0.0
         }
