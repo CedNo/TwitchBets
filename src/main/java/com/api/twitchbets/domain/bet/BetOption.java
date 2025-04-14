@@ -19,6 +19,10 @@ public class BetOption {
         return id;
     }
 
+    public String getOption() {
+        return option;
+    }
+
     public List<Bet> getBets() {
         return bets;
     }
