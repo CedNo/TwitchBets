@@ -1,5 +1,6 @@
 package com.api.twitchbets.domain;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,15 +35,15 @@ class BetQuestionTest {
         String question = "Question?";
         final String VALID_OPTION1 = "Yes";
         List<Bet> bets1 = new ArrayList<>();
-        bets1.add(new Bet(UUID.randomUUID(), "user1", 115f));
+        bets1.add(new Bet(UUID.randomUUID(), "user1", 115f, LocalDateTime.now()));
         firstBetOption = new BetOption(UUID.randomUUID(), VALID_OPTION1, bets1);
         final String VALID_OPTION2 = "No";
         List<Bet> bets2 = new ArrayList<>();
-        bets2.add(new Bet(UUID.randomUUID(), "user2", 120f));
+        bets2.add(new Bet(UUID.randomUUID(), "user2", 120f, LocalDateTime.now()));
         secondBetOption = new BetOption(UUID.randomUUID(), VALID_OPTION2, bets2);
         final String VALID_OPTION3 = "Toaster";
         List<Bet> bets3 = new ArrayList<>();
-        bets3.add(new Bet(UUID.randomUUID(), "user3", 0.5f));
+        bets3.add(new Bet(UUID.randomUUID(), "user3", 0.5f, LocalDateTime.now()));
         thirdBetOption = new BetOption(UUID.randomUUID(), VALID_OPTION3, bets3);
         List<BetOption> betOptions = new ArrayList<>();
         betOptions.add(firstBetOption);

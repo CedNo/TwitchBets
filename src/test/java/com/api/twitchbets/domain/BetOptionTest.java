@@ -1,5 +1,6 @@
 package com.api.twitchbets.domain;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -16,9 +17,9 @@ class BetOptionTest {
     @Test
     void givenBetsInOption_whenGetCurrentAmount_thenReturnTotalAmountOfAllBetsInBets() {
         List<Bet> bets = new ArrayList<>();
-        bets.add(new Bet(UUID.randomUUID(), "user1", 125f));
-        bets.add(new Bet(UUID.randomUUID(), "user2", 130f));
-        bets.add(new Bet(UUID.randomUUID(), "user3", 0.43f));
+        bets.add(new Bet(UUID.randomUUID(), "user1", 125f, LocalDateTime.now()));
+        bets.add(new Bet(UUID.randomUUID(), "user2", 130f, LocalDateTime.now()));
+        bets.add(new Bet(UUID.randomUUID(), "user3", 0.43f, LocalDateTime.now()));
         final String VALID_OPTION = "Yes";
         BetOption betOption = new BetOption(UUID.randomUUID(), VALID_OPTION, bets);
 
@@ -43,7 +44,7 @@ class BetOptionTest {
         List<Bet> bets = new ArrayList<>();
         final String VALID_OPTION = "Yes";
         BetOption betOption = new BetOption(UUID.randomUUID(), VALID_OPTION, bets);
-        Bet newBet = new Bet(UUID.randomUUID(), "user1", 125f);
+        Bet newBet = new Bet(UUID.randomUUID(), "user1", 125f, LocalDateTime.now());
 
         betOption.placeBet(newBet);
 
