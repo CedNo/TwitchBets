@@ -1,5 +1,6 @@
 package com.api.twitchbets.application;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,9 +37,9 @@ public class BetService {
         this.betFactory = betFactory;
     }
 
-    public UUID createBetQuestion(String question, List<String> options) {
+    public UUID createBetQuestion(String question, List<String> options, LocalDateTime endTime) {
         List<BetOption> betOptions = betOptionFactory.createBetOptions(options);
-        BetQuestion newQuestion = betQuestionFactory.createBetQuestion(question, betOptions);
+        BetQuestion newQuestion = betQuestionFactory.createBetQuestion(question, betOptions, endTime);
 
         betQuestionRepository.addBetQuestion(newQuestion);
 

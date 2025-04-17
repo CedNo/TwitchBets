@@ -1,5 +1,6 @@
 package com.api.twitchbets.interfaces.controllers;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +27,7 @@ import com.api.twitchbets.application.BetService;
 import com.api.twitchbets.interfaces.dto.requests.AddBetQuestionRequest;
 import com.api.twitchbets.interfaces.mappers.responses.BetQuestionResponseMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -44,9 +46,10 @@ public class BetQuestionControllerTest {
     void whenCreateBetQuestion_thenBetServiceCreatesBetQuestionAndHasCreatedStatus() throws Exception {
         String question = "Will @xQc stream today? (02/16/2025)";
         List<String> options = new ArrayList<>(Arrays.asList("Yes", "No"));
-        AddBetQuestionRequest addBetQuestionRequest = new AddBetQuestionRequest(question, options);
+        LocalDateTime endTime = LocalDateTime.now();
+        AddBetQuestionRequest addBetQuestionRequest = new AddBetQuestionRequest(question, options, endTime);
         UUID id = UUID.randomUUID();
-        when(betService.createBetQuestion(question, options)).thenReturn(id);
+        when(betService.createBetQuestion(question, options, endTime)).thenReturn(id);
 
         mvc.perform(MockMvcRequestBuilders.post("/bets/questions")
             .content(asJsonString(addBetQuestionRequest))
@@ -55,7 +58,7 @@ public class BetQuestionControllerTest {
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isCreated());
 
-        verify(betService).createBetQuestion(any(), any());
+        verify(betService).createBetQuestion(any(), any(), any());
     }
 
     @Test
@@ -69,8 +72,10 @@ public class BetQuestionControllerTest {
     }
 
     public static String asJsonString(final Object obj) {
+        ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
+
         try {
-            return new ObjectMapper().writeValueAsString(obj);
+            return mapper.writeValueAsString(obj);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

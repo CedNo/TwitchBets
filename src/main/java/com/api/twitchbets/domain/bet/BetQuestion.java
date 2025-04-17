@@ -1,5 +1,6 @@
 package com.api.twitchbets.domain.bet;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,11 +13,13 @@ public class BetQuestion {
     private final UUID id;
     private final String question;
     private final List<BetOption> options;
+    private final LocalDateTime endTime;
 
-    public BetQuestion(UUID id, String question, List<BetOption> options) {
+    public BetQuestion(UUID id, String question, List<BetOption> options, LocalDateTime endTime) {
         this.id = id;
         this.question = question;
         this.options = options;
+        this.endTime = endTime;
     }
 
     public UUID getId() {
@@ -29,6 +32,10 @@ public class BetQuestion {
 
     public List<BetOption> getOptions() {
         return options;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
     }
 
     public Map<UUID, Float> getCurrentOddsOfOptions() {

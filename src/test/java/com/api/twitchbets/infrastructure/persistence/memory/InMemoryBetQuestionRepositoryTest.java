@@ -1,5 +1,6 @@
 package com.api.twitchbets.infrastructure.persistence.memory;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -65,7 +66,7 @@ class InMemoryBetQuestionRepositoryTest {
     @Test
     void givenBetQuestionAdded_whenGetBetQuestion_thenReturnsCorrespondingBetQuestion() {
         UUID id = UUID.randomUUID();
-        BetQuestion expectedBetQuestion = new BetQuestion(id, "question", new ArrayList<>());
+        BetQuestion expectedBetQuestion = new BetQuestion(id, "question", new ArrayList<>(), LocalDateTime.now());
         repository.addBetQuestion(expectedBetQuestion);
 
         BetQuestion returnedBetQuestion = repository.getBetQuestion(id);
@@ -76,10 +77,10 @@ class InMemoryBetQuestionRepositoryTest {
     @Test
     void givenBetQuestionAdded_whenUpdateBetQuestion_thenRepositoryContainsUpdatedBetQuestion() {
         UUID id = UUID.randomUUID();
-        BetQuestion betQuestion = new BetQuestion(id, "question", new ArrayList<>());
+        BetQuestion betQuestion = new BetQuestion(id, "question", new ArrayList<>(), LocalDateTime.now());
         repository.addBetQuestion(betQuestion);
 
-        BetQuestion updatedBetQuestion = new BetQuestion(id, "question", new ArrayList<>());
+        BetQuestion updatedBetQuestion = new BetQuestion(id, "question", new ArrayList<>(), LocalDateTime.now());
         repository.updateBetQuestion(updatedBetQuestion);
 
         List<BetQuestion> returnedList = repository.getBetQuestions();

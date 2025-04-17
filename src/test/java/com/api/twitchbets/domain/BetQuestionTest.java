@@ -46,10 +46,11 @@ class BetQuestionTest {
         bets3.add(new Bet(UUID.randomUUID(), "user3", 0.5f, LocalDateTime.now()));
         thirdBetOption = new BetOption(UUID.randomUUID(), VALID_OPTION3, bets3);
         List<BetOption> betOptions = new ArrayList<>();
+        LocalDateTime endTime = LocalDateTime.now();
         betOptions.add(firstBetOption);
         betOptions.add(secondBetOption);
         betOptions.add(thirdBetOption);
-        betQuestion = betQuestionFactory.createBetQuestion(question, betOptions);
+        betQuestion = betQuestionFactory.createBetQuestion(question, betOptions, endTime);
     }
 
     @Test
@@ -108,7 +109,7 @@ class BetQuestionTest {
         BetOption betOption = mock();
         UUID optionId = UUID.randomUUID();
         when(betOption.getId()).thenReturn(optionId);
-        BetQuestion betQuestion1 = new BetQuestion(UUID.randomUUID(), "Question?", List.of(betOption));
+        BetQuestion betQuestion1 = new BetQuestion(UUID.randomUUID(), "Question?", List.of(betOption), LocalDateTime.now());
         Bet bet = mock();
 
         betQuestion1.placeBet(optionId, bet);

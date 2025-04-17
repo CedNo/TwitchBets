@@ -1,5 +1,6 @@
 package com.api.twitchbets.application;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -37,6 +38,7 @@ class BetServiceTest {
 
     final String VALID_QUESTION = "Question";
     final List<String> VALID_OPTIONS = new ArrayList<>();
+    final LocalDateTime VALID_END_TIME = LocalDateTime.now();
 
     @Autowired
     private BetService betService;
@@ -56,13 +58,13 @@ class BetServiceTest {
     @Test
     void whenCreateBetQuestion_thenCreateAndSaveNewBetQuestion() {
         when(betOptionFactory.createBetOptions(VALID_OPTIONS)).thenReturn(betOptions);
-        when(betQuestionFactory.createBetQuestion(VALID_QUESTION, betOptions)).thenReturn(betQuestion);
+        when(betQuestionFactory.createBetQuestion(VALID_QUESTION, betOptions, VALID_END_TIME)).thenReturn(betQuestion);
 
-        betService.createBetQuestion(VALID_QUESTION, VALID_OPTIONS);
+        betService.createBetQuestion(VALID_QUESTION, VALID_OPTIONS, VALID_END_TIME);
 
         InOrder inOrder = inOrder(betOptionFactory, betQuestionFactory, betQuestionRepository);
         inOrder.verify(betOptionFactory).createBetOptions(VALID_OPTIONS);
-        inOrder.verify(betQuestionFactory).createBetQuestion(VALID_QUESTION, betOptions);
+        inOrder.verify(betQuestionFactory).createBetQuestion(VALID_QUESTION, betOptions, VALID_END_TIME);
         inOrder.verify(betQuestionRepository).addBetQuestion(betQuestion);
     }
 
@@ -110,9 +112,9 @@ class BetServiceTest {
         when(betQuestionRepository.getBetQuestion(INVALID_BET_QUESTION_ID)).thenThrow(new BetQuestionNotFoundException(INVALID_BET_QUESTION_ID));
 
         assertThrows(
-            BetQuestionNotFoundException.class, () -> {
-            betService.checkIfCanPlaceBet(INVALID_BET_QUESTION_ID, VALID_BET_OPTION_ID);
-        });
+            BetQuestionNotFoundException.class, () ->
+            betService.checkIfCanPlaceBet(INVALID_BET_QUESTION_ID, VALID_BET_OPTION_ID)
+        );
 
         verify(betQuestionRepository).getBetQuestion(INVALID_BET_QUESTION_ID);
     }
@@ -125,9 +127,9 @@ class BetServiceTest {
         when(betQuestion.hasOption(INVALID_BET_OPTION_ID)).thenReturn(false);
 
         assertThrows(
-            BetOptionNotFoundException.class, () -> {
-            betService.checkIfCanPlaceBet(VALID_BET_QUESTION_ID, INVALID_BET_OPTION_ID);
-        });
+            BetOptionNotFoundException.class, () ->
+            betService.checkIfCanPlaceBet(VALID_BET_QUESTION_ID, INVALID_BET_OPTION_ID)
+        );
 
         verify(betQuestionRepository).getBetQuestion(VALID_BET_QUESTION_ID);
         verify(betQuestion).hasOption(INVALID_BET_OPTION_ID);
