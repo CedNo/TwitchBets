@@ -13,7 +13,14 @@ It is built using Spring Boot.
 
     curl --location 'http://localhost:8181/bets/questions' \
         --header 'Content-Type: application/json' \
-        --data-raw '{"question": "Will @xQc stream today? (02/16/2025)","options": ["Yes","No"]}'
+        --data-raw '{
+            "question": "Will @xQc stream today? (02/16/2025)",
+            "options": [
+                "Yes",
+                "No"
+            ],
+            "endTime": "2025-06-11 18:04:56"
+        }'
 
 ### Response
 
@@ -118,10 +125,10 @@ It is built using Spring Boot.
     curl --location 'http://localhost:8181/bets' \
     --header 'Content-Type: application/json' \
     --data '{
-    "username": "user1",
-    "amount": 10.0,
-    "betQuestionId": "1c2ab561-37b2-44e9-9979-ae685f5d6958",
-    "betOptionId": "153dfe05-6f92-4751-8cad-5f210701b9ae"
+        "username": "user1",
+        "amount": 10.0,
+        "betQuestionId": "1c2ab561-37b2-44e9-9979-ae685f5d6958",
+        "betOptionId": "153dfe05-6f92-4751-8cad-5f210701b9ae"
     }'
 
 ### Response
