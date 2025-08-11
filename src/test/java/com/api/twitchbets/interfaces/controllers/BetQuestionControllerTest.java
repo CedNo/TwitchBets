@@ -71,6 +71,39 @@ public class BetQuestionControllerTest {
         verify(betQuestionResponseMapper).toResponse(any());
     }
 
+    @Test
+    void givenInvalidQuestion_whenCreateBetQuestion_thenBadRequest() throws Exception {
+        AddBetQuestionRequest invalidRequest = new AddBetQuestionRequest("", new ArrayList<>(), LocalDateTime.now());
+
+        mvc.perform(MockMvcRequestBuilders.post("/bets/questions")
+            .content(asJsonString(invalidRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void givenInvalidOptions_whenCreateBetQuestion_thenBadRequest() throws Exception {
+        AddBetQuestionRequest invalidRequest = new AddBetQuestionRequest("Question", null, LocalDateTime.now());
+
+        mvc.perform(MockMvcRequestBuilders.post("/bets/questions")
+                .content(asJsonString(invalidRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void givenInvalidEndTime_whenCreateBetQuestion_thenBadRequest() throws Exception {
+        AddBetQuestionRequest invalidRequest = new AddBetQuestionRequest("Question", new ArrayList<>(), null);
+
+        mvc.perform(MockMvcRequestBuilders.post("/bets/questions")
+                .content(asJsonString(invalidRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
     public static String asJsonString(final Object obj) {
         ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
