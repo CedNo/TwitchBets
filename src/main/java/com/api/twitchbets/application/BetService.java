@@ -1,5 +1,6 @@
 package com.api.twitchbets.application;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -23,18 +24,21 @@ public class BetService {
     private final BetQuestionFactory betQuestionFactory;
     private final BetOptionFactory betOptionFactory;
     private final BetFactory betFactory;
+    private final Clock clock;
 
     @Autowired
     public BetService(
         BetQuestionRepository betQuestionRepository,
         BetQuestionFactory betQuestionFactory,
         BetOptionFactory betOptionFactory,
-        BetFactory betFactory
+        BetFactory betFactory,
+        Clock clock
     ) {
         this.betQuestionRepository = betQuestionRepository;
         this.betQuestionFactory = betQuestionFactory;
         this.betOptionFactory = betOptionFactory;
         this.betFactory = betFactory;
+        this.clock = clock;
     }
 
     public UUID createBetQuestion(String question, List<String> options, LocalDateTime endTime) {
@@ -66,5 +70,10 @@ public class BetService {
         betQuestion.placeBet(betOptionId, bet);
 
         betQuestionRepository.updateBetQuestion(betQuestion);
+    }
+    
+    public List<BetQuestion> getEndingBetQuestions(int amount) {
+        List<BetQuestion> endingBetQuestions = betQuestionRepository.getEndingBetQuestions(amount, clock);
+        return endingBetQuestions;
     }
 }

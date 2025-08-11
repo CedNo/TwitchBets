@@ -71,6 +71,61 @@ public class BetQuestionControllerTest {
         verify(betQuestionResponseMapper).toResponse(any());
     }
 
+    @Test
+    void givenInvalidQuestion_whenCreateBetQuestion_thenBadRequest() throws Exception {
+        AddBetQuestionRequest invalidRequest = new AddBetQuestionRequest("", new ArrayList<>(), LocalDateTime.now());
+
+        mvc.perform(MockMvcRequestBuilders.post("/bets/questions")
+            .content(asJsonString(invalidRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void givenInvalidOptions_whenCreateBetQuestion_thenBadRequest() throws Exception {
+        AddBetQuestionRequest invalidRequest = new AddBetQuestionRequest("Question", null, LocalDateTime.now());
+
+        mvc.perform(MockMvcRequestBuilders.post("/bets/questions")
+                .content(asJsonString(invalidRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void givenInvalidEndTime_whenCreateBetQuestion_thenBadRequest() throws Exception {
+        AddBetQuestionRequest invalidRequest = new AddBetQuestionRequest("Question", new ArrayList<>(), null);
+
+        mvc.perform(MockMvcRequestBuilders.post("/bets/questions")
+                .content(asJsonString(invalidRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void givenInvalidAmount_whenGetEndingBetQuestions_thenBadRequest() throws Exception {
+        int invalidAmount = 0;
+
+        mvc.perform(MockMvcRequestBuilders.get("/bets/questions/ending")
+                .param("amount", String.valueOf(invalidAmount))
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void givenValidAmount_whenGetEndingBetQuestions_thenBadRequest() throws Exception {
+        int validAmount = 1;
+
+        mvc.perform(MockMvcRequestBuilders.get("/bets/questions/ending")
+                .param("amount", String.valueOf(validAmount))
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
+
+        verify(betService).getEndingBetQuestions(validAmount);
+    }
+
     public static String asJsonString(final Object obj) {
         ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
 

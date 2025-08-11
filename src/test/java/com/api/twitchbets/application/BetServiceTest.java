@@ -1,5 +1,6 @@
 package com.api.twitchbets.application;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -133,5 +134,18 @@ class BetServiceTest {
 
         verify(betQuestionRepository).getBetQuestion(VALID_BET_QUESTION_ID);
         verify(betQuestion).hasOption(INVALID_BET_OPTION_ID);
+    }
+
+    @Test
+    void givenAmount_whenGetEndingBetQuestions_thenReturnEndingBetQuestions() {
+        int amount = 5;
+        Clock clock = Clock.systemUTC();
+        List<BetQuestion> endingBetQuestions = new ArrayList<>();
+        when(betQuestionRepository.getEndingBetQuestions(amount, clock)).thenReturn(endingBetQuestions);
+
+        List<BetQuestion> result = betService.getEndingBetQuestions(amount);
+
+        verify(betQuestionRepository).getEndingBetQuestions(amount, clock);
+        assert(result.equals(endingBetQuestions));
     }
 }
