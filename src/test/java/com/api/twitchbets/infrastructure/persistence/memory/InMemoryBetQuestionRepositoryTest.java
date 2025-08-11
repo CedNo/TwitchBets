@@ -1,5 +1,6 @@
 package com.api.twitchbets.infrastructure.persistence.memory;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,5 +87,35 @@ class InMemoryBetQuestionRepositoryTest {
         List<BetQuestion> returnedList = repository.getBetQuestions();
 
         assertEquals(updatedBetQuestion, returnedList.get(0));
+    }
+
+    @Test
+    void givenAmount_whenGetEndingBetQuestions_thenReturnsListOfEndingBetQuestions() {
+        Clock clock = Clock.systemUTC();
+        BetQuestion betQuestion1 = new BetQuestion(UUID.randomUUID(), "question1", new ArrayList<>(), LocalDateTime.now(clock).plusMinutes(10));
+        BetQuestion betQuestion2 = new BetQuestion(UUID.randomUUID(), "question2", new ArrayList<>(), LocalDateTime.now(clock).plusMinutes(20));
+        BetQuestion betQuestion3 = new BetQuestion(UUID.randomUUID(), "question3", new ArrayList<>(), LocalDateTime.now(clock).plusMinutes(30));
+        repository.addBetQuestion(betQuestion1);
+        repository.addBetQuestion(betQuestion3);
+        repository.addBetQuestion(betQuestion2);
+
+        List<BetQuestion> endingBetQuestions = repository.getEndingBetQuestions(2, clock);
+
+        assertEquals(2, endingBetQuestions.size());
+        assertEquals(betQuestion1, endingBetQuestions.get(0));
+        assertEquals(betQuestion2, endingBetQuestions.get(1));
+    }
+
+    @Test
+    void givenNegativeAmount_whenGetEndingBetQuestions_thenReturnsEmptyList() {
+        Clock clock = Clock.systemUTC();
+        BetQuestion betQuestion1 = new BetQuestion(UUID.randomUUID(), "question1", new ArrayList<>(), LocalDateTime.now(clock).plusMinutes(10));
+        BetQuestion betQuestion2 = new BetQuestion(UUID.randomUUID(), "question2", new ArrayList<>(), LocalDateTime.now(clock).plusMinutes(20));
+        repository.addBetQuestion(betQuestion1);
+        repository.addBetQuestion(betQuestion2);
+
+        List<BetQuestion> endingBetQuestions = repository.getEndingBetQuestions(-1, clock);
+
+        assertTrue(endingBetQuestions.isEmpty());
     }
 }

@@ -104,6 +104,28 @@ public class BetQuestionControllerTest {
             .andExpect(status().isBadRequest());
     }
 
+    @Test
+    void givenInvalidAmount_whenGetEndingBetQuestions_thenBadRequest() throws Exception {
+        int invalidAmount = 0;
+
+        mvc.perform(MockMvcRequestBuilders.get("/bets/questions/ending")
+                .param("amount", String.valueOf(invalidAmount))
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void givenValidAmount_whenGetEndingBetQuestions_thenBadRequest() throws Exception {
+        int validAmount = 1;
+
+        mvc.perform(MockMvcRequestBuilders.get("/bets/questions/ending")
+                .param("amount", String.valueOf(validAmount))
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
+
+        verify(betService).getEndingBetQuestions(validAmount);
+    }
+
     public static String asJsonString(final Object obj) {
         ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
 

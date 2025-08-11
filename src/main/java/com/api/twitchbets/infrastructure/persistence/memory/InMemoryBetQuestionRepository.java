@@ -1,6 +1,9 @@
 package com.api.twitchbets.infrastructure.persistence.memory;
 
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -49,5 +52,23 @@ public class InMemoryBetQuestionRepository implements BetQuestionRepository {
                 return;
             }
         }
+    }
+
+    @Override
+    public List<BetQuestion> getEndingBetQuestions(int amount, Clock clock) {
+        List<BetQuestion> endingBetQuestions = new ArrayList<>();
+
+        betQuestions.sort(Comparator.comparing(BetQuestion::getEndTime));
+
+        for (BetQuestion betQuestion : betQuestions) {
+            if (endingBetQuestions.size() >= amount) {
+                break;
+            }
+            if (betQuestion.getEndTime().isAfter(LocalDateTime.now(clock))) {
+                endingBetQuestions.add(betQuestion);
+            }
+        }
+
+        return endingBetQuestions;
     }
 }
