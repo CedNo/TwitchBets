@@ -77,6 +77,74 @@ It is built using Spring Boot.
         }
     }
 
+## Get ending bet questions
+
+### Request
+
+`GET /bets/questions/ending?amount={amount}`
+
+    curl --location 'http://localhost:8181/bets/questions/ending?amount=2'
+
+### Response
+
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+    Transfer-Encoding: chunked
+    Date: Mon, 11 Aug 2025 21:54:06 GMT
+    Keep-Alive: timeout=60
+    Connection: keep-alive
+
+    [
+        {
+            "id": "ce403328-25c6-4741-af80-c195fc0a05cf",
+            "question": "Will @xQc stream today? (08/18/2025)",
+            "options": [
+                {
+                    "id": "a90ae2fe-9e09-4303-ae35-d0f4c8737547",
+                    "option": "Yes",
+                    "bets": [],
+                    "currentAmount": 0.0
+                },
+                {
+                    "id": "e5c4fe73-a50d-4a38-9e98-6e72b073c4af",
+                    "option": "No",
+                    "bets": [],
+                    "currentAmount": 0.0
+                }
+            ],
+            "endTime": "2025-08-19T00:00:00",
+            "currentBettedAmount": 0.0,
+            "currentOddsOfOptions": {
+                "e5c4fe73-a50d-4a38-9e98-6e72b073c4af": "NaN",
+                "a90ae2fe-9e09-4303-ae35-d0f4c8737547": "NaN"
+            }
+        },
+        {
+            "id": "e2e63a4f-f837-4412-ab18-54329340bcb7",
+            "question": "Will @xQc stream today? (08/19/2025)",
+            "options": [
+                {
+                    "id": "9c189002-5228-4e2c-adbd-47f0fffa56d4",
+                    "option": "Yes",
+                    "bets": [],
+                    "currentAmount": 0.0
+                },
+                {
+                    "id": "5719b8f4-6d8d-48c4-be22-ee107060d394",
+                    "option": "No",
+                    "bets": [],
+                    "currentAmount": 0.0
+                }
+            ],
+            "endTime": "2025-08-20T00:00:00",
+            "currentBettedAmount": 0.0,
+            "currentOddsOfOptions": {
+                "5719b8f4-6d8d-48c4-be22-ee107060d394": "NaN",
+                "9c189002-5228-4e2c-adbd-47f0fffa56d4": "NaN"
+            }
+        }
+    ]
+
 ## Create a user
 
 ### Request
