@@ -115,7 +115,7 @@ public class BetQuestionControllerTest {
     }
 
     @Test
-    void givenValidAmount_whenGetEndingBetQuestions_thenBadRequest() throws Exception {
+    void givenValidAmount_whenGetEndingBetQuestions_thenStatusIsOk() throws Exception {
         int validAmount = 1;
 
         mvc.perform(MockMvcRequestBuilders.get("/bets/questions/ending")
