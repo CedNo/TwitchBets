@@ -45,7 +45,11 @@ public class BetQuestion {
         for(BetOption option : options) {
             float amount = option.getCurrentAmount();
 
-            float odd = amount / totalBettedAmount;
+            float odd = 0;
+
+            if(totalBettedAmount != 0) {
+                odd = amount / totalBettedAmount;
+            }
 
             oddsOfOptions.put(option.getId(), odd);
         }
