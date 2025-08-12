@@ -87,6 +87,28 @@ class BetQuestionTest {
     }
 
     @Test
+    void givenNoBetsWerePlaced_whenGetCurrentOddsOfOptions_thenReturnZeroOddsForAllOptions() {
+        String question = "Question?";
+        final String VALID_OPTION1 = "Yes";
+        List<Bet> bets1 = new ArrayList<>();
+        firstBetOption = new BetOption(UUID.randomUUID(), VALID_OPTION1, bets1);
+        final String VALID_OPTION2 = "No";
+        List<Bet> bets2 = new ArrayList<>();
+        secondBetOption = new BetOption(UUID.randomUUID(), VALID_OPTION2, bets2);
+        List<BetOption> betOptions = new ArrayList<>();
+        LocalDateTime endTime = LocalDateTime.now();
+        betOptions.add(firstBetOption);
+        betOptions.add(secondBetOption);
+        BetQuestion betQuestionWithNoBets = betQuestionFactory.createBetQuestion(question, betOptions, endTime);
+
+        Map<UUID, Float> returnedMap = betQuestionWithNoBets.getCurrentOddsOfOptions();
+
+        for(Float odd : returnedMap.values()) {
+            assertEquals(0f, odd);
+        }
+    }
+
+    @Test
     void givenValidOptionId_whenHasOption_thenReturnTrue() {
         UUID validOptionId = firstBetOption.getId();
 

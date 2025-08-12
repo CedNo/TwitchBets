@@ -70,8 +70,8 @@ It is built using Spring Boot.
                 }
             ],
             "currentOddsOfOptions": {
-                "757c3f15-c78e-4179-a3d0-8f928ac8f618": "NaN",
-                "57f415d7-97de-42e5-bae5-c5fa4cbde505": "NaN"
+                "757c3f15-c78e-4179-a3d0-8f928ac8f618": 0.0,
+                "57f415d7-97de-42e5-bae5-c5fa4cbde505": 0.0
             },
             "currentBettedAmount": 0.0
         }
@@ -115,8 +115,8 @@ It is built using Spring Boot.
             "endTime": "2025-08-19T00:00:00",
             "currentBettedAmount": 0.0,
             "currentOddsOfOptions": {
-                "e5c4fe73-a50d-4a38-9e98-6e72b073c4af": "NaN",
-                "a90ae2fe-9e09-4303-ae35-d0f4c8737547": "NaN"
+                "e5c4fe73-a50d-4a38-9e98-6e72b073c4af": 0.0,
+                "a90ae2fe-9e09-4303-ae35-d0f4c8737547": 0.0
             }
         },
         {
@@ -139,8 +139,8 @@ It is built using Spring Boot.
             "endTime": "2025-08-20T00:00:00",
             "currentBettedAmount": 0.0,
             "currentOddsOfOptions": {
-                "5719b8f4-6d8d-48c4-be22-ee107060d394": "NaN",
-                "9c189002-5228-4e2c-adbd-47f0fffa56d4": "NaN"
+                "5719b8f4-6d8d-48c4-be22-ee107060d394": 0.0,
+                "9c189002-5228-4e2c-adbd-47f0fffa56d4": 0.0
             }
         }
     ]
