@@ -62,9 +62,11 @@ It is built using Spring Boot.
                     "bets": [
                         {
                             "amount": 100.0
+                            "createdAt": "2025-08-13T22:34:02.2322474"
                         },
                         {
                             "amount": 100.0
+                            "createdAt": "2025-08-13T22:34:23.7552183"
                         }
                     ],
                     "odds": 0.6666667,
@@ -76,6 +78,7 @@ It is built using Spring Boot.
                     "bets": [
                         {
                             "amount": 100.0
+                            "createdAt": "2025-08-13T22:34:40.0367351"
                         }
                     ],
                     "odds": 0.33333334,
@@ -140,9 +143,11 @@ It is built using Spring Boot.
                         "bets": [
                             {
                                 "amount": 100.0
+                                "createdAt": "2025-08-13T22:34:02.2322474"
                             },
                             {
                                 "amount": 100.0
+                                "createdAt": "2025-08-13T22:34:23.7552183"
                             }
                         ],
                         "odds": 0.6666667,
@@ -154,6 +159,7 @@ It is built using Spring Boot.
                         "bets": [
                             {
                                 "amount": 100.0
+                                "createdAt": "2025-08-13T22:34:40.0367351"
                             }
                         ],
                         "odds": 0.33333334,

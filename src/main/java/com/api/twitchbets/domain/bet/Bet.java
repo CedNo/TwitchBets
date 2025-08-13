@@ -21,4 +21,8 @@ public class Bet {
         return amount;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
 }
