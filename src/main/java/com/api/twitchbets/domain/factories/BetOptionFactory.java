@@ -12,7 +12,7 @@ import com.api.twitchbets.domain.bet.BetOption;
 public class BetOptionFactory {
 
     private BetOption createBetOption(String option) {
-        return new BetOption(UUID.randomUUID(), option, new ArrayList<>());
+        return new BetOption(UUID.randomUUID(), option, new ArrayList<>(), 0f);
     }
 
     public List<BetOption> createBetOptions(List<String> options) {

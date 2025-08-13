@@ -1,9 +1,7 @@
 package com.api.twitchbets.domain.bet;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import com.api.twitchbets.domain.exceptions.BetOptionNotFoundException;
@@ -38,25 +36,6 @@ public class BetQuestion {
         return endTime;
     }
 
-    public Map<UUID, Float> getCurrentOddsOfOptions() {
-        Map<UUID, Float> oddsOfOptions = new HashMap<>();
-        float totalBettedAmount = getCurrentBettedAmount();
-
-        for(BetOption option : options) {
-            float amount = option.getCurrentAmount();
-
-            float odd = 0;
-
-            if(totalBettedAmount != 0) {
-                odd = amount / totalBettedAmount;
-            }
-
-            oddsOfOptions.put(option.getId(), odd);
-        }
-
-        return oddsOfOptions;
-    }
-
     public float getCurrentBettedAmount() {
         float totalAmount = 0;
 
@@ -81,10 +60,18 @@ public class BetQuestion {
         for (BetOption option : options) {
             if (option.getId().equals(optionId)) {
                 option.placeBet(bet);
+                updateOddsOfOptions();
                 return;
             }
         }
 
         throw new BetOptionNotFoundException(optionId);
+    }
+
+    private void updateOddsOfOptions() {
+        float totalBettedAmount = getCurrentBettedAmount();
+        for (BetOption option : options) {
+            option.updateOdds(totalBettedAmount);
+        }
     }
 }

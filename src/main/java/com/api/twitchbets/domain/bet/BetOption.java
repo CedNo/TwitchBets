@@ -8,11 +8,13 @@ public class BetOption {
     private final UUID id;
     private final String option;
     private final List<Bet> bets;
+    private float odds;
 
-    public BetOption(UUID id, String option, List<Bet> bets) {
+    public BetOption(UUID id, String option, List<Bet> bets, float odds) {
         this.id = id;
         this.option = option;
         this.bets = bets;
+        this.odds = odds;
     }
 
     public UUID getId() {
@@ -27,6 +29,10 @@ public class BetOption {
         return bets;
     }
 
+    public float getOdds() {
+        return odds;
+    }
+
     public float getCurrentAmount() {
         float totalAmount = 0;
 
@@ -35,6 +41,10 @@ public class BetOption {
         }
 
         return totalAmount;
+    }
+
+    public void updateOdds(float bettedAmountOfQuestion) {
+        odds = getCurrentAmount() / bettedAmountOfQuestion;
     }
 
     public void placeBet(Bet bet) {
