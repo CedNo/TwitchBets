@@ -53,27 +53,37 @@ It is built using Spring Boot.
 
     {
         "betQuestion": {
-            "id": "e4585195-6185-4522-a118-1a21a99dd9a7",
-            "question": "Will @xQc stream today? (02/16/2025)",
+            "id": "2bf9bc80-3cd5-4869-9123-e92f2b136f8e",
+            "question": "Will @xQc stream today? (08/19/2025)",
             "options": [
                 {
-                    "id": "757c3f15-c78e-4179-a3d0-8f928ac8f618",
+                    "id": "fda37c03-a3cb-492c-bc07-2c344fb38f1e",
                     "option": "Yes",
-                    "bets": [],
-                    "currentAmount": 0.0
+                    "bets": [
+                        {
+                            "amount": 100.0
+                        },
+                        {
+                            "amount": 100.0
+                        }
+                    ],
+                    "odds": 0.6666667,
+                    "currentAmount": 200.0
                 },
                 {
-                    "id": "57f415d7-97de-42e5-bae5-c5fa4cbde505",
+                    "id": "5334ced4-d28e-44e0-8c0f-236ace12da46",
                     "option": "No",
-                    "bets": [],
-                    "currentAmount": 0.0
+                    "bets": [
+                        {
+                            "amount": 100.0
+                        }
+                    ],
+                    "odds": 0.33333334,
+                    "currentAmount": 100.0
                 }
             ],
-            "currentOddsOfOptions": {
-                "757c3f15-c78e-4179-a3d0-8f928ac8f618": 0.0,
-                "57f415d7-97de-42e5-bae5-c5fa4cbde505": 0.0
-            },
-            "currentBettedAmount": 0.0
+            "endTime": "2025-08-22T00:00:00",
+            "currentBettedAmount": 300.0
         }
     }
 
@@ -96,51 +106,62 @@ It is built using Spring Boot.
 
     [
         {
-            "id": "ce403328-25c6-4741-af80-c195fc0a05cf",
-            "question": "Will @xQc stream today? (08/18/2025)",
-            "options": [
-                {
-                    "id": "a90ae2fe-9e09-4303-ae35-d0f4c8737547",
-                    "option": "Yes",
-                    "bets": [],
-                    "currentAmount": 0.0
-                },
-                {
-                    "id": "e5c4fe73-a50d-4a38-9e98-6e72b073c4af",
-                    "option": "No",
-                    "bets": [],
-                    "currentAmount": 0.0
-                }
-            ],
-            "endTime": "2025-08-19T00:00:00",
-            "currentBettedAmount": 0.0,
-            "currentOddsOfOptions": {
-                "e5c4fe73-a50d-4a38-9e98-6e72b073c4af": 0.0,
-                "a90ae2fe-9e09-4303-ae35-d0f4c8737547": 0.0
+            "betQuestion": {
+                "id": "c9ed83c9-8667-4261-987a-3ffdd9f1ede2",
+                "question": "Will @xQc stream today? (08/19/2025)",
+                "options": [
+                    {
+                        "id": "add0506f-67f5-4c6b-b326-49d22246b5d0",
+                        "option": "Yes",
+                        "bets": [],
+                        "odds": 0.0,
+                        "currentAmount": 0.0
+                    },
+                    {
+                        "id": "b06f7457-c855-45b4-bc59-2d9a89ae1bfe",
+                        "option": "No",
+                        "bets": [],
+                        "odds": 0.0,
+                        "currentAmount": 0.0
+                    }
+                ],
+                "endTime": "2025-08-22T00:00:00",
+                "currentBettedAmount": 0.0
             }
         },
         {
-            "id": "e2e63a4f-f837-4412-ab18-54329340bcb7",
-            "question": "Will @xQc stream today? (08/19/2025)",
-            "options": [
-                {
-                    "id": "9c189002-5228-4e2c-adbd-47f0fffa56d4",
-                    "option": "Yes",
-                    "bets": [],
-                    "currentAmount": 0.0
-                },
-                {
-                    "id": "5719b8f4-6d8d-48c4-be22-ee107060d394",
-                    "option": "No",
-                    "bets": [],
-                    "currentAmount": 0.0
-                }
-            ],
-            "endTime": "2025-08-20T00:00:00",
-            "currentBettedAmount": 0.0,
-            "currentOddsOfOptions": {
-                "5719b8f4-6d8d-48c4-be22-ee107060d394": 0.0,
-                "9c189002-5228-4e2c-adbd-47f0fffa56d4": 0.0
+            "betQuestion": {
+                "id": "2bf9bc80-3cd5-4869-9123-e92f2b136f8e",
+                "question": "Will @xQc stream today? (08/19/2025)",
+                "options": [
+                    {
+                        "id": "fda37c03-a3cb-492c-bc07-2c344fb38f1e",
+                        "option": "Yes",
+                        "bets": [
+                            {
+                                "amount": 100.0
+                            },
+                            {
+                                "amount": 100.0
+                            }
+                        ],
+                        "odds": 0.6666667,
+                        "currentAmount": 200.0
+                    },
+                    {
+                        "id": "5334ced4-d28e-44e0-8c0f-236ace12da46",
+                        "option": "No",
+                        "bets": [
+                            {
+                                "amount": 100.0
+                            }
+                        ],
+                        "odds": 0.33333334,
+                        "currentAmount": 100.0
+                    }
+                ],
+                "endTime": "2025-08-22T00:00:00",
+                "currentBettedAmount": 300.0
             }
         }
     ]
