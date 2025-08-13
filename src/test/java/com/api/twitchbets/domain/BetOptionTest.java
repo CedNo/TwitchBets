@@ -21,7 +21,7 @@ class BetOptionTest {
         bets.add(new Bet(UUID.randomUUID(), "user2", 130f, LocalDateTime.now()));
         bets.add(new Bet(UUID.randomUUID(), "user3", 0.43f, LocalDateTime.now()));
         final String VALID_OPTION = "Yes";
-        BetOption betOption = new BetOption(UUID.randomUUID(), VALID_OPTION, bets);
+        BetOption betOption = new BetOption(UUID.randomUUID(), VALID_OPTION, bets, 0f);
 
         float returnedAmount = betOption.getCurrentAmount();
 
@@ -32,7 +32,7 @@ class BetOptionTest {
     void givenNoBetsInOption_whenGetCurrentAmount_thenReturnZero() {
         List<Bet> bets = new ArrayList<>();
         final String VALID_OPTION = "Yes";
-        BetOption betOption = new BetOption(UUID.randomUUID(), VALID_OPTION, bets);
+        BetOption betOption = new BetOption(UUID.randomUUID(), VALID_OPTION, bets, 0f);
 
         float returnedAmount = betOption.getCurrentAmount();
 
@@ -43,11 +43,25 @@ class BetOptionTest {
     void whenPlaceBet_thenAddBetToBets() {
         List<Bet> bets = new ArrayList<>();
         final String VALID_OPTION = "Yes";
-        BetOption betOption = new BetOption(UUID.randomUUID(), VALID_OPTION, bets);
+        BetOption betOption = new BetOption(UUID.randomUUID(), VALID_OPTION, bets, 0f);
         Bet newBet = new Bet(UUID.randomUUID(), "user1", 125f, LocalDateTime.now());
 
         betOption.placeBet(newBet);
 
         assertTrue(betOption.getBets().contains(newBet));
+    }
+
+    @Test
+    void whenUpdateOdds_thenCalculateOddsBasedOnCurrentAmount() {
+        List<Bet> bets = new ArrayList<>();
+        bets.add(new Bet(UUID.randomUUID(), "user1", 100f, LocalDateTime.now()));
+        bets.add(new Bet(UUID.randomUUID(), "user2", 200f, LocalDateTime.now()));
+        final String VALID_OPTION = "Yes";
+        BetOption betOption = new BetOption(UUID.randomUUID(), VALID_OPTION, bets, 0f);
+
+        float bettedAmountOfQuestion = 300f;
+        betOption.updateOdds(bettedAmountOfQuestion);
+
+        assertEquals(1f, betOption.getOdds());
     }
 }
