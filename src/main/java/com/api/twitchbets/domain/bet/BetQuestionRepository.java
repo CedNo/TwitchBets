@@ -15,4 +15,6 @@ public interface BetQuestionRepository {
     void updateBetQuestion(BetQuestion betQuestion);
 
     List<BetQuestion> getEndingBetQuestions(int amount, Clock clock);
+
+    List<Bet> getBetsByUsername(String username);
 }

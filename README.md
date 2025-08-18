@@ -52,42 +52,43 @@ It is built using Spring Boot.
     Connection: keep-alive
 
     {
-        "betQuestion": {
-            "id": "2bf9bc80-3cd5-4869-9123-e92f2b136f8e",
-            "question": "Will @xQc stream today? (08/19/2025)",
-            "options": [
-                {
-                    "id": "fda37c03-a3cb-492c-bc07-2c344fb38f1e",
-                    "option": "Yes",
-                    "bets": [
-                        {
-                            "amount": 100.0
-                            "createdAt": "2025-08-13T22:34:02.2322474"
-                        },
-                        {
-                            "amount": 100.0
-                            "createdAt": "2025-08-13T22:34:23.7552183"
-                        }
-                    ],
-                    "odds": 0.6666667,
-                    "currentAmount": 200.0
-                },
-                {
-                    "id": "5334ced4-d28e-44e0-8c0f-236ace12da46",
-                    "option": "No",
-                    "bets": [
-                        {
-                            "amount": 100.0
-                            "createdAt": "2025-08-13T22:34:40.0367351"
-                        }
-                    ],
-                    "odds": 0.33333334,
-                    "currentAmount": 100.0
-                }
-            ],
-            "endTime": "2025-08-22T00:00:00",
-            "currentBettedAmount": 300.0
-        }
+        "id": "2bf9bc80-3cd5-4869-9123-e92f2b136f8e",
+        "question": "Will @xQc stream today? (08/19/2025)",
+        "options": [
+            {
+                "id": "fda37c03-a3cb-492c-bc07-2c344fb38f1e",
+                "option": "Yes",
+                "bets": [
+                    {
+                        "username": "Edgouille",
+                        "amount": 100.0,
+                        "createdAt": "2025-08-13T22:34:02.2322474"
+                    },
+                    {
+                        "username": "Edgouille",
+                        "amount": 100.0,
+                        "createdAt": "2025-08-13T22:34:23.7552183"
+                    }
+                ],
+                "odds": 0.6666667,
+                "currentAmount": 200.0
+            },
+            {
+                "id": "5334ced4-d28e-44e0-8c0f-236ace12da46",
+                "option": "No",
+                "bets": [
+                    {
+                        "username": "Edgouille",
+                        "amount": 100.0,
+                        "createdAt": "2025-08-13T22:34:40.0367351"
+                    }
+                ],
+                "odds": 0.33333334,
+                "currentAmount": 100.0
+            }
+        ],
+        "endTime": "2025-08-22T00:00:00",
+        "currentBettedAmount": 300.0
     }
 
 ## Get ending bet questions
@@ -109,66 +110,65 @@ It is built using Spring Boot.
 
     [
         {
-            "betQuestion": {
-                "id": "c9ed83c9-8667-4261-987a-3ffdd9f1ede2",
-                "question": "Will @xQc stream today? (08/19/2025)",
-                "options": [
-                    {
-                        "id": "add0506f-67f5-4c6b-b326-49d22246b5d0",
-                        "option": "Yes",
-                        "bets": [],
-                        "odds": 0.0,
-                        "currentAmount": 0.0
-                    },
-                    {
-                        "id": "b06f7457-c855-45b4-bc59-2d9a89ae1bfe",
-                        "option": "No",
-                        "bets": [],
-                        "odds": 0.0,
-                        "currentAmount": 0.0
-                    }
-                ],
-                "endTime": "2025-08-22T00:00:00",
-                "currentBettedAmount": 0.0
-            }
+            "id": "c9ed83c9-8667-4261-987a-3ffdd9f1ede2",
+            "question": "Will @xQc stream today? (08/19/2025)",
+            "options": [
+                {
+                    "id": "add0506f-67f5-4c6b-b326-49d22246b5d0",
+                    "option": "Yes",
+                    "bets": [],
+                    "odds": 0.0,
+                    "currentAmount": 0.0
+                },
+                {
+                    "id": "b06f7457-c855-45b4-bc59-2d9a89ae1bfe",
+                    "option": "No",
+                    "bets": [],
+                    "odds": 0.0,
+                    "currentAmount": 0.0
+                }
+            ],
+            "endTime": "2025-08-22T00:00:00",
+            "currentBettedAmount": 0.0
         },
         {
-            "betQuestion": {
-                "id": "2bf9bc80-3cd5-4869-9123-e92f2b136f8e",
-                "question": "Will @xQc stream today? (08/19/2025)",
-                "options": [
-                    {
-                        "id": "fda37c03-a3cb-492c-bc07-2c344fb38f1e",
-                        "option": "Yes",
-                        "bets": [
-                            {
-                                "amount": 100.0
-                                "createdAt": "2025-08-13T22:34:02.2322474"
-                            },
-                            {
-                                "amount": 100.0
-                                "createdAt": "2025-08-13T22:34:23.7552183"
-                            }
-                        ],
-                        "odds": 0.6666667,
-                        "currentAmount": 200.0
-                    },
-                    {
-                        "id": "5334ced4-d28e-44e0-8c0f-236ace12da46",
-                        "option": "No",
-                        "bets": [
-                            {
-                                "amount": 100.0
-                                "createdAt": "2025-08-13T22:34:40.0367351"
-                            }
-                        ],
-                        "odds": 0.33333334,
-                        "currentAmount": 100.0
-                    }
-                ],
-                "endTime": "2025-08-22T00:00:00",
-                "currentBettedAmount": 300.0
-            }
+            "id": "2bf9bc80-3cd5-4869-9123-e92f2b136f8e",
+            "question": "Will @xQc stream today? (08/19/2025)",
+            "options": [
+                {
+                    "id": "fda37c03-a3cb-492c-bc07-2c344fb38f1e",
+                    "option": "Yes",
+                    "bets": [
+                        {
+                            "username": "Edgouille",
+                            "amount": 100.0,
+                            "createdAt": "2025-08-13T22:34:02.2322474"
+                        },
+                        {
+                            "username": "Edgouille",
+                            "amount": 100.0,
+                            "createdAt": "2025-08-13T22:34:23.7552183"
+                        }
+                    ],
+                    "odds": 0.6666667,
+                    "currentAmount": 200.0
+                },
+                {
+                    "id": "5334ced4-d28e-44e0-8c0f-236ace12da46",
+                    "option": "No",
+                    "bets": [
+                        {
+                            "username": "Edgouille",
+                            "amount": 100.0,
+                            "createdAt": "2025-08-13T22:34:40.0367351"
+                        }
+                    ],
+                    "odds": 0.33333334,
+                    "currentAmount": 100.0
+                }
+            ],
+            "endTime": "2025-08-22T00:00:00",
+            "currentBettedAmount": 300.0
         }
     ]
 
@@ -207,8 +207,9 @@ It is built using Spring Boot.
     Keep-Alive: timeout=60
     Connection: keep-alive
 
-    "user": {
-        "username": "user1"
+    {
+        "username": "user1",
+        "balance": 1000.0
     }
 
 ## Place a bet
@@ -235,3 +236,33 @@ It is built using Spring Boot.
     Connection: keep-alive
 
     []
+
+## Get bet history of a user
+
+### Request
+
+    `GET /bets/{username}/history`
+
+    curl --location 'http://localhost:8181/bets/Edgouille/history'
+
+### Response
+
+    HTTP/1.1 200 Ok
+    Content-Type: application/json
+    Transfer-Encoding: chunked
+    Date: Sun, 17 Aug 2025 23:16:20 GMT
+    Keep-Alive: timeout=60
+    Connection: keep-alive
+
+    [
+        {
+            "username": "Edgouille",
+            "amount": 100.0,
+            "createdAt": "2025-08-17T23:14:41.7404879"
+        },
+        {
+            "username": "Edgouille",
+            "amount": 125.0,
+            "createdAt": "2025-08-17T23:14:51.4133776"
+        }
+    ]

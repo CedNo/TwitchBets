@@ -6,10 +6,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class UserResponse {
 
     @JsonProperty
-    public User user;
+    public final String username;
+    @JsonProperty
+    public final float balance;
 
     public UserResponse(User user) {
-        this.user = user;
+        this.username = user.getUsername();
+        this.balance = user.getBalance();
     }
 
 }
