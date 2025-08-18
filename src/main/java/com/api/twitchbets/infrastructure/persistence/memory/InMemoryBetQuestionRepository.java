@@ -9,6 +9,8 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Repository;
 
+import com.api.twitchbets.domain.bet.Bet;
+import com.api.twitchbets.domain.bet.BetOption;
 import com.api.twitchbets.domain.bet.BetQuestion;
 import com.api.twitchbets.domain.bet.BetQuestionRepository;
 import com.api.twitchbets.domain.exceptions.BetQuestionNotFoundException;
@@ -20,6 +22,10 @@ public class InMemoryBetQuestionRepository implements BetQuestionRepository {
 
     public InMemoryBetQuestionRepository() {
         betQuestions = new ArrayList<>();
+    }
+
+    public InMemoryBetQuestionRepository(List<BetQuestion> betQuestions) {
+        this.betQuestions = betQuestions;
     }
 
     @Override
@@ -70,5 +76,22 @@ public class InMemoryBetQuestionRepository implements BetQuestionRepository {
         }
 
         return endingBetQuestions;
+    }
+
+    @Override
+    public List<Bet> getBetsByUsername(String username) {
+        List<Bet> userBets = new ArrayList<>();
+
+        for (BetQuestion betQuestion : betQuestions) {
+            for (BetOption option : betQuestion.getOptions()) {
+                for (Bet bet : option.getBets()) {
+                    if (bet.getUsername().equals(username)) {
+                        userBets.add(bet);
+                    }
+                }
+            }
+        }
+
+        return userBets;
     }
 }

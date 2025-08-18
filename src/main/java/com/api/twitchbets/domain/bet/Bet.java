@@ -21,6 +21,10 @@ public class Bet {
         return amount;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }

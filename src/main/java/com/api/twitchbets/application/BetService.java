@@ -76,4 +76,9 @@ public class BetService {
         List<BetQuestion> endingBetQuestions = betQuestionRepository.getEndingBetQuestions(amount, clock);
         return endingBetQuestions;
     }
+
+    public List<Bet> getBetsByUsername(String username) {
+        List<Bet> bets = betQuestionRepository.getBetsByUsername(username);
+        return bets;
+    }
 }

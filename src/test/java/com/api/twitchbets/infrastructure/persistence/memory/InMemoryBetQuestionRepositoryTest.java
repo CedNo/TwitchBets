@@ -9,6 +9,8 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.api.twitchbets.domain.bet.Bet;
+import com.api.twitchbets.domain.bet.BetOption;
 import com.api.twitchbets.domain.bet.BetQuestion;
 import com.api.twitchbets.domain.exceptions.BetQuestionNotFoundException;
 
@@ -117,5 +119,22 @@ class InMemoryBetQuestionRepositoryTest {
         List<BetQuestion> endingBetQuestions = repository.getEndingBetQuestions(-1, clock);
 
         assertTrue(endingBetQuestions.isEmpty());
+    }
+
+    @Test
+    void givenAddedBets_whenGetBetsByUsername_thenReturnsBetsForUsername() {
+        String request_username = "user1";
+        String random_username = "user2";
+        Bet bet1 = new Bet(UUID.randomUUID(), request_username, 100, LocalDateTime.now());
+        Bet bet2 = new Bet(UUID.randomUUID(), random_username, 200, LocalDateTime.now());
+        BetOption betOption1 = new BetOption(UUID.randomUUID(), "Yes", List.of(bet1, bet2), 0);
+        BetQuestion betQuestion1 = new BetQuestion(UUID.randomUUID(), "question1", List.of(betOption1), LocalDateTime.now());
+        List<BetQuestion> betQuestions = List.of(betQuestion1);
+        InMemoryBetQuestionRepository betQuestionRepository = new InMemoryBetQuestionRepository(betQuestions);
+        List<Bet> expectedBets = List.of(bet1);
+
+        List<Bet> userBets = betQuestionRepository.getBetsByUsername(request_username);
+
+        assertEquals(expectedBets, userBets);
     }
 }

@@ -12,12 +12,7 @@ import com.api.twitchbets.interfaces.dto.responses.BetQuestionResponse;
 public class BetQuestionResponseMapper {
 
     public BetQuestionResponse toResponse(BetQuestion betQuestion) {
-        return new BetQuestionResponse(
-            betQuestion.getId(),
-            betQuestion.getQuestion(),
-            betQuestion.getOptions(),
-            betQuestion.getEndTime()
-        );
+        return new BetQuestionResponse(betQuestion);
     }
 
     public List<BetQuestionResponse> toResponseList(List<BetQuestion> betQuestions) {

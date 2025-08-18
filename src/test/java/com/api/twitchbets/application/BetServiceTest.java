@@ -148,4 +148,16 @@ class BetServiceTest {
         verify(betQuestionRepository).getEndingBetQuestions(amount, clock);
         assert(result.equals(endingBetQuestions));
     }
+
+    @Test
+    void whenGetBetsByUsername_thenReturnBetsForUsername() {
+        String username = "valid_username";
+        List<Bet> expectedBets = new ArrayList<>();
+        when(betQuestionRepository.getBetsByUsername(username)).thenReturn(expectedBets);
+
+        List<Bet> result = betService.getBetsByUsername(username);
+
+        verify(betQuestionRepository).getBetsByUsername(username);
+        assert(result.equals(expectedBets));
+    }
 }
