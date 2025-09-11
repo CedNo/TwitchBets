@@ -12,6 +12,7 @@ import com.api.twitchbets.domain.bet.Bet;
 import com.api.twitchbets.domain.bet.BetOption;
 import com.api.twitchbets.domain.bet.BetQuestion;
 import com.api.twitchbets.domain.bet.BetQuestionRepository;
+import com.api.twitchbets.domain.bet.Wager;
 import com.api.twitchbets.domain.exceptions.BetOptionNotFoundException;
 import com.api.twitchbets.domain.factories.BetFactory;
 import com.api.twitchbets.domain.factories.BetOptionFactory;
@@ -64,8 +65,8 @@ public class BetService {
     }
 
     public void createBet(String username, float amount, UUID betQuestionId, UUID betOptionId) {
-        Bet bet = betFactory.createBet(username, amount);
         BetQuestion betQuestion = betQuestionRepository.getBetQuestion(betQuestionId);
+        Bet bet = betFactory.createBet(username, amount);
 
         betQuestion.placeBet(betOptionId, bet);
 
@@ -80,5 +81,10 @@ public class BetService {
     public List<Bet> getBetsByUsername(String username) {
         List<Bet> bets = betQuestionRepository.getBetsByUsername(username);
         return bets;
+    }
+
+    public List<Wager> getLatestWagersByUsername(String username, int limit) {
+        List<Wager> latestBets = betQuestionRepository.getLatestWagersByUsername(username, limit);
+        return latestBets;
     }
 }

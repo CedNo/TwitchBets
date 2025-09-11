@@ -13,6 +13,7 @@ import com.api.twitchbets.domain.bet.Bet;
 import com.api.twitchbets.domain.bet.BetOption;
 import com.api.twitchbets.domain.bet.BetQuestion;
 import com.api.twitchbets.domain.bet.BetQuestionRepository;
+import com.api.twitchbets.domain.bet.Wager;
 import com.api.twitchbets.domain.exceptions.BetQuestionNotFoundException;
 
 @Repository
@@ -93,5 +94,26 @@ public class InMemoryBetQuestionRepository implements BetQuestionRepository {
         }
 
         return userBets;
+    }
+
+    @Override
+    public List<Wager> getLatestWagersByUsername(String username, int limit) {
+        List<Wager> userWagers = new ArrayList<>();
+
+        for (BetQuestion betQuestion : betQuestions) {
+            for (BetOption betOption : betQuestion.getOptions()) {
+                for (Bet bet : betOption.getBets()) {
+                    if (bet.getUsername().equals(username)) {
+                        Wager wager = new Wager(betQuestion, betOption, bet);
+                        userWagers.add(wager);
+                    }
+                }
+            }
+        }
+
+        userWagers.sort(Comparator.comparing(Wager::getCreatedAt).reversed());
+        List<Wager> latestBets = userWagers.stream().limit(limit).toList();
+
+        return latestBets;
     }
 }

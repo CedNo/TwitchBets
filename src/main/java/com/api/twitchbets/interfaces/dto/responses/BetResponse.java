@@ -13,10 +13,13 @@ public class BetResponse {
     public final float amount;
     @JsonProperty
     public final LocalDateTime createdAt;
+    @JsonProperty
+    public final float betWin;
 
     public BetResponse(Bet bet) {
         this.username = bet.getUsername();
         this.amount = bet.getAmount();
         this.createdAt = bet.getCreatedAt();
+        this.betWin = bet.getBetWin();
     }
 }

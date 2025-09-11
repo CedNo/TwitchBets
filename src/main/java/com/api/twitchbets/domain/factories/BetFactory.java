@@ -19,6 +19,6 @@ public class BetFactory {
 
     public Bet createBet(String username, Float amount) {
         LocalDateTime createdAt = LocalDateTime.now(clock);
-        return new Bet(UUID.randomUUID(), username, amount, createdAt);
+        return new Bet(UUID.randomUUID(), username, amount, createdAt, 0);
     }
 }

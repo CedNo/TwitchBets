@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import com.api.twitchbets.domain.bet.Bet;
+import com.api.twitchbets.domain.bet.Wager;
 import com.api.twitchbets.domain.bet.BetOption;
 import com.api.twitchbets.domain.bet.BetQuestion;
 import com.api.twitchbets.domain.bet.BetQuestionRepository;
@@ -25,9 +26,6 @@ import com.api.twitchbets.domain.factories.BetOptionFactory;
 import com.api.twitchbets.domain.factories.BetQuestionFactory;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyFloat;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -81,15 +79,19 @@ class BetServiceTest {
     @Test
     void whenCreateBet_thenCreateAndSaveUpdatedBetQuestion() {
         Bet VALID_BET = mock();
-        when(betFactory.createBet(anyString(), anyFloat())).thenReturn(VALID_BET);
-        when(betQuestionRepository.getBetQuestion(any())).thenReturn(betQuestion);
+        String VALID_USERNAME = "username";
+        float VALID_AMOUNT = 10.0f;
+        UUID VALID_BET_QUESTION_ID = UUID.randomUUID();
+        UUID VALID_BET_OPTION_ID = UUID.randomUUID();
+        when(betFactory.createBet(VALID_USERNAME, VALID_AMOUNT)).thenReturn(VALID_BET);
+        when(betQuestionRepository.getBetQuestion(VALID_BET_QUESTION_ID)).thenReturn(betQuestion);
 
-        betService.createBet(anyString(), anyFloat(), UUID.randomUUID(), UUID.randomUUID());
+        betService.createBet(VALID_USERNAME, VALID_AMOUNT, VALID_BET_QUESTION_ID, VALID_BET_OPTION_ID);
 
         InOrder inOrder = inOrder(betQuestionRepository, betQuestion, betFactory);
-        inOrder.verify(betFactory).createBet(anyString(), anyFloat());
-        inOrder.verify(betQuestionRepository).getBetQuestion(any());
-        inOrder.verify(betQuestion).placeBet(any(), any());
+        inOrder.verify(betQuestionRepository).getBetQuestion(VALID_BET_QUESTION_ID);
+        inOrder.verify(betFactory).createBet(VALID_USERNAME, VALID_AMOUNT);
+        inOrder.verify(betQuestion).placeBet(VALID_BET_OPTION_ID, VALID_BET);
         inOrder.verify(betQuestionRepository).updateBetQuestion(betQuestion);
     }
 
@@ -158,6 +160,19 @@ class BetServiceTest {
         List<Bet> result = betService.getBetsByUsername(username);
 
         verify(betQuestionRepository).getBetsByUsername(username);
+        assert(result.equals(expectedBets));
+    }
+
+    @Test
+    void whenGetLatestBetsByUsername_thenReturnLatestBetsForUsername() {
+        String username = "valid_username";
+        int limit = 5;
+        List<Wager> expectedBets = new ArrayList<>();
+        when(betQuestionRepository.getLatestWagersByUsername(username, limit)).thenReturn(expectedBets);
+
+        List<Wager> result = betService.getLatestWagersByUsername(username, limit);
+
+        verify(betQuestionRepository).getLatestWagersByUsername(username, limit);
         assert(result.equals(expectedBets));
     }
 }

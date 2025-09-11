@@ -17,9 +17,9 @@ class BetOptionTest {
     @Test
     void givenBetsInOption_whenGetCurrentAmount_thenReturnTotalAmountOfAllBetsInBets() {
         List<Bet> bets = new ArrayList<>();
-        bets.add(new Bet(UUID.randomUUID(), "user1", 125f, LocalDateTime.now()));
-        bets.add(new Bet(UUID.randomUUID(), "user2", 130f, LocalDateTime.now()));
-        bets.add(new Bet(UUID.randomUUID(), "user3", 0.43f, LocalDateTime.now()));
+        bets.add(new Bet(UUID.randomUUID(), "user1", 125f, LocalDateTime.now(), 0));
+        bets.add(new Bet(UUID.randomUUID(), "user2", 130f, LocalDateTime.now(), 0));
+        bets.add(new Bet(UUID.randomUUID(), "user3", 0.43f, LocalDateTime.now(), 0));
         final String VALID_OPTION = "Yes";
         BetOption betOption = new BetOption(UUID.randomUUID(), VALID_OPTION, bets, 0f);
 
@@ -44,7 +44,7 @@ class BetOptionTest {
         List<Bet> bets = new ArrayList<>();
         final String VALID_OPTION = "Yes";
         BetOption betOption = new BetOption(UUID.randomUUID(), VALID_OPTION, bets, 0f);
-        Bet newBet = new Bet(UUID.randomUUID(), "user1", 125f, LocalDateTime.now());
+        Bet newBet = new Bet(UUID.randomUUID(), "user1", 125f, LocalDateTime.now(), 0);
 
         betOption.placeBet(newBet);
 
@@ -54,8 +54,8 @@ class BetOptionTest {
     @Test
     void whenUpdateOdds_thenCalculateOddsBasedOnCurrentAmount() {
         List<Bet> bets = new ArrayList<>();
-        bets.add(new Bet(UUID.randomUUID(), "user1", 100f, LocalDateTime.now()));
-        bets.add(new Bet(UUID.randomUUID(), "user2", 200f, LocalDateTime.now()));
+        bets.add(new Bet(UUID.randomUUID(), "user1", 100f, LocalDateTime.now(), 0));
+        bets.add(new Bet(UUID.randomUUID(), "user2", 200f, LocalDateTime.now(), 0));
         final String VALID_OPTION = "Yes";
         BetOption betOption = new BetOption(UUID.randomUUID(), VALID_OPTION, bets, 0f);
 

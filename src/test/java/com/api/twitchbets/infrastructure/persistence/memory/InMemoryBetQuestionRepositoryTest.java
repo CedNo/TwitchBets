@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import com.api.twitchbets.domain.bet.Bet;
 import com.api.twitchbets.domain.bet.BetOption;
 import com.api.twitchbets.domain.bet.BetQuestion;
+import com.api.twitchbets.domain.bet.Wager;
 import com.api.twitchbets.domain.exceptions.BetQuestionNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -125,8 +126,8 @@ class InMemoryBetQuestionRepositoryTest {
     void givenAddedBets_whenGetBetsByUsername_thenReturnsBetsForUsername() {
         String request_username = "user1";
         String random_username = "user2";
-        Bet bet1 = new Bet(UUID.randomUUID(), request_username, 100, LocalDateTime.now());
-        Bet bet2 = new Bet(UUID.randomUUID(), random_username, 200, LocalDateTime.now());
+        Bet bet1 = new Bet(UUID.randomUUID(), request_username, 100, LocalDateTime.now(), 0);
+        Bet bet2 = new Bet(UUID.randomUUID(), random_username, 200, LocalDateTime.now(), 0);
         BetOption betOption1 = new BetOption(UUID.randomUUID(), "Yes", List.of(bet1, bet2), 0);
         BetQuestion betQuestion1 = new BetQuestion(UUID.randomUUID(), "question1", List.of(betOption1), LocalDateTime.now());
         List<BetQuestion> betQuestions = List.of(betQuestion1);
@@ -136,5 +137,40 @@ class InMemoryBetQuestionRepositoryTest {
         List<Bet> userBets = betQuestionRepository.getBetsByUsername(request_username);
 
         assertEquals(expectedBets, userBets);
+    }
+
+    @Test
+    void givenLimit_whenGetLatestWagersByUsername_thenReturnsCorrectAmountOfWagers() {
+        String request_username = "user1";
+        Bet bet1 = new Bet(UUID.randomUUID(), request_username, 100, LocalDateTime.now().plusMinutes(1), 0);
+        Bet bet2 = new Bet(UUID.randomUUID(), request_username, 200, LocalDateTime.now().plusMinutes(2), 0);
+        Bet bet3 = new Bet(UUID.randomUUID(), request_username, 300, LocalDateTime.now().plusMinutes(3), 0);
+        BetOption betOption1 = new BetOption(UUID.randomUUID(), "Yes", List.of(bet1, bet2, bet3), 0);
+        BetQuestion betQuestion1 = new BetQuestion(UUID.randomUUID(), "question1", List.of(betOption1), LocalDateTime.now());
+
+        InMemoryBetQuestionRepository betQuestionRepository = new InMemoryBetQuestionRepository(List.of(betQuestion1));
+
+        List<Wager> latestWagers = betQuestionRepository.getLatestWagersByUsername(request_username, 2);
+
+        assertEquals(2, latestWagers.size());
+        assertEquals(bet3, latestWagers.get(0).getBet());
+        assertEquals(bet2, latestWagers.get(1).getBet());
+    }
+
+    @Test
+    void givenLimitGreaterThanPlacedBets_whenGetLatestWagersByUsername_thenReturnsAllWagers() {
+        String request_username = "user1";
+        Bet bet1 = new Bet(UUID.randomUUID(), request_username, 100, LocalDateTime.now().plusMinutes(1), 0);
+        Bet bet2 = new Bet(UUID.randomUUID(), request_username, 200, LocalDateTime.now().plusMinutes(2), 0);
+        BetOption betOption1 = new BetOption(UUID.randomUUID(), "Yes", List.of(bet1, bet2), 0);
+        BetQuestion betQuestion1 = new BetQuestion(UUID.randomUUID(), "question1", List.of(betOption1), LocalDateTime.now());
+
+        InMemoryBetQuestionRepository betQuestionRepository = new InMemoryBetQuestionRepository(List.of(betQuestion1));
+
+        List<Wager> latestWagers = betQuestionRepository.getLatestWagersByUsername(request_username, 5);
+
+        assertEquals(2, latestWagers.size());
+        assertEquals(bet2, latestWagers.get(0).getBet());
+        assertEquals(bet1, latestWagers.get(1).getBet());
     }
 }

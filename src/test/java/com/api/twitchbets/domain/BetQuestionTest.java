@@ -33,15 +33,15 @@ class BetQuestionTest {
         String question = "Question?";
         final String VALID_OPTION1 = "Yes";
         List<Bet> bets1 = new ArrayList<>();
-        bets1.add(new Bet(UUID.randomUUID(), "user1", 115f, LocalDateTime.now()));
+        bets1.add(new Bet(UUID.randomUUID(), "user1", 115f, LocalDateTime.now(), 0));
         firstBetOption = new BetOption(UUID.randomUUID(), VALID_OPTION1, bets1, 0f);
         final String VALID_OPTION2 = "No";
         List<Bet> bets2 = new ArrayList<>();
-        bets2.add(new Bet(UUID.randomUUID(), "user2", 120f, LocalDateTime.now()));
+        bets2.add(new Bet(UUID.randomUUID(), "user2", 120f, LocalDateTime.now(), 0));
         secondBetOption = new BetOption(UUID.randomUUID(), VALID_OPTION2, bets2, 0f);
         final String VALID_OPTION3 = "Toaster";
         List<Bet> bets3 = new ArrayList<>();
-        bets3.add(new Bet(UUID.randomUUID(), "user3", 0.5f, LocalDateTime.now()));
+        bets3.add(new Bet(UUID.randomUUID(), "user3", 0.5f, LocalDateTime.now(), 0));
         thirdBetOption = new BetOption(UUID.randomUUID(), VALID_OPTION3, bets3, 0f);
         List<BetOption> betOptions = new ArrayList<>();
         LocalDateTime endTime = LocalDateTime.now();

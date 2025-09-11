@@ -17,4 +17,6 @@ public interface BetQuestionRepository {
     List<BetQuestion> getEndingBetQuestions(int amount, Clock clock);
 
     List<Bet> getBetsByUsername(String username);
+
+    List<Wager> getLatestWagersByUsername(String username, int limit);
 }

@@ -62,12 +62,14 @@ It is built using Spring Boot.
                     {
                         "username": "Edgouille",
                         "amount": 100.0,
-                        "createdAt": "2025-08-13T22:34:02.2322474"
+                        "createdAt": "2025-08-13T22:34:02.2322474",
+                        "betWin": 0.0
                     },
                     {
                         "username": "Edgouille",
                         "amount": 100.0,
-                        "createdAt": "2025-08-13T22:34:23.7552183"
+                        "createdAt": "2025-08-13T22:34:23.7552183",
+                        "betWin": 0.0
                     }
                 ],
                 "odds": 0.6666667,
@@ -80,7 +82,8 @@ It is built using Spring Boot.
                     {
                         "username": "Edgouille",
                         "amount": 100.0,
-                        "createdAt": "2025-08-13T22:34:40.0367351"
+                        "createdAt": "2025-08-13T22:34:40.0367351",
+                        "betWin": 0.0
                     }
                 ],
                 "odds": 0.33333334,
@@ -142,12 +145,14 @@ It is built using Spring Boot.
                         {
                             "username": "Edgouille",
                             "amount": 100.0,
-                            "createdAt": "2025-08-13T22:34:02.2322474"
+                            "createdAt": "2025-08-13T22:34:02.2322474",
+                            "betWin": 0.0
                         },
                         {
                             "username": "Edgouille",
                             "amount": 100.0,
-                            "createdAt": "2025-08-13T22:34:23.7552183"
+                            "createdAt": "2025-08-13T22:34:23.7552183",
+                            "betWin": 0.0
                         }
                     ],
                     "odds": 0.6666667,
@@ -160,7 +165,8 @@ It is built using Spring Boot.
                         {
                             "username": "Edgouille",
                             "amount": 100.0,
-                            "createdAt": "2025-08-13T22:34:40.0367351"
+                            "createdAt": "2025-08-13T22:34:40.0367351",
+                            "betWin": 0.0
                         }
                     ],
                     "odds": 0.33333334,
@@ -258,11 +264,43 @@ It is built using Spring Boot.
         {
             "username": "Edgouille",
             "amount": 100.0,
-            "createdAt": "2025-08-17T23:14:41.7404879"
+            "createdAt": "2025-08-17T23:14:41.7404879",
+            "betWin": 0.0
         },
         {
             "username": "Edgouille",
             "amount": 125.0,
-            "createdAt": "2025-08-17T23:14:51.4133776"
+            "createdAt": "2025-08-17T23:14:51.4133776",
+            "betWin": 0.0
+        }
+    ]
+
+## Get latest bets of a user
+
+### Request
+
+    `GET /bets/{username}/latest?amount={amount}`
+
+    curl --location 'http://localhost:8181/bets/Edgouille/latest?limit=1'
+
+### Response
+
+    HTTP/1.1 200 Ok
+    Content-Type: application/json
+    Transfer-Encoding: chunked
+    Date: Thu, 11 Sep 2025 21:32:38 GMT
+    Keep-Alive: timeout=60
+    Connection: keep-alive
+
+    [
+        {
+            "username": "Edgouille",
+            "amount": 34.0,
+            "createdAt": "2025-09-11T21:32:14.6918846",
+            "betQuestionId": "6e8c6f4c-717d-458a-accf-cc0ba2863b81",
+            "betQuestion": "Will @xQc stream today? (08/19/2025)",
+            "betOptionId": "36772708-e49d-4165-85c2-afb8c6acfc05",
+            "betOption": "No",
+            "betWin": 0.0
         }
     ]

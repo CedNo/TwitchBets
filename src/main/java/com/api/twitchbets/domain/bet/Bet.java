@@ -9,12 +9,14 @@ public class Bet {
     private final String username;
     private final float amount;
     private final LocalDateTime createdAt;
+    private final float betWin;
 
-    public Bet(UUID id, String username, float amount, LocalDateTime createdAt) {
+    public Bet(UUID id, String username, float amount, LocalDateTime createdAt, float betWin) {
         this.id = id;
         this.username = username;
         this.amount = amount;
         this.createdAt = createdAt;
+        this.betWin = betWin;
     }
 
     public float getAmount() {
@@ -27,6 +29,14 @@ public class Bet {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public float getBetWin() {
+        return betWin;
     }
 
 }

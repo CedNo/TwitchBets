@@ -117,7 +117,7 @@ public class BetControllerTest {
     @Test
     void givenValidUsername_whenGetUserBetHistory_thenReturnOk() throws Exception {
         String VALID_USERNAME = "username";
-        Bet bet = new Bet(UUID.randomUUID(), VALID_USERNAME, 10.0f, LocalDateTime.now());
+        Bet bet = new Bet(UUID.randomUUID(), VALID_USERNAME, 10.0f, LocalDateTime.now(), 0);
         List<Bet> betList = List.of(bet);
 
         when(betService.getBetsByUsername(VALID_USERNAME)).thenReturn(betList);
