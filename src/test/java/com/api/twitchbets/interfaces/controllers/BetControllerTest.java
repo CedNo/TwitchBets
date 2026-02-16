@@ -22,10 +22,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.api.twitchbets.application.BetService;
-import com.api.twitchbets.application.UserService;
+import com.api.twitchbets.application.PlayerService;
 import com.api.twitchbets.domain.bet.Bet;
 import com.api.twitchbets.domain.exceptions.BetQuestionNotFoundException;
-import com.api.twitchbets.domain.exceptions.UserNotFoundException;
+import com.api.twitchbets.domain.exceptions.PlayerNotFoundException;
 import com.api.twitchbets.interfaces.dto.requests.AddBetRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -34,7 +34,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class BetControllerTest {
 
     @MockitoBean
-    private UserService userService;
+    private PlayerService playerService;
     @MockitoBean
     private BetService betService;
     @Autowired
@@ -54,9 +54,9 @@ public class BetControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isCreated());
 
-        verify(userService).checkIfCanPlaceBet(VALID_USERNAME, VALID_AMOUNT);
+        verify(playerService).checkIfCanPlaceBet(VALID_USERNAME, VALID_AMOUNT);
         verify(betService).checkIfCanPlaceBet(VALID_BET_QUESTION_ID, VALID_BET_OPTION_ID);
-        verify(userService).chargeUser(VALID_USERNAME, VALID_AMOUNT);
+        verify(playerService).chargePlayer(VALID_USERNAME, VALID_AMOUNT);
         verify(betService).createBet(VALID_USERNAME, VALID_AMOUNT, VALID_BET_QUESTION_ID, VALID_BET_OPTION_ID);
     }
 
@@ -67,7 +67,7 @@ public class BetControllerTest {
         String INVALID_USERNAME = "invalid_username";
         float VALID_AMOUNT = 10;
         AddBetRequest addBetRequest = new AddBetRequest(INVALID_USERNAME, VALID_AMOUNT, VALID_BET_QUESTION_ID, VALID_BET_OPTION_ID);
-        doThrow(new UserNotFoundException(INVALID_USERNAME)).when(userService).checkIfCanPlaceBet(INVALID_USERNAME, VALID_AMOUNT);
+        doThrow(new PlayerNotFoundException(INVALID_USERNAME)).when(playerService).checkIfCanPlaceBet(INVALID_USERNAME, VALID_AMOUNT);
 
         mvc.perform(MockMvcRequestBuilders.post("/bets")
                 .content(asJsonString(addBetRequest))
@@ -75,9 +75,9 @@ public class BetControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
 
-        verify(userService).checkIfCanPlaceBet(INVALID_USERNAME, VALID_AMOUNT);
+        verify(playerService).checkIfCanPlaceBet(INVALID_USERNAME, VALID_AMOUNT);
         verify(betService, never()).checkIfCanPlaceBet(VALID_BET_QUESTION_ID, VALID_BET_OPTION_ID);
-        verify(userService, never()).chargeUser(INVALID_USERNAME, VALID_AMOUNT);
+        verify(playerService, never()).chargePlayer(INVALID_USERNAME, VALID_AMOUNT);
         verify(betService, never()).createBet(INVALID_USERNAME, VALID_AMOUNT, VALID_BET_QUESTION_ID, VALID_BET_OPTION_ID);
     }
 
@@ -96,22 +96,22 @@ public class BetControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
 
-        verify(userService).checkIfCanPlaceBet(VALID_USERNAME, VALID_AMOUNT);
+        verify(playerService).checkIfCanPlaceBet(VALID_USERNAME, VALID_AMOUNT);
         verify(betService).checkIfCanPlaceBet(INVALID_BET_QUESTION_ID, VALID_BET_OPTION_ID);
-        verify(userService, never()).chargeUser(VALID_USERNAME, VALID_AMOUNT);
+        verify(playerService, never()).chargePlayer(VALID_USERNAME, VALID_AMOUNT);
         verify(betService, never()).createBet(VALID_USERNAME, VALID_AMOUNT, INVALID_BET_QUESTION_ID, VALID_BET_OPTION_ID);
     }
 
     @Test
     void givenInvalidUsername_whenGetUserBetHistory_thenReturnNotFound() throws Exception {
         String INVALID_USERNAME = "invalid_username";
-        doThrow(new UserNotFoundException(INVALID_USERNAME)).when(userService).getUser(INVALID_USERNAME);
+        doThrow(new PlayerNotFoundException(INVALID_USERNAME)).when(playerService).getPlayer(INVALID_USERNAME);
 
         mvc.perform(MockMvcRequestBuilders.get("/bets/" + INVALID_USERNAME + "/history")
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
 
-        verify(userService).getUser(INVALID_USERNAME);
+        verify(playerService).getPlayer(INVALID_USERNAME);
     }
 
     @Test
@@ -121,13 +121,13 @@ public class BetControllerTest {
         List<Bet> betList = List.of(bet);
 
         when(betService.getBetsByUsername(VALID_USERNAME)).thenReturn(betList);
-        when(userService.getUser(VALID_USERNAME)).thenReturn(mock());
+        when(playerService.getPlayer(VALID_USERNAME)).thenReturn(mock());
 
         mvc.perform(MockMvcRequestBuilders.get("/bets/" + VALID_USERNAME + "/history")
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());
 
-        verify(userService).getUser(VALID_USERNAME);
+        verify(playerService).getPlayer(VALID_USERNAME);
         verify(betService).getBetsByUsername(VALID_USERNAME);
     }
 

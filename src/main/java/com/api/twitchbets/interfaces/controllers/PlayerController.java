@@ -11,43 +11,43 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api.twitchbets.application.UserService;
-import com.api.twitchbets.domain.user.User;
-import com.api.twitchbets.interfaces.dto.responses.UserResponse;
-import com.api.twitchbets.interfaces.mappers.responses.UserResponseMapper;
+import com.api.twitchbets.application.PlayerService;
+import com.api.twitchbets.domain.user.Player;
+import com.api.twitchbets.interfaces.dto.responses.PlayerResponse;
+import com.api.twitchbets.interfaces.mappers.responses.PlayerResponseMapper;
 
 @RestController
 @RequestMapping("/users")
-public class UserController {
+public class PlayerController {
 
     private final Logger logger = LoggerFactory.getLogger(BetController.class);
-    private final UserService userService;
-    private final UserResponseMapper userResponseMapper;
+    private final PlayerService playerService;
+    private final PlayerResponseMapper playerResponseMapper;
 
-    public UserController (
-        UserService userService,
-        UserResponseMapper userResponseMapper
+    public PlayerController(
+        PlayerService playerService,
+        PlayerResponseMapper playerResponseMapper
     ) {
-        this.userService = userService;
-        this.userResponseMapper = userResponseMapper;
+        this.playerService = playerService;
+        this.playerResponseMapper = playerResponseMapper;
     }
 
     @PostMapping("/{username}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createUser(@PathVariable String username) {
+    public void createPlayer(@PathVariable String username) {
         logger.info("Creating user : {}", username);
 
-        userService.createUser(username);
+        playerService.createPlayer(username);
     }
 
     @GetMapping("/{username}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public UserResponse getUser(@PathVariable String username) {
+    public PlayerResponse getUser(@PathVariable String username) {
         logger.info("Getting user : {}", username);
 
-        User user = userService.getUser(username);
-        UserResponse response = userResponseMapper.toResponse(user);
+        Player player = playerService.getPlayer(username);
+        PlayerResponse response = playerResponseMapper.toResponse(player);
 
         return response;
     }

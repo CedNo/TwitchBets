@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.api.twitchbets.domain.exceptions.BetQuestionNotFoundException;
 import com.api.twitchbets.domain.exceptions.GenericException;
-import com.api.twitchbets.domain.exceptions.UserAlreadyExistsException;
+import com.api.twitchbets.domain.exceptions.PlayerAlreadyExistsException;
 import com.api.twitchbets.interfaces.dto.responses.ErrorResponse;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,7 +18,7 @@ class CatchallExceptionMapperTest {
 
     @Test
     public void givenUserAlreadyExistsException_whenHandleConflict_thenConflictErrorResponse() {
-        UserAlreadyExistsException exception = new UserAlreadyExistsException("Username");
+        PlayerAlreadyExistsException exception = new PlayerAlreadyExistsException("Username");
         CatchallExceptionMapper mapper = new CatchallExceptionMapper();
 
         ResponseEntity<Object> response = mapper.handleConflict(exception, mock());

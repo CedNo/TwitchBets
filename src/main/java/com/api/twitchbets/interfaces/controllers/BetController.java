@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.twitchbets.application.BetService;
-import com.api.twitchbets.application.UserService;
+import com.api.twitchbets.application.PlayerService;
 import com.api.twitchbets.domain.bet.Bet;
 import com.api.twitchbets.domain.bet.Wager;
 import com.api.twitchbets.interfaces.dto.requests.AddBetRequest;
@@ -33,18 +33,18 @@ public class BetController {
 
     private final Logger logger = LoggerFactory.getLogger(BetController.class);
     private final BetService betService;
-    private final UserService userService;
+    private final PlayerService playerService;
     private final BetResponseMapper betResponseMapper;
     private final WagerResponseMapper wagerResponseMapper;
 
     public BetController(
         BetService betService,
-        UserService userService,
+        PlayerService playerService,
         BetResponseMapper betResponseMapper,
         WagerResponseMapper wagerResponseMapper
     ) {
         this.betService = betService;
-        this.userService = userService;
+        this.playerService = playerService;
         this.betResponseMapper = betResponseMapper;
         this.wagerResponseMapper = wagerResponseMapper;
     }
@@ -55,10 +55,10 @@ public class BetController {
         logger.info("Placing bet");
 
         try {
-            userService.checkIfCanPlaceBet(request.username(), request.amount());
+            playerService.checkIfCanPlaceBet(request.username(), request.amount());
             betService.checkIfCanPlaceBet(request.betQuestionId(), request.betOptionId());
 
-            userService.chargeUser(request.username(), request.amount());
+            playerService.chargePlayer(request.username(), request.amount());
             betService.createBet(request.username(), request.amount(), request.betQuestionId(), request.betOptionId());
         } catch (Exception e) {
             logger.error("Error placing bet");
@@ -72,7 +72,7 @@ public class BetController {
     public List<BetResponse> getUserBetHistory(@PathVariable String username) {
         logger.info("Getting bet history for user: {}", username);
 
-        userService.getUser(username);
+        playerService.getPlayer(username);
 
         List<Bet> betHistory = betService.getBetsByUsername(username);
 
@@ -90,7 +90,7 @@ public class BetController {
     ) {
         logger.info("Getting latest bets for user: {}", username);
 
-        userService.getUser(username);
+        playerService.getPlayer(username);
 
         List<Wager> latestBets = betService.getLatestWagersByUsername(username, limit);
 
