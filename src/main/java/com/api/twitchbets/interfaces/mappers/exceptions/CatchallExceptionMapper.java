@@ -10,14 +10,14 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.api.twitchbets.domain.exceptions.GenericException;
 import com.api.twitchbets.domain.exceptions.NotFoundException;
-import com.api.twitchbets.domain.exceptions.UserAlreadyExistsException;
+import com.api.twitchbets.domain.exceptions.PlayerAlreadyExistsException;
 import com.api.twitchbets.interfaces.dto.responses.ErrorResponse;
 
 @ControllerAdvice
 public class CatchallExceptionMapper extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(UserAlreadyExistsException.class)
-    protected ResponseEntity<Object> handleConflict(UserAlreadyExistsException exception, WebRequest request) {
+    @ExceptionHandler(PlayerAlreadyExistsException.class)
+    protected ResponseEntity<Object> handleConflict(PlayerAlreadyExistsException exception, WebRequest request) {
         logger.error("UserAlreadyExistsException in " + request.getDescription(false), exception.getCause());
 
         ErrorResponse bodyOfResponse = new ErrorResponse(exception.error, exception.description);

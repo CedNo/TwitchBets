@@ -1,11 +1,11 @@
 package com.api.twitchbets.domain.user;
 
-public class User {
+public class Player {
 
     private final String username;
     private float balance;
 
-    public User(String username, float balance) {
+    public Player(String username, float balance) {
         this.username = username;
         this.balance = balance;
     }

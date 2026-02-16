@@ -1,18 +1,18 @@
 package com.api.twitchbets.interfaces.dto.responses;
 
-import com.api.twitchbets.domain.user.User;
+import com.api.twitchbets.domain.user.Player;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class UserResponse {
+public class PlayerResponse {
 
     @JsonProperty
     public final String username;
     @JsonProperty
     public final float balance;
 
-    public UserResponse(User user) {
-        this.username = user.getUsername();
-        this.balance = user.getBalance();
+    public PlayerResponse(Player player) {
+        this.username = player.getUsername();
+        this.balance = player.getBalance();
     }
 
 }

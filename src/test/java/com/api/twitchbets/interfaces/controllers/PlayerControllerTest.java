@@ -11,8 +11,8 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.api.twitchbets.application.UserService;
-import com.api.twitchbets.interfaces.mappers.responses.UserResponseMapper;
+import com.api.twitchbets.application.PlayerService;
+import com.api.twitchbets.interfaces.mappers.responses.PlayerResponseMapper;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -23,23 +23,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ExtendWith(MockitoExtension.class)
-class UserControllerTest {
+class PlayerControllerTest {
 
     private static final String VALID_USERNAME = "username";
 
     @Autowired
     private MockMvc mvc;
     @MockitoBean
-    private UserService userService;
+    private PlayerService playerService;
     @MockitoBean
-    private UserResponseMapper userResponseMapper;
+    private PlayerResponseMapper playerResponseMapper;
 
     @Test
     void whenCreateUser_thenReturnCreatedStatus() throws Exception {
         mvc.perform(MockMvcRequestBuilders.post("/users/" + VALID_USERNAME).accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isCreated());
 
-        verify(userService).createUser(VALID_USERNAME);
+        verify(playerService).createPlayer(VALID_USERNAME);
     }
 
     @Test
@@ -47,19 +47,19 @@ class UserControllerTest {
         mvc.perform(MockMvcRequestBuilders.get("/users/" + VALID_USERNAME).accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());
 
-        verify(userService).getUser(VALID_USERNAME);
-        verify(userResponseMapper).toResponse(any());
+        verify(playerService).getPlayer(VALID_USERNAME);
+        verify(playerResponseMapper).toResponse(any());
     }
 
     @Test
     void givenId_whenGetUser_thenUserServiceFetchUserAndMapperAssemblesResponse() throws Exception {
-        when(userService.getUser(any())).thenReturn(mock());
+        when(playerService.getPlayer(any())).thenReturn(mock());
 
         mvc.perform(MockMvcRequestBuilders.get("/users/{username}", VALID_USERNAME)
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());
 
-        verify(userService).getUser(any());
-        verify(userResponseMapper).toResponse(any());
+        verify(playerService).getPlayer(any());
+        verify(playerResponseMapper).toResponse(any());
     }
 }

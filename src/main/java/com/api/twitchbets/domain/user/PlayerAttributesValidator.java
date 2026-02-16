@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import com.api.twitchbets.domain.exceptions.GenericException;
 
 @Component
-public class UserAttributesValidator {
+public class PlayerAttributesValidator {
 
     private static final String NAME_REGEX = "^[a-zA-Z0-9]+$";
 
