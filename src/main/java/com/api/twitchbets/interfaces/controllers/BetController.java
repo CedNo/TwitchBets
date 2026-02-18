@@ -70,7 +70,7 @@ public class BetController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<BetResponse> getUserBetHistory(@PathVariable String username) {
-        logger.info("Getting bet history for user: {}", username);
+        logger.info("Getting bet history for player: {}", username);
 
         playerService.getPlayer(username);
 
@@ -88,7 +88,7 @@ public class BetController {
         @PathVariable String username,
         @RequestParam(defaultValue = "10") @Min(value = 0, message = "Limit must be greater than zero.") int limit
     ) {
-        logger.info("Getting latest bets for user: {}", username);
+        logger.info("Getting latest bets for player: {}", username);
 
         playerService.getPlayer(username);
 

@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import com.api.twitchbets.domain.exceptions.PlayerAlreadyExistsException;
 import com.api.twitchbets.domain.exceptions.PlayerNotFoundException;
-import com.api.twitchbets.domain.user.Player;
-import com.api.twitchbets.domain.user.PlayerRepository;
+import com.api.twitchbets.domain.player.Player;
+import com.api.twitchbets.domain.player.PlayerRepository;
 
 @Repository
 public class InMemoryPlayerRepository implements PlayerRepository {

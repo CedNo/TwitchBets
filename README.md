@@ -1,5 +1,5 @@
 # TwitchBets
-This REST API is a simple betting system that allows users to bet on various events related Twitch streams. 
+This REST API is a simple betting system that allows players to bet on various events related Twitch streams. 
 
 It is built using Spring Boot.
 
@@ -178,13 +178,13 @@ It is built using Spring Boot.
         }
     ]
 
-## Create a user
+## Create a player
 
 ### Request
 
-`POST /users/{username}`
+`POST /players/{username}`
 
-    curl --location --request POST 'http://localhost:8181/users/user1'
+    curl --location --request POST 'http://localhost:8181/players/player1'
 
 ### Response
 
@@ -196,13 +196,13 @@ It is built using Spring Boot.
 
     []
 
-## Get a user
+## Get a player
 
 ### Request
 
-`GET /users/{username}`
+`GET /players/{username}`
 
-    curl --location 'http://localhost:8181/users/user1'
+    curl --location 'http://localhost:8181/players/player1'
 
 ### Response
 
@@ -214,7 +214,7 @@ It is built using Spring Boot.
     Connection: keep-alive
 
     {
-        "username": "user1",
+        "username": "player1",
         "balance": 1000.0
     }
 
@@ -227,7 +227,7 @@ It is built using Spring Boot.
     curl --location 'http://localhost:8181/bets' \
     --header 'Content-Type: application/json' \
     --data '{
-        "username": "user1",
+        "username": "player1",
         "amount": 10.0,
         "betQuestionId": "1c2ab561-37b2-44e9-9979-ae685f5d6958",
         "betOptionId": "153dfe05-6f92-4751-8cad-5f210701b9ae"
@@ -243,7 +243,7 @@ It is built using Spring Boot.
 
     []
 
-## Get bet history of a user
+## Get bet history of a player
 
 ### Request
 
@@ -275,7 +275,7 @@ It is built using Spring Boot.
         }
     ]
 
-## Get latest bets of a user
+## Get latest bets of a player
 
 ### Request
 

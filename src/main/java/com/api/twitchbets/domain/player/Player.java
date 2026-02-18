@@ -1,4 +1,4 @@
-package com.api.twitchbets.domain.user;
+package com.api.twitchbets.domain.player;
 
 public class Player {
 

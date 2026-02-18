@@ -9,9 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import com.api.twitchbets.domain.factories.PlayerFactory;
-import com.api.twitchbets.domain.user.Player;
-import com.api.twitchbets.domain.user.PlayerAttributesValidator;
-import com.api.twitchbets.domain.user.PlayerRepository;
+import com.api.twitchbets.domain.player.Player;
+import com.api.twitchbets.domain.player.PlayerAttributesValidator;
+import com.api.twitchbets.domain.player.PlayerRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

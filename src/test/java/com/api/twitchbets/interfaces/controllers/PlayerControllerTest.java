@@ -35,16 +35,16 @@ class PlayerControllerTest {
     private PlayerResponseMapper playerResponseMapper;
 
     @Test
-    void whenCreateUser_thenReturnCreatedStatus() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.post("/users/" + VALID_USERNAME).accept(MediaType.APPLICATION_JSON))
+    void whenCreatePlayer_thenReturnCreatedStatus() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.post("/players/" + VALID_USERNAME).accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isCreated());
 
         verify(playerService).createPlayer(VALID_USERNAME);
     }
 
     @Test
-    void whenGetUser_thenReturnUser() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/users/" + VALID_USERNAME).accept(MediaType.APPLICATION_JSON))
+    void whenGetPlayer_thenReturnPlayer() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/players/" + VALID_USERNAME).accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());
 
         verify(playerService).getPlayer(VALID_USERNAME);
@@ -52,10 +52,10 @@ class PlayerControllerTest {
     }
 
     @Test
-    void givenId_whenGetUser_thenUserServiceFetchUserAndMapperAssemblesResponse() throws Exception {
+    void givenId_whenGetPlayer_thenPlayerServiceFetchPlayerAndMapperAssemblesResponse() throws Exception {
         when(playerService.getPlayer(any())).thenReturn(mock());
 
-        mvc.perform(MockMvcRequestBuilders.get("/users/{username}", VALID_USERNAME)
+        mvc.perform(MockMvcRequestBuilders.get("/players/{username}", VALID_USERNAME)
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());
 

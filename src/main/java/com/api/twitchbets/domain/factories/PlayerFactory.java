@@ -2,7 +2,7 @@ package com.api.twitchbets.domain.factories;
 
 import org.springframework.stereotype.Component;
 
-import com.api.twitchbets.domain.user.Player;
+import com.api.twitchbets.domain.player.Player;
 
 @Component
 public class PlayerFactory {

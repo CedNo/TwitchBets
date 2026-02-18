@@ -17,7 +17,7 @@ import static org.mockito.Mockito.mock;
 class CatchallExceptionMapperTest {
 
     @Test
-    public void givenUserAlreadyExistsException_whenHandleConflict_thenConflictErrorResponse() {
+    public void givenPlayerAlreadyExistsException_whenHandleConflict_thenConflictErrorResponse() {
         PlayerAlreadyExistsException exception = new PlayerAlreadyExistsException("Username");
         CatchallExceptionMapper mapper = new CatchallExceptionMapper();
 
