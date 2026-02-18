@@ -1,23 +1,23 @@
-package com.api.twitchbets.domain.user;
+package com.api.twitchbets.domain.player;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserTest {
+class PlayerTest {
 
     Player player;
 
     @BeforeEach
-    void setupUser() {
-        final String VALID_USERNAME = "user1";
+    void setupPlayer() {
+        final String VALID_USERNAME = "player1";
         final float VALID_BALANCE = 1000;
         player = new Player(VALID_USERNAME, VALID_BALANCE);
     }
 
     @Test
-    void givenUser_whenCharge_thenReturnUserWithUpdatedBalance() {
+    void givenPlayer_whenCharge_thenReturnPlayerWithUpdatedBalance() {
 
         player.charge(100);
 
@@ -25,13 +25,13 @@ class UserTest {
     }
 
     @Test
-    void givenUserWithInsufficientFunds_whenCharge_thenThrowIllegalArgumentException() {
+    void givenPlayerWithInsufficientFunds_whenCharge_thenThrowIllegalArgumentException() {
 
         assertThrows(IllegalArgumentException.class, () -> player.charge(1001));
     }
 
     @Test
-    void givenUserWithNegativeAmount_whenCharge_thenThrowIllegalArgumentException() {
+    void givenPlayerWithNegativeAmount_whenCharge_thenThrowIllegalArgumentException() {
 
         assertThrows(IllegalArgumentException.class, () -> player.charge(-1));
     }

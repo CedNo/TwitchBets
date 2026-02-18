@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.twitchbets.application.PlayerService;
-import com.api.twitchbets.domain.user.Player;
+import com.api.twitchbets.domain.player.Player;
 import com.api.twitchbets.interfaces.dto.responses.PlayerResponse;
 import com.api.twitchbets.interfaces.mappers.responses.PlayerResponseMapper;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/players")
 public class PlayerController {
 
     private final Logger logger = LoggerFactory.getLogger(BetController.class);
@@ -35,7 +35,7 @@ public class PlayerController {
     @PostMapping("/{username}")
     @ResponseStatus(HttpStatus.CREATED)
     public void createPlayer(@PathVariable String username) {
-        logger.info("Creating user : {}", username);
+        logger.info("Creating player : {}", username);
 
         playerService.createPlayer(username);
     }
@@ -43,8 +43,8 @@ public class PlayerController {
     @GetMapping("/{username}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public PlayerResponse getUser(@PathVariable String username) {
-        logger.info("Getting user : {}", username);
+    public PlayerResponse getPlayer(@PathVariable String username) {
+        logger.info("Getting player : {}", username);
 
         Player player = playerService.getPlayer(username);
         PlayerResponse response = playerResponseMapper.toResponse(player);

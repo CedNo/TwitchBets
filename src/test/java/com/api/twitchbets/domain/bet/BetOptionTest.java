@@ -1,4 +1,4 @@
-package com.api.twitchbets.domain;
+package com.api.twitchbets.domain.bet;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -6,9 +6,6 @@ import java.util.List;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
-
-import com.api.twitchbets.domain.bet.Bet;
-import com.api.twitchbets.domain.bet.BetOption;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.api.twitchbets.domain.factories.PlayerFactory;
-import com.api.twitchbets.domain.user.Player;
-import com.api.twitchbets.domain.user.PlayerAttributesValidator;
-import com.api.twitchbets.domain.user.PlayerRepository;
+import com.api.twitchbets.domain.player.Player;
+import com.api.twitchbets.domain.player.PlayerAttributesValidator;
+import com.api.twitchbets.domain.player.PlayerRepository;
 
 @Service
 public class PlayerService {

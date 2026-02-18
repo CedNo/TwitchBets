@@ -1,6 +1,6 @@
 package com.api.twitchbets.interfaces.dto.responses;
 
-import com.api.twitchbets.domain.user.Player;
+import com.api.twitchbets.domain.player.Player;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PlayerResponse {

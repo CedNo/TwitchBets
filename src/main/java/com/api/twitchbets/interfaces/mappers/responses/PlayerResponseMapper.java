@@ -2,7 +2,7 @@ package com.api.twitchbets.interfaces.mappers.responses;
 
 import org.springframework.stereotype.Component;
 
-import com.api.twitchbets.domain.user.Player;
+import com.api.twitchbets.domain.player.Player;
 import com.api.twitchbets.interfaces.dto.responses.PlayerResponse;
 
 @Component

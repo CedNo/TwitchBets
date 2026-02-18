@@ -46,7 +46,7 @@ public class BetQuestionControllerTest {
     void whenCreateBetQuestion_thenBetServiceCreatesBetQuestionAndHasCreatedStatus() throws Exception {
         String question = "Will @xQc stream today? (02/16/2025)";
         List<String> options = new ArrayList<>(Arrays.asList("Yes", "No"));
-        LocalDateTime endTime = LocalDateTime.now();
+        LocalDateTime endTime = LocalDateTime.now().plusMinutes(4);
         AddBetQuestionRequest addBetQuestionRequest = new AddBetQuestionRequest(question, options, endTime);
         UUID id = UUID.randomUUID();
         when(betService.createBetQuestion(question, options, endTime)).thenReturn(id);
