@@ -50,6 +50,43 @@ class PlayerControllerTest {
         verify(playerService).createPlayer(VALID_USERNAME, VALID_PASSWORD);
     }
 
+    @Test
+    void whenCreatePlayerWithInvalidCharactersInUsername_thenReturnBadRequestStatus() throws Exception {
+        String invalidCharacterUsername = "$invalidusername";
+        AddPlayerRequest addPlayerRequest = new AddPlayerRequest(invalidCharacterUsername, VALID_PASSWORD, VALID_PASSWORD);
+
+        mvc.perform(MockMvcRequestBuilders.post("/players/create")
+                .content(asJsonString(addPlayerRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void whenCreatePlayerWithEmptyUsername_thenReturnBadRequestStatus() throws Exception {
+        String emptyUsername = "";
+        AddPlayerRequest addPlayerRequest = new AddPlayerRequest(emptyUsername, VALID_PASSWORD, VALID_PASSWORD);
+
+        mvc.perform(MockMvcRequestBuilders.post("/players/create")
+                .content(asJsonString(addPlayerRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void whenCreatePlayerWithNonMatchingPasswords_thenReturnBadRequestStatus() throws Exception {
+        String password = "password";
+        String confirmPassword = "nonmatchingpassword";
+        AddPlayerRequest addPlayerRequest = new AddPlayerRequest(VALID_USERNAME, password, confirmPassword);
+
+        mvc.perform(MockMvcRequestBuilders.post("/players/create")
+                .content(asJsonString(addPlayerRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
     //todo: add tests for validation of AddPlayerRequest
 
     @Test
@@ -72,6 +109,4 @@ class PlayerControllerTest {
         verify(playerService).getPlayer(any());
         verify(playerResponseMapper).toResponse(any());
     }
-
-    //todo : add tests for validation of AddPlayerRequest
 }
