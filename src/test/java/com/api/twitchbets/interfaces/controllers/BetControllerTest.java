@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+import static com.testutils.TestUtilities.asJsonString;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -27,7 +28,6 @@ import com.api.twitchbets.domain.bet.Bet;
 import com.api.twitchbets.domain.exceptions.BetQuestionNotFoundException;
 import com.api.twitchbets.domain.exceptions.PlayerNotFoundException;
 import com.api.twitchbets.interfaces.dto.requests.AddBetRequest;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -129,13 +129,5 @@ public class BetControllerTest {
 
         verify(playerService).getPlayer(VALID_USERNAME);
         verify(betService).getBetsByUsername(VALID_USERNAME);
-    }
-
-    public static String asJsonString(final Object obj) {
-        try {
-            return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 }

@@ -1,17 +1,17 @@
 package com.api.twitchbets.domain.player;
 
-public class Player {
+import java.io.Serializable;
+import java.util.ArrayList;
 
-    private final String username;
+import org.springframework.security.core.userdetails.User;
+
+public class Player extends User implements Serializable {
+
     private float balance;
 
-    public Player(String username, float balance) {
-        this.username = username;
+    public Player(String username, String password, float balance) {
+        super(username, password, new ArrayList<>());
         this.balance = balance;
-    }
-
-    public String getUsername() {
-        return username;
     }
 
     public float getBalance() {

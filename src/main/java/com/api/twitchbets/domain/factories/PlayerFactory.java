@@ -9,8 +9,8 @@ public class PlayerFactory {
 
     public static final float INITIAL_BALANCE = 1000;
 
-    public Player createPlayer(String username) {
-        return new Player(username, INITIAL_BALANCE);
+    public Player createNormalPlayer(String username, String password) {
+        return new Player(username, password, INITIAL_BALANCE);
     }
 
 }

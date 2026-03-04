@@ -13,13 +13,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class InMemoryPlayerRepositoryTest {
 
     private static final String VALID_USERNAME = "test";
+    private static final String VALID_PASSWORD = "password1";
     PlayerRepository inMemoryPlayerRepository;
     Player player;
 
     @BeforeEach
     void setUpRepositoryAndUser() {
         inMemoryPlayerRepository = new InMemoryPlayerRepository();
-        player = new Player(VALID_USERNAME, 1000);
+        player = new Player(VALID_USERNAME, VALID_PASSWORD, 1000);
     }
 
     @Test
@@ -53,7 +54,7 @@ class InMemoryPlayerRepositoryTest {
 
     @Test
     void whenGetUsers_thenAllUsersAreReturned() {
-        Player user2 = new Player("test2", 1000);
+        Player user2 = new Player("test2", VALID_PASSWORD, 1000);
         inMemoryPlayerRepository.addPlayer(player);
         inMemoryPlayerRepository.addPlayer(user2);
 
@@ -72,7 +73,7 @@ class InMemoryPlayerRepositoryTest {
     @Test
     void givenUserAdded_whenUpdateUser_thenUserIsUpdated() {
         inMemoryPlayerRepository.addPlayer(player);
-        Player updatedUser = new Player(VALID_USERNAME, 2000);
+        Player updatedUser = new Player(VALID_USERNAME, VALID_PASSWORD, 2000);
 
         inMemoryPlayerRepository.updatePlayer(updatedUser);
 

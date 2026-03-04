@@ -182,9 +182,15 @@ It is built using Spring Boot.
 
 ### Request
 
-`POST /players/{username}`
+`POST /players/create`
 
-    curl --location --request POST 'http://localhost:8181/players/player1'
+    curl --location 'http://localhost:8181/players/create' \
+    --header 'Content-Type: application/json' \
+    --data '{
+        "username": "Edgouille",
+        "password": "MDP123",
+        "confirmPassword": "MDP123"
+    }'
 
 ### Response
 

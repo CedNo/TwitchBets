@@ -12,8 +12,9 @@ class PlayerTest {
     @BeforeEach
     void setupPlayer() {
         final String VALID_USERNAME = "player1";
+        final String VALID_PASSWORD = "password1";
         final float VALID_BALANCE = 1000;
-        player = new Player(VALID_USERNAME, VALID_BALANCE);
+        player = new Player(VALID_USERNAME, VALID_PASSWORD, VALID_BALANCE);
     }
 
     @Test

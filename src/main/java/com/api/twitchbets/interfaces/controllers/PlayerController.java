@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -13,8 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.api.twitchbets.application.PlayerService;
 import com.api.twitchbets.domain.player.Player;
+import com.api.twitchbets.interfaces.dto.requests.AddPlayerRequest;
 import com.api.twitchbets.interfaces.dto.responses.PlayerResponse;
 import com.api.twitchbets.interfaces.mappers.responses.PlayerResponseMapper;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/players")
@@ -32,12 +36,12 @@ public class PlayerController {
         this.playerResponseMapper = playerResponseMapper;
     }
 
-    @PostMapping("/{username}")
+    @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createPlayer(@PathVariable String username) {
-        logger.info("Creating player : {}", username);
+    public void createPlayer(@Valid @RequestBody AddPlayerRequest addPlayerRequest) {
+        logger.info("Creating player : {}", addPlayerRequest.username());
 
-        playerService.createPlayer(username);
+        playerService.createPlayer(addPlayerRequest.username(), addPlayerRequest.password());
     }
 
     @GetMapping("/{username}")

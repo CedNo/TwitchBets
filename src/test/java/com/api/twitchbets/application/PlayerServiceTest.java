@@ -10,7 +10,6 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import com.api.twitchbets.domain.factories.PlayerFactory;
 import com.api.twitchbets.domain.player.Player;
-import com.api.twitchbets.domain.player.PlayerAttributesValidator;
 import com.api.twitchbets.domain.player.PlayerRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -25,6 +24,7 @@ import static org.mockito.Mockito.when;
 class PlayerServiceTest {
 
     private static final String VALID_USERNAME = "username";
+    private static final String VALID_PASSWORD = "password";
 
     @Autowired
     private PlayerService playerService;
@@ -33,19 +33,16 @@ class PlayerServiceTest {
     @MockitoBean
     private PlayerFactory playerFactory;
     @MockitoBean
-    private PlayerAttributesValidator playerAttributesValidator;
-    @MockitoBean
     private Player player;
 
     @Test
     void whenCreatePlayer_thenValidateCreateAndSaveNewPlayer() {
-        when(playerFactory.createPlayer(VALID_USERNAME)).thenReturn(player);
+        when(playerFactory.createNormalPlayer(VALID_USERNAME, VALID_PASSWORD)).thenReturn(player);
 
-        playerService.createPlayer(VALID_USERNAME);
+        playerService.createPlayer(VALID_USERNAME, VALID_PASSWORD);
 
-        InOrder inOrder = inOrder(playerAttributesValidator, playerFactory, playerRepository);
-        inOrder.verify(playerAttributesValidator).validate(VALID_USERNAME);
-        inOrder.verify(playerFactory).createPlayer(VALID_USERNAME);
+        InOrder inOrder = inOrder(playerFactory, playerRepository);
+        inOrder.verify(playerFactory).createNormalPlayer(VALID_USERNAME, VALID_PASSWORD);
         inOrder.verify(playerRepository).addPlayer(player);
     }
 

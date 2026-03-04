@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import com.api.twitchbets.domain.factories.PlayerFactory;
 import com.api.twitchbets.domain.player.Player;
-import com.api.twitchbets.domain.player.PlayerAttributesValidator;
 import com.api.twitchbets.domain.player.PlayerRepository;
 
 @Service
@@ -13,22 +12,18 @@ public class PlayerService {
 
     private final PlayerRepository playerRepository;
     private final PlayerFactory playerFactory;
-    private final PlayerAttributesValidator playerAttributesValidator;
 
     @Autowired
     public PlayerService(
         PlayerRepository playerRepository,
-        PlayerFactory playerFactory,
-        PlayerAttributesValidator playerAttributesValidator
+        PlayerFactory playerFactory
     ) {
         this.playerRepository = playerRepository;
         this.playerFactory = playerFactory;
-        this.playerAttributesValidator = playerAttributesValidator;
     }
 
-    public void createPlayer(String username) {
-        playerAttributesValidator.validate(username);
-        Player newPlayer = playerFactory.createPlayer(username);
+    public void createPlayer(String username, String password) {
+        Player newPlayer = playerFactory.createNormalPlayer(username, password);
 
         playerRepository.addPlayer(newPlayer);
     }

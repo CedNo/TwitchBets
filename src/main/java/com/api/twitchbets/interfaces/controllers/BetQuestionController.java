@@ -77,7 +77,9 @@ public class BetQuestionController {
     @GetMapping ("/ending")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public List<BetQuestionResponse> getEndingBetQuestions(@Min(value = 1, message = "Must fetch at least 1 ending bet question.") @RequestParam("amount") int amount) {
+    public List<BetQuestionResponse> getEndingBetQuestions(
+        @Min(value = 1, message = "Must fetch at least 1 ending bet question.") @RequestParam("amount") int amount
+        ) {
         logger.info("Getting {} ending bet questions...", amount);
 
         List<BetQuestion> endingBetQuestions = betService.getEndingBetQuestions(amount);
