@@ -11,7 +11,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.api.twitchbets.application.PlayerService;
+import com.api.twitchbets.application.services.PlayerService;
 import com.api.twitchbets.interfaces.dto.requests.AddPlayerRequest;
 import com.api.twitchbets.interfaces.mappers.responses.PlayerResponseMapper;
 
@@ -86,8 +86,6 @@ class PlayerControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isBadRequest());
     }
-
-    //todo: add tests for validation of AddPlayerRequest
 
     @Test
     void whenGetPlayer_thenReturnPlayer() throws Exception {

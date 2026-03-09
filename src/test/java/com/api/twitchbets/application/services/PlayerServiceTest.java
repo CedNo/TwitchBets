@@ -1,4 +1,4 @@
-package com.api.twitchbets.application;
+package com.api.twitchbets.application.services;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,6 +11,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import com.api.twitchbets.domain.factories.PlayerFactory;
 import com.api.twitchbets.domain.player.Player;
 import com.api.twitchbets.domain.player.PlayerRepository;
+import com.api.twitchbets.application.utilities.CustomPasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -34,15 +35,21 @@ class PlayerServiceTest {
     private PlayerFactory playerFactory;
     @MockitoBean
     private Player player;
+    @MockitoBean
+    private CustomPasswordEncoder customPasswordEncoder;
+
 
     @Test
-    void whenCreatePlayer_thenValidateCreateAndSaveNewPlayer() {
-        when(playerFactory.createNormalPlayer(VALID_USERNAME, VALID_PASSWORD)).thenReturn(player);
+    void whenCreatePlayer_thenEncodePasswordCreateAndSaveNewPlayer() {
+        String encodedPassword = "encodedPassword";
+        when(customPasswordEncoder.encode(VALID_PASSWORD)).thenReturn(encodedPassword);
+        when(playerFactory.createNormalPlayer(VALID_USERNAME, encodedPassword)).thenReturn(player);
 
         playerService.createPlayer(VALID_USERNAME, VALID_PASSWORD);
 
-        InOrder inOrder = inOrder(playerFactory, playerRepository);
-        inOrder.verify(playerFactory).createNormalPlayer(VALID_USERNAME, VALID_PASSWORD);
+        InOrder inOrder = inOrder(customPasswordEncoder, playerFactory, playerRepository);
+        inOrder.verify(customPasswordEncoder).encode(VALID_PASSWORD);
+        inOrder.verify(playerFactory).createNormalPlayer(VALID_USERNAME, encodedPassword);
         inOrder.verify(playerRepository).addPlayer(player);
     }
 

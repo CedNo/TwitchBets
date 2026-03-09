@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api.twitchbets.application.PlayerService;
+import com.api.twitchbets.application.services.PlayerService;
 import com.api.twitchbets.domain.player.Player;
 import com.api.twitchbets.interfaces.dto.requests.AddPlayerRequest;
 import com.api.twitchbets.interfaces.dto.responses.PlayerResponse;

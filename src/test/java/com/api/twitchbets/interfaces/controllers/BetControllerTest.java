@@ -22,8 +22,8 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.api.twitchbets.application.BetService;
-import com.api.twitchbets.application.PlayerService;
+import com.api.twitchbets.application.services.BetService;
+import com.api.twitchbets.application.services.PlayerService;
 import com.api.twitchbets.domain.bet.Bet;
 import com.api.twitchbets.domain.exceptions.BetQuestionNotFoundException;
 import com.api.twitchbets.domain.exceptions.PlayerNotFoundException;

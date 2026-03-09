@@ -24,7 +24,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.api.twitchbets.application.BetService;
+import com.api.twitchbets.application.services.BetService;
 import com.api.twitchbets.interfaces.dto.requests.AddBetQuestionRequest;
 import com.api.twitchbets.interfaces.mappers.responses.BetQuestionResponseMapper;
 

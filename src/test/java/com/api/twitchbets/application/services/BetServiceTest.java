@@ -1,4 +1,4 @@
-package com.api.twitchbets.application;
+package com.api.twitchbets.application.services;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
