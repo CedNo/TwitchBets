@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.api.twitchbets.application.BetService;
+import com.api.twitchbets.application.services.BetService;
 import com.api.twitchbets.domain.bet.BetQuestion;
 import com.api.twitchbets.interfaces.dto.requests.AddBetQuestionRequest;
 import com.api.twitchbets.interfaces.dto.responses.BetQuestionResponse;
@@ -77,7 +77,9 @@ public class BetQuestionController {
     @GetMapping ("/ending")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public List<BetQuestionResponse> getEndingBetQuestions(@Min(value = 1, message = "Must fetch at least 1 ending bet question.") @RequestParam("amount") int amount) {
+    public List<BetQuestionResponse> getEndingBetQuestions(
+        @Min(value = 1, message = "Must fetch at least 1 ending bet question.") @RequestParam("amount") int amount
+        ) {
         logger.info("Getting {} ending bet questions...", amount);
 
         List<BetQuestion> endingBetQuestions = betService.getEndingBetQuestions(amount);

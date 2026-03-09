@@ -11,9 +11,11 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.api.twitchbets.application.PlayerService;
+import com.api.twitchbets.application.services.PlayerService;
+import com.api.twitchbets.interfaces.dto.requests.AddPlayerRequest;
 import com.api.twitchbets.interfaces.mappers.responses.PlayerResponseMapper;
 
+import static com.testutils.TestUtilities.asJsonString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -26,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class PlayerControllerTest {
 
     private static final String VALID_USERNAME = "username";
+    private static final String VALID_PASSWORD = "password1";
 
     @Autowired
     private MockMvc mvc;
@@ -35,11 +38,104 @@ class PlayerControllerTest {
     private PlayerResponseMapper playerResponseMapper;
 
     @Test
-    void whenCreatePlayer_thenReturnCreatedStatus() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.post("/players/" + VALID_USERNAME).accept(MediaType.APPLICATION_JSON))
+    void whenCreatePlayerWithValidBody_thenReturnCreatedStatus() throws Exception {
+        AddPlayerRequest addPlayerRequest = new AddPlayerRequest(VALID_USERNAME, VALID_PASSWORD, VALID_PASSWORD);
+
+        mvc.perform(MockMvcRequestBuilders.post("/players/create")
+            .content(asJsonString(addPlayerRequest))
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isCreated());
 
-        verify(playerService).createPlayer(VALID_USERNAME);
+        verify(playerService).createPlayer(VALID_USERNAME, VALID_PASSWORD);
+    }
+
+    @Test
+    void whenCreatePlayerWithInvalidCharactersInUsername_thenReturnBadRequestStatus() throws Exception {
+        String invalidCharacterUsername = "$invalidusername";
+        AddPlayerRequest addPlayerRequest = new AddPlayerRequest(invalidCharacterUsername, VALID_PASSWORD, VALID_PASSWORD);
+
+        mvc.perform(MockMvcRequestBuilders.post("/players/create")
+                .content(asJsonString(addPlayerRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void whenCreatePlayerWithEmptyUsername_thenReturnBadRequestStatus() throws Exception {
+        String emptyUsername = "";
+        AddPlayerRequest addPlayerRequest = new AddPlayerRequest(emptyUsername, VALID_PASSWORD, VALID_PASSWORD);
+
+        mvc.perform(MockMvcRequestBuilders.post("/players/create")
+                .content(asJsonString(addPlayerRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void whenCreatePlayerWithTooLongUsername_thenReturnBadRequestStatus() throws Exception {
+        String tooLongUsername = "aaaaaaaaaaaaaaaaaaaaa";
+        AddPlayerRequest addPlayerRequest = new AddPlayerRequest(tooLongUsername, VALID_PASSWORD, VALID_PASSWORD);
+
+        mvc.perform(MockMvcRequestBuilders.post("/players/create")
+                .content(asJsonString(addPlayerRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void whenCreatePlayerWithNonMatchingPasswords_thenReturnBadRequestStatus() throws Exception {
+        String password = "password";
+        String confirmPassword = "nonmatchingpassword";
+        AddPlayerRequest addPlayerRequest = new AddPlayerRequest(VALID_USERNAME, password, confirmPassword);
+
+        mvc.perform(MockMvcRequestBuilders.post("/players/create")
+                .content(asJsonString(addPlayerRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void whenCreatePlayerWithBlankPassword_thenReturnBadRequestStatus() throws Exception {
+        String password = "";
+        String confirmPassword = "";
+        AddPlayerRequest addPlayerRequest = new AddPlayerRequest(VALID_USERNAME, password, confirmPassword);
+
+        mvc.perform(MockMvcRequestBuilders.post("/players/create")
+                .content(asJsonString(addPlayerRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void whenCreatePlayerWithTooShortPassword_thenReturnBadRequestStatus() throws Exception {
+        String password = "1234567";
+        String confirmPassword = "1234567";
+        AddPlayerRequest addPlayerRequest = new AddPlayerRequest(VALID_USERNAME, password, confirmPassword);
+
+        mvc.perform(MockMvcRequestBuilders.post("/players/create")
+                .content(asJsonString(addPlayerRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void whenCreatePlayerWithTooLongPassword_thenReturnBadRequestStatus() throws Exception {
+        String password = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        String confirmPassword = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        AddPlayerRequest addPlayerRequest = new AddPlayerRequest(VALID_USERNAME, password, confirmPassword);
+
+        mvc.perform(MockMvcRequestBuilders.post("/players/create")
+                .content(asJsonString(addPlayerRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
     }
 
     @Test

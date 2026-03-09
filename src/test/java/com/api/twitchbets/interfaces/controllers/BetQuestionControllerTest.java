@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import static com.testutils.TestUtilities.asJsonString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -23,11 +24,9 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.api.twitchbets.application.BetService;
+import com.api.twitchbets.application.services.BetService;
 import com.api.twitchbets.interfaces.dto.requests.AddBetQuestionRequest;
 import com.api.twitchbets.interfaces.mappers.responses.BetQuestionResponseMapper;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -124,15 +123,5 @@ public class BetQuestionControllerTest {
             .andExpect(status().isOk());
 
         verify(betService).getEndingBetQuestions(validAmount);
-    }
-
-    public static String asJsonString(final Object obj) {
-        ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
-
-        try {
-            return mapper.writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 }

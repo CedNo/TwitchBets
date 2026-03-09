@@ -1,4 +1,4 @@
-package com.api.twitchbets.application;
+package com.api.twitchbets.application.services;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,8 +10,8 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import com.api.twitchbets.domain.factories.PlayerFactory;
 import com.api.twitchbets.domain.player.Player;
-import com.api.twitchbets.domain.player.PlayerAttributesValidator;
 import com.api.twitchbets.domain.player.PlayerRepository;
+import com.api.twitchbets.application.utilities.CustomPasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -25,6 +25,7 @@ import static org.mockito.Mockito.when;
 class PlayerServiceTest {
 
     private static final String VALID_USERNAME = "username";
+    private static final String VALID_PASSWORD = "password";
 
     @Autowired
     private PlayerService playerService;
@@ -33,19 +34,22 @@ class PlayerServiceTest {
     @MockitoBean
     private PlayerFactory playerFactory;
     @MockitoBean
-    private PlayerAttributesValidator playerAttributesValidator;
-    @MockitoBean
     private Player player;
+    @MockitoBean
+    private CustomPasswordEncoder customPasswordEncoder;
+
 
     @Test
-    void whenCreatePlayer_thenValidateCreateAndSaveNewPlayer() {
-        when(playerFactory.createPlayer(VALID_USERNAME)).thenReturn(player);
+    void whenCreatePlayer_thenEncodePasswordCreateAndSaveNewPlayer() {
+        String encodedPassword = "encodedPassword";
+        when(customPasswordEncoder.encode(VALID_PASSWORD)).thenReturn(encodedPassword);
+        when(playerFactory.createNormalPlayer(VALID_USERNAME, encodedPassword)).thenReturn(player);
 
-        playerService.createPlayer(VALID_USERNAME);
+        playerService.createPlayer(VALID_USERNAME, VALID_PASSWORD);
 
-        InOrder inOrder = inOrder(playerAttributesValidator, playerFactory, playerRepository);
-        inOrder.verify(playerAttributesValidator).validate(VALID_USERNAME);
-        inOrder.verify(playerFactory).createPlayer(VALID_USERNAME);
+        InOrder inOrder = inOrder(customPasswordEncoder, playerFactory, playerRepository);
+        inOrder.verify(customPasswordEncoder).encode(VALID_PASSWORD);
+        inOrder.verify(playerFactory).createNormalPlayer(VALID_USERNAME, encodedPassword);
         inOrder.verify(playerRepository).addPlayer(player);
     }
 

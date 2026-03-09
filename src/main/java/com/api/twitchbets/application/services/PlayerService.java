@@ -1,11 +1,11 @@
-package com.api.twitchbets.application;
+package com.api.twitchbets.application.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.api.twitchbets.application.utilities.CustomPasswordEncoder;
 import com.api.twitchbets.domain.factories.PlayerFactory;
 import com.api.twitchbets.domain.player.Player;
-import com.api.twitchbets.domain.player.PlayerAttributesValidator;
 import com.api.twitchbets.domain.player.PlayerRepository;
 
 @Service
@@ -13,22 +13,23 @@ public class PlayerService {
 
     private final PlayerRepository playerRepository;
     private final PlayerFactory playerFactory;
-    private final PlayerAttributesValidator playerAttributesValidator;
+    private final CustomPasswordEncoder customPasswordEncoder;
 
     @Autowired
     public PlayerService(
         PlayerRepository playerRepository,
         PlayerFactory playerFactory,
-        PlayerAttributesValidator playerAttributesValidator
+        CustomPasswordEncoder customPasswordEncoder
     ) {
         this.playerRepository = playerRepository;
         this.playerFactory = playerFactory;
-        this.playerAttributesValidator = playerAttributesValidator;
+        this.customPasswordEncoder = customPasswordEncoder;
     }
 
-    public void createPlayer(String username) {
-        playerAttributesValidator.validate(username);
-        Player newPlayer = playerFactory.createPlayer(username);
+    public void createPlayer(String username, String password) {
+        String encodedPassword = this.customPasswordEncoder.encode(password);
+
+        Player newPlayer = playerFactory.createNormalPlayer(username, encodedPassword);
 
         playerRepository.addPlayer(newPlayer);
     }
