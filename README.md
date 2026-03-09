@@ -188,8 +188,8 @@ It is built using Spring Boot.
     --header 'Content-Type: application/json' \
     --data '{
         "username": "Edgouille",
-        "password": "MDP123",
-        "confirmPassword": "MDP123"
+        "password": "Password123",
+        "confirmPassword": "Password123"
     }'
 
 ### Response
