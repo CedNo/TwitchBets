@@ -75,9 +75,60 @@ class PlayerControllerTest {
     }
 
     @Test
+    void whenCreatePlayerWithTooLongUsername_thenReturnBadRequestStatus() throws Exception {
+        String tooLongUsername = "aaaaaaaaaaaaaaaaaaaaa";
+        AddPlayerRequest addPlayerRequest = new AddPlayerRequest(tooLongUsername, VALID_PASSWORD, VALID_PASSWORD);
+
+        mvc.perform(MockMvcRequestBuilders.post("/players/create")
+                .content(asJsonString(addPlayerRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void whenCreatePlayerWithNonMatchingPasswords_thenReturnBadRequestStatus() throws Exception {
         String password = "password";
         String confirmPassword = "nonmatchingpassword";
+        AddPlayerRequest addPlayerRequest = new AddPlayerRequest(VALID_USERNAME, password, confirmPassword);
+
+        mvc.perform(MockMvcRequestBuilders.post("/players/create")
+                .content(asJsonString(addPlayerRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void whenCreatePlayerWithBlankPassword_thenReturnBadRequestStatus() throws Exception {
+        String password = "";
+        String confirmPassword = "";
+        AddPlayerRequest addPlayerRequest = new AddPlayerRequest(VALID_USERNAME, password, confirmPassword);
+
+        mvc.perform(MockMvcRequestBuilders.post("/players/create")
+                .content(asJsonString(addPlayerRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void whenCreatePlayerWithTooShortPassword_thenReturnBadRequestStatus() throws Exception {
+        String password = "1234567";
+        String confirmPassword = "1234567";
+        AddPlayerRequest addPlayerRequest = new AddPlayerRequest(VALID_USERNAME, password, confirmPassword);
+
+        mvc.perform(MockMvcRequestBuilders.post("/players/create")
+                .content(asJsonString(addPlayerRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void whenCreatePlayerWithTooLongPassword_thenReturnBadRequestStatus() throws Exception {
+        String password = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        String confirmPassword = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
         AddPlayerRequest addPlayerRequest = new AddPlayerRequest(VALID_USERNAME, password, confirmPassword);
 
         mvc.perform(MockMvcRequestBuilders.post("/players/create")
