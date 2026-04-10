@@ -8,14 +8,20 @@ import org.springframework.security.core.userdetails.User;
 public class Player extends User implements Serializable {
 
     private float balance;
+    private float totalPoints;
 
     public Player(String username, String password, float balance) {
         super(username, password, new ArrayList<>());
         this.balance = balance;
+        this.totalPoints = balance;
     }
 
     public float getBalance() {
         return balance;
+    }
+
+    public float getTotalPoints() {
+        return totalPoints;
     }
 
     public void charge(float amount) {
