@@ -9,10 +9,13 @@ public class PlayerResponse {
     public final String username;
     @JsonProperty
     public final float balance;
+    @JsonProperty
+    public final float totalPoints;
 
     public PlayerResponse(Player player) {
         this.username = player.getUsername();
         this.balance = player.getBalance();
+        this.totalPoints = player.getTotalPoints();
     }
 
 }
