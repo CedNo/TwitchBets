@@ -1,14 +1,21 @@
 package com.api.twitchbets.application.utilities;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CustomPasswordEncoder {
+public class CustomPasswordEncoder implements PasswordEncoder {
 
     BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-    public String encode(String password) {
-        return bCryptPasswordEncoder.encode(password);
+    @Override
+    public String encode(CharSequence rawPassword) {
+        return bCryptPasswordEncoder.encode(rawPassword);
+    }
+
+    @Override
+    public boolean matches(CharSequence rawPassword, String encodedPassword) {
+        return bCryptPasswordEncoder.matches(rawPassword, encodedPassword);
     }
 }

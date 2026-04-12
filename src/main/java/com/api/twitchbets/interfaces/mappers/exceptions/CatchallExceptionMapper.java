@@ -43,7 +43,7 @@ public class CatchallExceptionMapper extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(exception, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
-    @ExceptionHandler(value = { GenericException.class, RuntimeException.class })
+    @ExceptionHandler(GenericException.class)
     protected ResponseEntity<Object> handleConflict(GenericException exception, WebRequest request) {
         logger.error("Unhandled exception in " + request.getDescription(false), exception.getCause());
 

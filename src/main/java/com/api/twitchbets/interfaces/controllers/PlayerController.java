@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.api.twitchbets.application.services.PlayerService;
 import com.api.twitchbets.domain.player.Player;
 import com.api.twitchbets.interfaces.dto.requests.AddPlayerRequest;
+import com.api.twitchbets.interfaces.dto.requests.PlayerLoginRequest;
 import com.api.twitchbets.interfaces.dto.responses.PlayerResponse;
 import com.api.twitchbets.interfaces.mappers.responses.PlayerResponseMapper;
 
@@ -54,5 +55,13 @@ public class PlayerController {
         PlayerResponse response = playerResponseMapper.toResponse(player);
 
         return response;
+    }
+
+    @PostMapping("/login")
+    @ResponseStatus(HttpStatus.OK)
+    public void loginPlayer(@Valid @RequestBody PlayerLoginRequest playerLoginRequest) {
+        logger.info("Logging in player : {}", playerLoginRequest.username());
+
+        playerService.loginPlayer(playerLoginRequest.username(), playerLoginRequest.password());
     }
 }

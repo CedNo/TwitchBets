@@ -1,6 +1,9 @@
 package com.api.twitchbets.application.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.api.twitchbets.application.utilities.CustomPasswordEncoder;
@@ -14,16 +17,19 @@ public class PlayerService {
     private final PlayerRepository playerRepository;
     private final PlayerFactory playerFactory;
     private final CustomPasswordEncoder customPasswordEncoder;
+    private final AuthenticationProvider authenticationProvider;
 
     @Autowired
     public PlayerService(
         PlayerRepository playerRepository,
         PlayerFactory playerFactory,
-        CustomPasswordEncoder customPasswordEncoder
+        CustomPasswordEncoder customPasswordEncoder,
+        AuthenticationProvider authenticationProvider
     ) {
         this.playerRepository = playerRepository;
         this.playerFactory = playerFactory;
         this.customPasswordEncoder = customPasswordEncoder;
+        this.authenticationProvider = authenticationProvider;
     }
 
     public void createPlayer(String username, String password) {
@@ -49,5 +55,14 @@ public class PlayerService {
         Player player = playerRepository.getPlayer(username);
         player.charge(amount);
         playerRepository.updatePlayer(player);
+    }
+
+    public void loginPlayer(String username, String password) {
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+        Authentication authentication = authenticationProvider.authenticate(authenticationToken);
+
+        if(!authentication.isAuthenticated()) {
+            throw new IllegalArgumentException("Invalid username or password");
+        }
     }
 }
