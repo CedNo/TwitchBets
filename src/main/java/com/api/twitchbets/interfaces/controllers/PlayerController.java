@@ -19,6 +19,8 @@ import com.api.twitchbets.interfaces.dto.requests.PlayerLoginRequest;
 import com.api.twitchbets.interfaces.dto.responses.PlayerResponse;
 import com.api.twitchbets.interfaces.mappers.responses.PlayerResponseMapper;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 @RestController
@@ -59,9 +61,9 @@ public class PlayerController {
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public void loginPlayer(@Valid @RequestBody PlayerLoginRequest playerLoginRequest) {
+    public void loginPlayer(@Valid @RequestBody PlayerLoginRequest playerLoginRequest, HttpServletRequest request, HttpServletResponse response) {
         logger.info("Logging in player : {}", playerLoginRequest.username());
 
-        playerService.loginPlayer(playerLoginRequest.username(), playerLoginRequest.password());
+        playerService.loginPlayer(playerLoginRequest.username(), playerLoginRequest.password(), request, response);
     }
 }

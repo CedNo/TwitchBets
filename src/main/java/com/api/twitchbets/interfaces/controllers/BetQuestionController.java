@@ -50,7 +50,6 @@ public class BetQuestionController {
     @ResponseBody
     public ResponseEntity<Object> createBetQuestion(@Valid @RequestBody AddBetQuestionRequest request) {
         logger.info("Creating new question: {}", request.question());
-
         UUID id = betService.createBetQuestion(request.question(), request.options(), request.endTime());
 
         URI location = ServletUriComponentsBuilder
