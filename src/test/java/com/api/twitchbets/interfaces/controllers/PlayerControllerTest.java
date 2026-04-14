@@ -7,16 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.api.twitchbets.application.services.PlayerService;
 import com.api.twitchbets.interfaces.dto.requests.AddPlayerRequest;
+import com.api.twitchbets.interfaces.dto.requests.PlayerLoginRequest;
 import com.api.twitchbets.interfaces.mappers.responses.PlayerResponseMapper;
 
 import static com.testutils.TestUtilities.asJsonString;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -140,7 +143,8 @@ class PlayerControllerTest {
 
     @Test
     void whenGetPlayer_thenReturnPlayer() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/players/" + VALID_USERNAME).accept(MediaType.APPLICATION_JSON))
+        mvc.perform(MockMvcRequestBuilders.get("/players/" + VALID_USERNAME)
+                .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());
 
         verify(playerService).getPlayer(VALID_USERNAME);
@@ -157,5 +161,50 @@ class PlayerControllerTest {
 
         verify(playerService).getPlayer(any());
         verify(playerResponseMapper).toResponse(any());
+    }
+
+    @Test
+    void givenUsernameAndPassword_whenLoginPlayer_thenPlayerServiceLoginPlayer() throws Exception {
+        PlayerLoginRequest playerLoginRequest = new PlayerLoginRequest(VALID_USERNAME, VALID_PASSWORD);
+
+         mvc.perform(MockMvcRequestBuilders.post("/players/login")
+                .content(asJsonString(playerLoginRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
+
+        verify(playerService).loginPlayer(eq(VALID_USERNAME), eq(VALID_PASSWORD), any(), any());
+    }
+
+    @Test
+    @WithAnonymousUser
+    void givenAnonymousUser_whenCreatePlayer_thenReturnCreated() throws Exception {
+        AddPlayerRequest addPlayerRequest = new AddPlayerRequest(VALID_USERNAME, VALID_PASSWORD, VALID_PASSWORD);
+
+        mvc.perform(MockMvcRequestBuilders.post("/players/create")
+                .content(asJsonString(addPlayerRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isCreated());
+    }
+
+    @Test
+    @WithAnonymousUser
+    void givenAnonymousUser_whenGetPlayer_thenReturnOk() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/players/" + VALID_USERNAME)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithAnonymousUser
+    void givenAnonymousUser_whenLoginPlayer_thenReturnOk() throws Exception {
+        PlayerLoginRequest playerLoginRequest = new PlayerLoginRequest(VALID_USERNAME, VALID_PASSWORD);
+
+        mvc.perform(MockMvcRequestBuilders.post("/players/login")
+                .content(asJsonString(playerLoginRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
     }
 }

@@ -53,8 +53,8 @@ public class Configuration {
                 .requestMatchers(HttpMethod.POST, "/bets/questions").authenticated()
                 .requestMatchers(HttpMethod.GET, "/bets/questions/{id}").permitAll()
                 .requestMatchers(HttpMethod.GET, "/bets/questions/ending").permitAll()
-                .requestMatchers(HttpMethod.GET, "/bets/questions/history").permitAll()
-                .requestMatchers(HttpMethod.GET, "/bets/questions/latest").permitAll()
+                .requestMatchers(HttpMethod.GET, "/bets/{username}/history").permitAll()
+                .requestMatchers(HttpMethod.GET, "/bets/{username}/latest").permitAll()
             )
             .securityContext((securityContext) -> securityContext
                 .securityContextRepository(new DelegatingSecurityContextRepository(
@@ -71,8 +71,8 @@ public class Configuration {
 
     @Bean
     public AuthenticationManager authenticationManager(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider(passwordEncoder);
-        authenticationProvider.setUserDetailsService(userDetailsService);
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider(userDetailsService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder);
 
         return new ProviderManager(authenticationProvider);
     }
