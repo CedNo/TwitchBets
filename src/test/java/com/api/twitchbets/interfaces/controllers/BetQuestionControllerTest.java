@@ -20,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -42,6 +44,7 @@ public class BetQuestionControllerTest {
     private BetQuestionResponseMapper betQuestionResponseMapper;
 
     @Test
+    @WithMockUser
     void whenCreateBetQuestion_thenBetServiceCreatesBetQuestionAndHasCreatedStatus() throws Exception {
         String question = "Will @xQc stream today? (02/16/2025)";
         List<String> options = new ArrayList<>(Arrays.asList("Yes", "No"));
@@ -71,6 +74,7 @@ public class BetQuestionControllerTest {
     }
 
     @Test
+    @WithMockUser
     void givenInvalidQuestion_whenCreateBetQuestion_thenBadRequest() throws Exception {
         AddBetQuestionRequest invalidRequest = new AddBetQuestionRequest("", new ArrayList<>(), LocalDateTime.now());
 
@@ -82,6 +86,7 @@ public class BetQuestionControllerTest {
     }
 
     @Test
+    @WithMockUser
     void givenInvalidOptions_whenCreateBetQuestion_thenBadRequest() throws Exception {
         AddBetQuestionRequest invalidRequest = new AddBetQuestionRequest("Question", null, LocalDateTime.now());
 
@@ -93,6 +98,7 @@ public class BetQuestionControllerTest {
     }
 
     @Test
+    @WithMockUser
     void givenInvalidEndTime_whenCreateBetQuestion_thenBadRequest() throws Exception {
         AddBetQuestionRequest invalidRequest = new AddBetQuestionRequest("Question", new ArrayList<>(), null);
 
@@ -123,5 +129,42 @@ public class BetQuestionControllerTest {
             .andExpect(status().isOk());
 
         verify(betService).getEndingBetQuestions(validAmount);
+    }
+
+    @Test
+    @WithAnonymousUser
+    void givenAnonymousUser_whenCreateBetQuestion_thenReturnsUnauthorized() throws Exception {
+        String question = "Will @xQc stream today? (02/16/2025)";
+        List<String> options = new ArrayList<>(Arrays.asList("Yes", "No"));
+        LocalDateTime endTime = LocalDateTime.now().plusMinutes(4);
+        AddBetQuestionRequest addBetQuestionRequest = new AddBetQuestionRequest(question, options, endTime);
+        UUID id = UUID.randomUUID();
+        when(betService.createBetQuestion(question, options, endTime)).thenReturn(id);
+
+        mvc.perform(MockMvcRequestBuilders.post("/bets/questions")
+                .content(asJsonString(addBetQuestionRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("location", id)
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithAnonymousUser
+    void givenAnonymousUser_whenGetBetQuestion_thenReturnsOk() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/bets/questions/{id}", UUID.randomUUID())
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithAnonymousUser
+    void givenAnonymousUser_whenGetEndingBetQuestions_thenReturnsOk() throws Exception {
+        int validAmount = 1;
+
+        mvc.perform(MockMvcRequestBuilders.get("/bets/questions/ending")
+                .param("amount", String.valueOf(validAmount))
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
     }
 }
