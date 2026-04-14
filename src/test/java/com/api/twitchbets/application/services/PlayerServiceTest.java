@@ -6,6 +6,9 @@ import org.mockito.InOrder;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import com.api.twitchbets.domain.factories.PlayerFactory;
@@ -13,10 +16,17 @@ import com.api.twitchbets.domain.player.Player;
 import com.api.twitchbets.domain.player.PlayerRepository;
 import com.api.twitchbets.application.utilities.CustomPasswordEncoder;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -37,6 +47,10 @@ class PlayerServiceTest {
     private Player player;
     @MockitoBean
     private CustomPasswordEncoder customPasswordEncoder;
+    @MockitoBean
+    private AuthenticationManager authenticationManager;
+    @MockitoBean
+    private SecurityContextRepository securityContextRepository;
 
 
     @Test
@@ -94,5 +108,44 @@ class PlayerServiceTest {
         doThrow(new IllegalArgumentException()).when(player).checkIfCanPlaceBet(INVALID_AMOUNT);
 
         assertThrows(IllegalArgumentException.class, () -> playerService.checkIfCanPlaceBet(VALID_USERNAME, INVALID_AMOUNT));
+    }
+
+    @Test
+    void givenValidUsernameAndPassword_whenLoginPlayer_thenAuthenticateAndSaveContext() {
+        when(authenticationManager.authenticate(any())).thenReturn(mock(Authentication.class));
+
+        playerService.loginPlayer(VALID_USERNAME, VALID_PASSWORD, mock(HttpServletRequest.class), mock(
+            HttpServletResponse.class));
+
+        verify(authenticationManager).authenticate(any());
+        verify(securityContextRepository).saveContext(any(), any(), any());
+    }
+
+    @Test
+    void givenInvalidUsernameAndPassword_whenLoginPlayer_thenAuthenticateAndDontSaveContext() {
+        when(authenticationManager.authenticate(any())).thenThrow(new RuntimeException());
+
+        assertThrows(
+            RuntimeException.class,
+            () -> playerService.loginPlayer(
+                VALID_USERNAME,
+                VALID_PASSWORD,
+                mock(HttpServletRequest.class),
+                mock(HttpServletResponse.class)
+            )
+        );
+
+        verify(authenticationManager).authenticate(any());
+        verify(securityContextRepository, never()).saveContext(any(), any(), any());
+    }
+
+    @Test
+    void whenSaveSecurityContext_thenSaveContext() {
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+
+        playerService.loginPlayer(VALID_USERNAME, VALID_PASSWORD, request, response);
+
+        verify(securityContextRepository).saveContext(any(), eq(request), eq(response));
     }
 }
