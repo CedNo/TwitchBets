@@ -32,7 +32,8 @@ public class Configuration {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                    .allowedOrigins("http://localhost:5000");
+                    .allowedOrigins("http://localhost:5000")
+                    .allowCredentials(true);
             }
         };
     }
