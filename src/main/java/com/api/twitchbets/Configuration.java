@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -57,6 +58,7 @@ public class Configuration {
                 .requestMatchers(HttpMethod.GET, "/bets/{username}/history").permitAll()
                 .requestMatchers(HttpMethod.GET, "/bets/{username}/latest").permitAll()
             )
+            .cors(Customizer.withDefaults())
             .securityContext((securityContext) -> securityContext
                 .securityContextRepository(new DelegatingSecurityContextRepository(
                     new RequestAttributeSecurityContextRepository(),
