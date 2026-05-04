@@ -6,6 +6,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolderStrategy;
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,7 @@ public class PlayerService {
     private final AuthenticationManager authenticationManager;
     private final SecurityContextRepository securityContextRepository;
     private final SecurityContextHolderStrategy securityContextHolderStrategy;
+    private final SessionRegistry sessionRegistry;
 
     @Autowired
     public PlayerService(
@@ -34,7 +37,8 @@ public class PlayerService {
         CustomPasswordEncoder customPasswordEncoder,
         AuthenticationManager authenticationManager,
         SecurityContextRepository securityContextRepository,
-        SecurityContextHolderStrategy securityContextHolderStrategy
+        SecurityContextHolderStrategy securityContextHolderStrategy,
+        SessionRegistry sessionRegistry
 
     ) {
         this.playerRepository = playerRepository;
@@ -43,6 +47,7 @@ public class PlayerService {
         this.authenticationManager = authenticationManager;
         this.securityContextRepository = securityContextRepository;
         this.securityContextHolderStrategy = securityContextHolderStrategy;
+        this.sessionRegistry = sessionRegistry;
     }
 
     public void createPlayer(String username, String password) {
@@ -82,5 +87,11 @@ public class PlayerService {
         context.setAuthentication(authentication);
         securityContextHolderStrategy.setContext(context);
         securityContextRepository.saveContext(context, request, response);
+        sessionRegistry.registerNewSession(request.getSession().getId(), request.getSession().getMaxInactiveInterval());
+    }
+
+    public boolean checkSession(String sessionId) {
+        SessionInformation info = sessionRegistry.getSessionInformation(sessionId);
+        return info != null && !info.isExpired();
     }
 }

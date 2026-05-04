@@ -58,7 +58,7 @@ public class BetQuestionController {
             .buildAndExpand(id)
             .toUri();
 
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.created(location).body(id);
     }
 
     @GetMapping ("/{id}")

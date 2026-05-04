@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
@@ -51,7 +52,8 @@ class PlayerServiceTest {
     private AuthenticationManager authenticationManager;
     @MockitoBean
     private SecurityContextRepository securityContextRepository;
-
+    @MockitoBean
+    private SessionRegistry sessionRegistry;
 
     @Test
     void whenCreatePlayer_thenEncodePasswordCreateAndSaveNewPlayer() {
@@ -112,13 +114,15 @@ class PlayerServiceTest {
 
     @Test
     void givenValidUsernameAndPassword_whenLoginPlayer_thenAuthenticateAndSaveContext() {
+        HttpServletRequest request = mock(HttpServletRequest.class);
         when(authenticationManager.authenticate(any())).thenReturn(mock(Authentication.class));
+        when(request.getSession()).thenReturn(mock());
 
-        playerService.loginPlayer(VALID_USERNAME, VALID_PASSWORD, mock(HttpServletRequest.class), mock(
-            HttpServletResponse.class));
+        playerService.loginPlayer(VALID_USERNAME, VALID_PASSWORD, request, mock(HttpServletResponse.class));
 
         verify(authenticationManager).authenticate(any());
         verify(securityContextRepository).saveContext(any(), any(), any());
+        verify(sessionRegistry).registerNewSession(any(), any());
     }
 
     @Test
@@ -137,15 +141,39 @@ class PlayerServiceTest {
 
         verify(authenticationManager).authenticate(any());
         verify(securityContextRepository, never()).saveContext(any(), any(), any());
+        verify(sessionRegistry, never()).registerNewSession(any(), any());
     }
 
     @Test
     void whenSaveSecurityContext_thenSaveContext() {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
+        when(request.getSession()).thenReturn(mock());
 
         playerService.loginPlayer(VALID_USERNAME, VALID_PASSWORD, request, response);
 
         verify(securityContextRepository).saveContext(any(), eq(request), eq(response));
+    }
+
+    @Test
+    void givenValidSessionId_whenCheckSession_thenReturnTrue() {
+        final String VALID_SESSION_ID = "validSessionId";
+        when(sessionRegistry.getSessionInformation(VALID_SESSION_ID)).thenReturn(mock());
+
+        boolean isValidSession = playerService.checkSession(VALID_SESSION_ID);
+
+        verify(sessionRegistry).getSessionInformation(VALID_SESSION_ID);
+        assertEquals(true, isValidSession);
+    }
+
+    @Test
+    void givenInvalidSessionId_whenCheckSession_thenReturnFalse() {
+        final String INVALID_SESSION_ID = "invalidSessionId";
+        when(sessionRegistry.getSessionInformation(INVALID_SESSION_ID)).thenReturn(null);
+
+        boolean isValidSession = playerService.checkSession(INVALID_SESSION_ID);
+
+        verify(sessionRegistry).getSessionInformation(INVALID_SESSION_ID);
+        assertEquals(false, isValidSession);
     }
 }
