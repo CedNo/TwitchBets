@@ -6,7 +6,6 @@ import org.mockito.InOrder;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.session.SessionRegistry;
@@ -55,8 +54,6 @@ class PlayerServiceTest {
     private SecurityContextRepository securityContextRepository;
     @MockitoBean
     private SessionRegistry sessionRegistry;
-    @Autowired
-    private ResourceLoader resourceLoader;
 
     @Test
     void whenCreatePlayer_thenEncodePasswordCreateAndSaveNewPlayer() {

@@ -53,7 +53,6 @@ public class Configuration {
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests((authorize) -> authorize
                 .requestMatchers("/players/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/players/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/bets").authenticated()
                 .requestMatchers(HttpMethod.POST, "/bets/questions").authenticated()
                 .requestMatchers(HttpMethod.GET, "/bets/questions/{id}").permitAll()
