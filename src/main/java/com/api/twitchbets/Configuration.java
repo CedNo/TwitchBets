@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextHolderStrategy;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -51,6 +53,7 @@ public class Configuration {
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests((authorize) -> authorize
                 .requestMatchers("/players/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/players/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/bets").authenticated()
                 .requestMatchers(HttpMethod.POST, "/bets/questions").authenticated()
                 .requestMatchers(HttpMethod.GET, "/bets/questions/{id}").permitAll()
@@ -88,5 +91,10 @@ public class Configuration {
     @Bean
     public SecurityContextRepository securityContextRepository() {
         return new HttpSessionSecurityContextRepository();
+    }
+
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
     }
 }

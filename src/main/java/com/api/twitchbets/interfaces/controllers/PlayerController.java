@@ -66,4 +66,16 @@ public class PlayerController {
 
         playerService.loginPlayer(playerLoginRequest.username(), playerLoginRequest.password(), request, response);
     }
+
+    @PostMapping("/session")
+    @ResponseStatus(HttpStatus.OK)
+    public void checkSession(HttpServletRequest request) {
+        logger.info("Checking session for player");
+
+        boolean isValidSession = playerService.checkSession(request.getSession().getId());
+
+        if(!isValidSession) {
+            throw new IllegalArgumentException("Invalid session");
+        }
+    }
 }
